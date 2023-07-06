@@ -1,0 +1,56 @@
+import styled from 'styled-components';
+import logoIcon from 'assets/logo.svg';
+import menuIconLight from 'assets/menu-icon-light.svg';
+import { Button } from 'components/Button';
+
+const StyledHeader = styled.div`
+    background-color: #190401;
+    width: 1449px;
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 0 17px;
+    }
+    .c {
+        filter: brightness(0) saturate(100%) invert(13%) sepia(70%) saturate(7479%) hue-rotate(22deg) brightness(91%) contrast(118%);
+    }
+    
+    .menu-nav {
+        ul {
+            padding: 0;
+            margin: 0;
+            display: flex;
+            align-items: center;
+        }
+        ul li {
+            text-decoration: none;
+            display: inline-block;
+            margin-left: 12px;
+        }
+    }
+`
+export const Header = () => {
+    return (
+        <StyledHeader>
+            <div className='header'>
+                <div>
+                    <img src={menuIconLight} alt=""  className='c'/>
+                </div>
+                <div className='menu-nav'>
+                    <ul>
+                        <li><Button title={"about"} text_color={"white"} width={"98px"} height={"19px"} radius={"40px"} border_custom={"2px solid transparent"}></Button></li>
+                        <li><Button title={"about"} text_color={"white"} width={"98px"} height={"19px"} radius={"40px"} border_custom={"2px solid transparent"}></Button></li>
+                        <li><img src={logoIcon} alt="" /></li>
+                        <li><Button title={"about"} text_color={"white"} width={"98px"} height={"19px"} radius={"40px"} border_custom={"2px solid transparent"}></Button></li>
+                        <li><Button title={"about"} text_color={"white"} width={"98px"} height={"19px"} radius={"40px"} border_custom={"2px solid transparent"}></Button></li>
+                    </ul>
+                </div>
+                <div className='login'>
+                    <Button title={"SIGNIN"} text_color={"white"} width={"98px"} height={"19px"} radius={"40px"} border_custom={"2px solid transparent"}></Button>
+                    <Button title={"SIGNUP"} text_color={"white"} width={"98px"} height={"19px"} radius={"40px"} border_custom={"2px solid transparent"}></Button>
+                </div>
+            </div>
+        </StyledHeader>
+    )
+}
