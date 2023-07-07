@@ -18,18 +18,18 @@ export const ShowCase = () => {
     return (
         <StyledShowCase>
             <div className="showcase">
-                <Card title={"Avatar"} srcImg={true}></Card>
-                <Card title={"filmBladeRunner"} srcImg={false}></Card>
-                <Card title={"Avatar"} srcImg={true}></Card>
-                <Card title={"filmBladeRunner"} srcImg={false}></Card>
-                <Card title={"Avatar"} srcImg={true}></Card>
-                <Card title={"filmBladeRunner"} srcImg={false}></Card>
-                <Card title={"Avatar"} srcImg={true}></Card>
-                <Card title={"filmBladeRunner"} srcImg={false}></Card>
-                <Card title={"Avatar"} srcImg={true}></Card>
-                <Card title={"filmBladeRunner"} srcImg={false}></Card>
-                <Card title={"Avatar"} srcImg={true}></Card>
-                <Card title={"filmBladeRunner"} srcImg={false}></Card>
+                <Card title={"Avatar"} srcImg={true} title_center={"center"} font_size={"12px"} font_weight={"400"} radius={"10px"}></Card>
+                <Card title={"filmBladeRunner"} srcImg={false} title_center={"center"} font_size={"12px"} font_weight={"400"} radius={"10px"}></Card>
+                <Card title={"Avatar"} srcImg={true} title_center={"center"} font_size={"12px"} font_weight={"400"} radius={"10px"}></Card>
+                <Card title={"filmBladeRunner"} srcImg={false} title_center={"center"} font_size={"12px"} font_weight={"400"} radius={"10px"}></Card>
+                <Card title={"Avatar"} srcImg={true} title_center={"center"} font_size={"12px"} font_weight={"400"} radius={"10px"}></Card>
+                <Card title={"filmBladeRunner"} srcImg={false} title_center={"center"} font_size={"12px"} font_weight={"400"} radius={"10px"}></Card>
+                <Card title={"Avatar"} srcImg={true} title_center={"center"} font_size={"12px"} font_weight={"400"} radius={"10px"}></Card>
+                <Card title={"filmBladeRunner"} srcImg={false} title_center={"center"} font_size={"12px"} font_weight={"400"} radius={"10px"}></Card>
+                <Card title={"Avatar"} srcImg={true} title_center={"center"} font_size={"12px"} font_weight={"400"} radius={"10px"}></Card>
+                <Card title={"filmBladeRunner"} srcImg={false} title_center={"center"} font_size={"12px"} font_weight={"400"} radius={"10px"}></Card>
+                <Card title={"Avatar"} srcImg={true} title_center={"center"} font_size={"12px"} font_weight={"400"} radius={"10px"}></Card>
+                <Card title={"filmBladeRunner"} srcImg={false} title_center={"center"} font_size={"12px"} font_weight={"400"} radius={"10px"}></Card>
             </div>
         </StyledShowCase>
     )
