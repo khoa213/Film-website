@@ -29,6 +29,10 @@ const StyledHeader = styled.div`
             margin-left: 12px;
         }
     }
+    .line-white {
+        border: 1px solid white;
+        margin: 0;
+    }
 `
 export const Header = () => {
     return (
@@ -39,18 +43,19 @@ export const Header = () => {
                 </div>
                 <div className='menu-nav'>
                     <ul>
-                        <li><Button title={"about"} text_color={"white"} width={"98px"} height={"19px"} radius={"40px"} border_custom={"2px solid transparent"}></Button></li>
-                        <li><Button title={"about"} text_color={"white"} width={"98px"} height={"19px"} radius={"40px"} border_custom={"2px solid transparent"}></Button></li>
+                        <li><Button title={"about"} text_color={"white"} width={"98px"} height={"19px"} radius={"40px"} border_custom={"2px solid transparent"} font_size_text={"12px"}></Button></li>
+                        <li><Button title={"about"} text_color={"white"} width={"98px"} height={"19px"} radius={"40px"} border_custom={"2px solid transparent"} font_size_text={"12px"}></Button></li>
                         <li><img src={logoIcon} alt="" /></li>
-                        <li><Button title={"about"} text_color={"white"} width={"98px"} height={"19px"} radius={"40px"} border_custom={"2px solid transparent"}></Button></li>
-                        <li><Button title={"about"} text_color={"white"} width={"98px"} height={"19px"} radius={"40px"} border_custom={"2px solid transparent"}></Button></li>
+                        <li><Button title={"about"} text_color={"white"} width={"98px"} height={"19px"} radius={"40px"} border_custom={"2px solid transparent"} font_size_text={"12px"}></Button></li>
+                        <li><Button title={"about"} text_color={"white"} width={"98px"} height={"19px"} radius={"40px"} border_custom={"2px solid transparent"} font_size_text={"12px"}></Button></li>
                     </ul>
                 </div>
                 <div className='login'>
-                    <Button title={"SIGNIN"} text_color={"white"} width={"98px"} height={"19px"} radius={"40px"} border_custom={"2px solid transparent"}></Button>
-                    <Button title={"SIGNUP"} text_color={"white"} width={"98px"} height={"19px"} radius={"40px"} border_custom={"2px solid transparent"}></Button>
+                    <Button title={"SIGNIN"} text_color={"white"} width={"49px"} height={"19px"} radius={"40px"} border_custom={"2px solid transparent"} font_size_text={"11px"}></Button>
+                    <Button title={"SIGNUP"} text_color={"white"} width={"49px"} height={"19px"} radius={"40px"} border_custom={"2px solid transparent"} font_size_text={"11px"}></Button>
                 </div>
             </div>
+            <hr className='line-white'/>
         </StyledHeader>
     )
 }
