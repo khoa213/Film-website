@@ -27,7 +27,7 @@ public class MovieEntity {
     private int duration;
 
     @Column(name = "price")
-    private int price;
+    private double price;
 
     @Column(name = "language")
     private String language;
@@ -85,15 +85,17 @@ public class MovieEntity {
         this.duration = duration;
     }
 
-    public int getPrice() {
-        return price;
-    }
+    
 
-    public void setPrice(int price) {
-        this.price = price;
-    }
+    public double getPrice() {
+		return price;
+	}
 
-    public String getLanguage() {
+	public void setPrice(double price) {
+		this.price = price;
+	}
+
+	public String getLanguage() {
         return language;
     }
 

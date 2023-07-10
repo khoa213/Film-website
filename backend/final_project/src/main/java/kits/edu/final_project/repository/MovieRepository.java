@@ -1,12 +1,10 @@
-//package kits.edu.final_project.repository;
-//
-//import kits.edu.final_project.entity.MovieEntity;
-//import org.springframework.data.jpa.repository.JpaRepository;
-//import org.springframework.stereotype.Repository;
-//
-//import java.util.List;
-//
-//@Repository
-//public interface MovieRepository extends JpaRepository<MovieEntity,Integer> {
-//    List<MovieEntity> findByGenreId(int idGenre);
-//}
+package kits.edu.final_project.repository;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+import kits.edu.final_project.entity.MovieEntity;
+
+@Repository
+public interface MovieRepository extends JpaRepository<MovieEntity,Integer> {
+    
+}
