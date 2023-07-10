@@ -4,9 +4,9 @@ import menuIconLight from 'assets/menu-icon-light.svg';
 import { Button } from 'components/Button';
 
 const StyledHeader = styled.div`
-    background-color: #190401;
-    width: 1449px;
     .header {
+        background-color: #190401;
+        width: 1406px;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -29,6 +29,10 @@ const StyledHeader = styled.div`
             margin-left: 12px;
         }
     }
+    .login {
+        display: flex;
+        gap: 5px;
+    }
     .line-white {
         border: 1px solid white;
         margin: 0;
@@ -38,16 +42,16 @@ export const Header = () => {
     return (
         <StyledHeader>
             <div className='header'>
-                <div>
+                <div className='menuicon'>
                     <img src={menuIconLight} alt=""  className='c'/>
                 </div>
                 <div className='menu-nav'>
                     <ul>
-                        <li><Button title={"about"} text_color={"white"} width={"98px"} height={"19px"} radius={"40px"} border_custom={"2px solid transparent"} font_size_text={"12px"}></Button></li>
-                        <li><Button title={"about"} text_color={"white"} width={"98px"} height={"19px"} radius={"40px"} border_custom={"2px solid transparent"} font_size_text={"12px"}></Button></li>
-                        <li><img src={logoIcon} alt="" /></li>
-                        <li><Button title={"about"} text_color={"white"} width={"98px"} height={"19px"} radius={"40px"} border_custom={"2px solid transparent"} font_size_text={"12px"}></Button></li>
-                        <li><Button title={"about"} text_color={"white"} width={"98px"} height={"19px"} radius={"40px"} border_custom={"2px solid transparent"} font_size_text={"12px"}></Button></li>
+                        <li><Button title={"ABOUT"} text_color={"white"} width={"98px"} height={"19px"} radius={"40px"} border_custom={"2px solid transparent"} font_size_text={"12px"}></Button></li>
+                        <li><Button title={"MOVIES"} text_color={"white"} width={"98px"} height={"19px"} radius={"40px"} border_custom={"2px solid transparent"} font_size_text={"12px"}></Button></li>
+                        <li className='logo'><img src={logoIcon} alt="" /></li>
+                        <li><Button title={"SERIES"} text_color={"white"} width={"98px"} height={"19px"} radius={"40px"} border_custom={"2px solid transparent"} font_size_text={"12px"}></Button></li>
+                        <li><Button title={"UPCOMING"} text_color={"white"} width={"98px"} height={"19px"} radius={"40px"} border_custom={"2px solid transparent"} font_size_text={"12px"}></Button></li>
                     </ul>
                 </div>
                 <div className='login'>

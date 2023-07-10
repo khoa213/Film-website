@@ -48,7 +48,7 @@ export const Genres = () => {
         <StyledGenres>
             <div className="genres">
                 <div className="title">
-                    <Button title={"Genres"} text_color={"white"} width={"98px"} height={"19px"} radius={"40px"} border_custom={"2px solid transparent"} font_size_text={"13px"} isGenres={true}></Button>
+                    <Button title={"Genres"} text_color={"#E4E4E4"} width={"140px"} height={"40px"} radius={"10px"} border_custom={"1px solid #E4E4E4"} font_size_text={"13px"} isGenres={true} bg_color={"#171616"}></Button>
                     <hr className="line-white" />
                     <img src={menu} alt="photo" />
                     <img src={filter} alt="photo" />
@@ -91,8 +91,8 @@ export const Genres = () => {
                         </tbody>
                     </table>
                     <div className="buttonGenres">
-                        <Button title={"about"} text_color={"white"} width={"98px"} height={"19px"} radius={"40px"} border_custom={"2px solid transparent"} font_size_text={"12px"}></Button>
-                        <Button title={"about"} text_color={"white"} width={"98px"} height={"19px"} radius={"40px"} border_custom={"2px solid transparent"} font_size_text={"12px"}></Button>
+                        <Button title={"COUNTRY"} text_color={"#171616"} width={"171px"} height={"40px"} radius={"40px"} border_custom={"2px solid #D9D9D9"} font_size_text={"16px"} border_bottom_text={"1px solid #252525"} isGenres={true} bg_color={"#D9D9D9"}></Button>
+                        <Button title={"YEAR"} text_color={"#171616"} width={"171px"} height={"40px"} radius={"40px"} border_custom={"2px solid #D9D9D9"} font_size_text={"16px"} border_bottom_text={"1px solid #252525"} isGenres={true} bg_color={"#D9D9D9"}></Button>
                     </div>
                 </div>
             </div>

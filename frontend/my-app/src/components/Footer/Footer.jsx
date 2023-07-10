@@ -7,7 +7,7 @@ const StyledFooter = styled.div`
         display: flex;
         flex-direction: column;
         align-items: center;
-        width: 1449px;
+        width: 1440px;
         img {
             width: 133px;
             height: 113px;
