@@ -1,291 +1,303 @@
-import React from 'react';
-import styled from 'styled-components';
-import { Button, Col, Dropdown, Row, Space ,message } from 'antd';
-import CardTransfer from '../../components/CardTransfer';
-import { DollarOutlined ,DownOutlined,UserOutlined } from '@ant-design/icons';
-import ChartComponent from '../../components/Chart/Chart';
-import { Overview } from 'components/Overview';
-import ChartPie from 'components/ChartPie';
-import { CardBar } from 'components/CardBar';
-import { CardProductBar } from 'components/CardProductBar';
-import { PercentBar } from 'components/PercentBar';
-
-
+import { Col, Row, Table } from "antd";
+import CardTransfer from "components/CardTransfer";
+import React from "react";
+import styled from "styled-components";
+import { EyeOutlined } from "@ant-design/icons";
+import TopRate from "components/TopRate";
+import UserProduct from "components/UserProduct";
+import BarChartComponent from "components/BarChart/BarChart";
+import DropDown from "components/Dropdown/Dropdown";
+import PieChartComponent from "components/PieChart/PieChart";
+import CardCategory from "components/CardCategory";
 const DashboardWrapper = styled.div`
-/* display: flex;
-flex-direction:row; */
-width: 100%;
-overflow-x:hidden;
-padding-bottom:20px;
-/* .chart{
-  margin:0 auto;
-  .chart-item{
-    display: flex;
-    justify-content:center;
-    margin:20px 0;
-    background-color:#fff;
-    border-radius:20px;
-    padding:40px 10px;
-    
-  }
-  .chart-item-2{
-    margin-left:auto;
-  }
-  
-  } */
-  
-  .top-desc{
-    display: flex;
-    justify-content:space-between;
-    align-items:center;
-    .ant-dropdown-trigger{
-      width: 120px;
-      height: 35px;
-      /* padding:0 40px; */
-      background: #FFF8E5;
-      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-      border-radius: 7px;
-    }
-    .revenue{
-      margin-bottom:20px;
-      p{
-        height:28px;
-        font-family: 'Roboto';
-        font-style: normal;
-        font-weight: 500;
-        font-size: 24px;
-        line-height: 28px;
-
-        color: #A7A7A7;
-        margin:0;
-      }
-      h1{
-        margin:0;
-        font-family: 'Roboto';
-        font-style: normal;
-        font-weight: 500;
-        font-size: 36px;
-        line-height: 42px;
-
-        color: #000000;
-      }
-    }
-  }
-  .chart-pie-wrapper{
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
-    /* gap: 10px; */
-    height: 100%; /* Thiết lập chiều cao của grid container */
-    width:100%;
-    margin-left:-20px;
-    .grid-item {
-      /* width:30%; */
+  .top-category {
+    .top-category-top {
       display: flex;
-      flex-direction:column; /*
-      /* background-color: #ddd; */
-    justify-content: center;
-    align-items: center;
-    /* overflow: hidden; */
-    
-    /* padding: 20px; */
-    /* scale:0.6; */
-  }
-  }
-  .top-bar{
-    display: flex;
-    justify-content:space-between;
-    align-items:center;
+      justify-content: space-between;
     }
-`;const style = {
-  background: '#fff',
-  padding: '20px 40px',
-  borderRadius:"20px",
-  boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
-  height: "60vh",
-};
-const style2 = {
-  background: '#fff',
-  padding: '20px 40px',
-  borderRadius:"20px",
-  boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
-  height: "40vh",
-};
-const styleRow = {
- marginBottom:"20px",
-};
+    .top-category-bot {
+      display: flex;
+      .left {
+        flex: 60%;
+      }
+      .right {
+        flex: 40%;
+      }
+    }
+  }
+  .category {
+    height: 400px;
+    .recharts-responsive-container {
+      margin: none !important;
+    }
+  }
+  .part-one {
+    min-height: 500px;
+    background-color: var(--body-content-light-background) !important;
+    /* margin-right: -12px; */
+  }
+  .part-two {
+    min-height: 400px;
+    background-color: var(--body-content-light-background) !important;
+    /* margin-right: -12px; */
+  }
+  width: 100%;
+  overflow-x: hidden;
+  padding-bottom: 20px;
+  margin: 0;
+  color: white;
+  /* background-color: red; */
+  .custom-table .ant-table-wrapper {
+    background-color: var(--body-content-light-background);
+  }
 
-const handleMenuClick = (e) => {
-  message.info('Click on menu item.');
-  console.log('click', e);
+  .custom-table .ant-table-thead > tr > th {
+    background-color: var(--body-content-light-background);
+    color: white;
+  }
+
+  .custom-table .ant-table-tbody > tr > td {
+    background-color: var(--body-content-light-background);
+    color: white;
+    border-color: darkgray;
+  }
+
+  /* .custom-table .ant-table-tbody > tr {
+    background-color: black;
+    color: white;
+  } */
+
+  .custom-table .ant-table-tbody > tr:hover {
+    background-color: darkslategray;
+  }
+
+  .custom-table .ant-table-tbody > tr:hover td {
+    color: red;
+    background-color: darkslategray;
+  }
+`;
+const GridContainer = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 24px;
+`;
+
+const GridItem = styled.div`
+  /* background-color: #f0f0f0; */
+  padding: 8px;
+`;
+
+const data = [1, 2, 3, 4, 5, 6];
+const style = {
+  background: "var(--body-content-light-background)",
+  padding: "8px 0",
 };
-const items = [
-  {
-    label: '1st menu item',
-    key: '1',
-    icon: <UserOutlined />,
-  },
-  {
-    label: '2nd menu item',
-    key: '2',
-    icon: <UserOutlined />,
-  },
-  {
-    label: '3rd menu item',
-    key: '3',
-    icon: <UserOutlined />,
-    danger: true,
-  },
-  {
-    label: '4rd menu item',
-    key: '4',
-    icon: <UserOutlined />,
-    danger: true,
-    disabled: true,
-  },
-];
-const menuProps = {
-  items,
-  onClick: handleMenuClick,
+const rowStyles = {
+  marginBottom: "24px", // Add desired margin bottom value
+  marginLeft: "12px",
+  marginTop: "24px",
 };
-const data1 = [
-  { name: 'Progress', value: 85 }, // Giá trị phần trăm của đường tròn
-  { name: 'Remaining', value: 100 - 85 }, // Giá trị phần trăm còn lại
+const marginBottom = {
+  marginBottom: "24px",
+};
+const dataChart = [
+  { name: "Group A", value: 400 },
+  { name: "Group B", value: 300 },
+  { name: "Group C", value: 300 },
+  { name: "Group D", value: 200 },
+  { name: "Group D", value: 150 },
+  { name: "Group D", value: 350 },
 ];
-const data2 = [
-  { name: 'Progress', value: 85 }, // Giá trị phần trăm của đường tròn
-  { name: 'Remaining', value: 100 - 85 }, // Giá trị phần trăm còn lại
+const COLORS = [
+  "#0088FE",
+  "#00C49F",
+  "#FFBB28",
+  "#FF8042",
+  "#84b51b",
+  "#06aec1",
 ];
-const data3 = [
-  { name: 'Progress', value: 85 }, // Giá trị phần trăm của đường tròn
-  { name: 'Remaining', value: 100 - 85 }, // Giá trị phần trăm còn lại
+const columns = [
+  {
+    title: "Full Name",
+    width: 100,
+    dataIndex: "name",
+    key: "name",
+    fixed: "left",
+  },
+  {
+    title: "Age",
+    width: 100,
+    dataIndex: "age",
+    key: "age",
+    fixed: "left",
+    sorter: (a, b) => a.age - b.age,
+  },
+  {
+    title: "Column 1",
+    dataIndex: "address",
+    key: "1",
+  },
+  {
+    title: "Column 2",
+    dataIndex: "address",
+    key: "2",
+  },
+  {
+    title: "Column 3",
+    dataIndex: "address",
+    key: "3",
+  },
+  {
+    title: "Column 4",
+    dataIndex: "address",
+    key: "4",
+  },
+  {
+    title: "Column 5",
+    dataIndex: "address",
+    key: "5",
+  },
+  {
+    title: "Column 6",
+    dataIndex: "address",
+    key: "6",
+  },
+  {
+    title: "Column 7",
+    dataIndex: "address",
+    key: "7",
+  },
+  {
+    title: "Column 8",
+    dataIndex: "address",
+    key: "8",
+  },
+  {
+    title: "Action",
+    key: "operation",
+    fixed: "right",
+    width: 100,
+    render: () => <a>action</a>,
+  },
 ];
-const data4 = [
-  { name: 'Progress', value: 85 }, // Giá trị phần trăm của đường tròn
-  { name: 'Remaining', value: 100 - 85 }, // Giá trị phần trăm còn lại
+const dataTable = [
+  {
+    key: "1",
+    name: "John Brown",
+    age: 32,
+    address: "New York Park",
+  },
+  {
+    key: "2",
+    name: "Jim Green",
+    age: 40,
+    address: "London Park",
+  },
 ];
 const Dashboard = () => {
   return (
     <DashboardWrapper>
-      {/* <div className="top-dash">
-        <Row gutter={24}>
-          <Col className="gutter-row" span={6}>
-            <CardTransfer speed={30} money={2360} title={"Today's Sales"}>
-              <DollarOutlined />
-            </CardTransfer>
-          </Col>
-          <Col className="gutter-row" span={6}>
-            <CardTransfer speed={30} money={2360} title={"Today's Sales"}>
-              <DollarOutlined />
-            </CardTransfer>
-          </Col>
-          <Col className="gutter-row" span={6}>
-            <CardTransfer speed={30} money={2360} title={"Today's Sales"}>
-              <DollarOutlined />
-            </CardTransfer>
-          </Col>
-          <Col className="gutter-row" span={6}>
-            <CardTransfer speed={30} money={2360} title={"Today's Sales"}>
-              <DollarOutlined />
-            </CardTransfer>
-          </Col>
-        </Row>
-        <Row gutter={0} className='chart'>
-          
-
-            <Col className="chart-item gutter-row" span={10}>
-              <ChartComponent />
+      <Row gutter={48} style={marginBottom}>
+        <Col className="gutter-row part-one" span={16}>
+          <Row gutter={24} style={rowStyles}>
+            <Col className="gutter-row" span={6}>
+              <CardTransfer
+                speed={80}
+                transfer={55}
+                unit={"K"}
+                title={"Viewer"}
+                colorCircle={"#e7141b"}
+                iconCard={<EyeOutlined />}
+              />
             </Col>
-            <Col className="chart-item chart-item-2 gutter-row" span={13}>
-              <LineChart />
+            <Col className="gutter-row" span={6}>
+              <CardTransfer
+                speed={80}
+                transfer={55}
+                unit={"K"}
+                title={"Viewer"}
+                colorCircle={"#14E788"}
+                iconCard={<EyeOutlined />}
+              />
             </Col>
-         
-        </Row>
-        
-      </div> */}
-      <Row style={styleRow} gutter={24} >
-      <Col  className="gutter-row column" span={16}>
-        <div style={style}>
-          <div className="top-desc">
-            <div className="revenue">
-
-              <p>Total Revenue</p>
-              <h1>$980,273.00</h1>
-            </div>
-            <Dropdown menu={menuProps}>
-              <Button>
-                <Space>
-                  This year
-                  <DownOutlined />
-                </Space>
-              </Button>
-            </Dropdown>
+            <Col className="gutter-row" span={6}>
+              <CardTransfer
+                speed={-80}
+                transfer={55}
+                unit={"K"}
+                title={"Viewer"}
+                colorCircle={"#e78514"}
+                iconCard={<EyeOutlined />}
+              />
+            </Col>
+            <Col className="gutter-row" span={6}>
+              <CardTransfer
+                speed={80}
+                transfer={55}
+                unit={"K"}
+                title={"Viewer"}
+                colorCircle={"#1b14e7"}
+                iconCard={<EyeOutlined />}
+              />
+            </Col>
+          </Row>
+          <Row gutter={0}>
+            <Col className="gutter-row" span={24}>
+              <div style={style}>
+                <TopRate />
+              </div>
+            </Col>
+          </Row>
+        </Col>
+        <Col className="gutter-row " span={8}>
+          <div className="part-one" style={style}>
+            <UserProduct />
           </div>
-          <ChartComponent />
-          {/* <div className="chart">
-            <ChartComponent  />
-          </div> */}
-        </div>
-      </Col>
-      <Col className="gutter-row column" span={8}>
-        <div style={style}>
-          <Overview title={"Customers"} desc={"Information About your Customers"} >
-            <div className="chart-pie-wrapper">
-              <div className="grid-item"> <ChartPie color={"#5F27CD"} percent={85} text={"Current Customers"}/>
-               
-              </div>
-              <div className="grid-item"> <ChartPie color={"#6C6C6C"}  percent={66} text={"Current Customers"}/>
-              
-              </div>
-              <div className="grid-item"> <ChartPie color={"#FF8918"}  percent={90} text={"Current Customers"}/>
-              
-              </div>
-              <div className="grid-item"> <ChartPie color={"#FF6F61"}  percent={30} text={"Current Customers"}/>
-              
-              </div>
-           
+        </Col>
+      </Row>
+      <Row gutter={24}>
+        <Col className="gutter-row " span={8}>
+          <div className="part-two">
+            <div className="category" style={style}>
+              <h1>Category</h1>
+              <BarChartComponent />
             </div>
-            
-          </Overview>
-             {/* <div>sdsad</div> */}
-        </div>
-      </Col>
-     
-     </Row>
-
-     <Row gutter={24} >
-      <Col  className="gutter-row column" span={16}>
-        <div style={style2}>
-            <div className="top-bar">
-              <CardBar title={"Total Visits"} qual={"10.8m"}/>
-              <CardBar title={"Total Sales"} qual={100.345}/>
-              <CardBar title={"Total Mades"} qual={"200k$"}/>
-              <CardBar title={"Orders Completed"} qual={30000}/>
+          </div>
+        </Col>
+        <Col className="gutter-row" span={16}>
+          <div className="part-two">
+            <div className="top-category" style={style}>
+              <div className="top-category-top">
+                <h1>Top Category</h1>
+                <DropDown />
+              </div>
+              <div className="top-category-bot">
+                <div className="left">
+                  <GridContainer>
+                    {data.map((item, index) => (
+                      <GridItem key={index}>
+                        <CardCategory />
+                      </GridItem>
+                    ))}
+                  </GridContainer>
+                </div>
+                <div className="right">
+                  <PieChartComponent data={dataChart} colors={COLORS} />
+                </div>
+              </div>
             </div>
-            <h1>Top Products</h1>
-            <div className="top-product-bar">
-              <CardProductBar name="Nike Jordan 1 2019" type={"Pink - 50 orders"}/>
-              <CardProductBar name="Gucci Winter 2023" type={"Red - 103 orders"}/>
-
-            </div>
-        </div>
-      </Col>
-      <Col className="gutter-row column" span={8}>
-        <div style={style2}>
-          <Overview title={"Target Customers"} desc={"Information about store visits"} >
-            <PercentBar title={"Women"} percent={63} color={"#6C6C6C"}/>
-            <PercentBar title={"Men"} percent={88} color={"#FF6B6B"}/>
-
-            <PercentBar title={"Kids"} percent={38} color={"#5F27CD"}/>
-
-            
-          </Overview>
-             {/* <div>sdsad</div> */}
-        </div>
-      </Col>
-     
-     </Row>
-  
+          </div>
+        </Col>
+      </Row>
+      <Row>
+        <Table
+          columns={columns}
+          dataSource={dataTable}
+          pagination={{ pageSize: 50 }}
+          scroll={{ y: 240 }}
+          className="custom-table"
+        />
+      </Row>
     </DashboardWrapper>
   );
 };

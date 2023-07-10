@@ -1,5 +1,3 @@
-
-
 import { useState, useEffect } from "react";
 
 import {
@@ -17,7 +15,6 @@ import {
   Switch,
 } from "antd";
 
-
 // import {
 //   SearchOutlined,
 //   StarOutlined,
@@ -28,8 +25,8 @@ import {
 import { NavLink, Link, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import avtar from "../../assets/images/team-2.jpg";
-import Menu1 from "../../assets/images/menu (1).svg"
-import Menu2 from "../../assets/images/menu (2).svg"
+import Menu1 from "../../assets/images/menu (1).svg";
+import Menu2 from "../../assets/images/menu (2).svg";
 
 const { Search } = Input;
 const ButtonContainer = styled.div`
@@ -139,44 +136,6 @@ const clockicon = [
   </svg>,
 ];
 
-const data = [
-  {
-    title: "New message from Sophie",
-    description: <>{clockicon} 2 days ago</>,
-
-    avatar: avtar,
-  },
-  {
-    title: "New album by Travis Scott",
-    description: <>{clockicon} 2 days ago</>,
-
-    avatar: <Avatar shape="square">{wifi}</Avatar>,
-  },
-  {
-    title: "Payment completed",
-    description: <>{clockicon} 2 days ago</>,
-    avatar: <Avatar shape="square">{credit}</Avatar>,
-  },
-];
-
-// const menu = (
-//   <List
-//     min-width="100%"
-//     className="header-notifications-dropdown "
-//     itemLayout="horizontal"
-//     dataSource={data}
-//     renderItem={(item) => (
-//       <List.Item>
-//         <List.Item.Meta
-//           avatar={<Avatar shape="square" src={item.avatar} />}
-//           title={item.title}
-//           description={item.description}
-//         />
-//       </List.Item>
-//     )}
-//   />
-// );
-
 const logsetting = [
   <svg
     width="20"
@@ -242,91 +201,100 @@ const setting = [
     ></path>
   </svg>,
 ];
- const HeaderWrapper=styled.div`
-    display: flex;
-    justify-content:space-between;
-    height: 100%;
-    background-color:#E2E2E2;
-    .left{
-      flex:35%;
-      display: flex;
-       flex-direction:column;
-       justify-content:center;
-       span{
-        line-height:30px;
-        margin-left:20px;
-        
-       }
-       .link{
-      
-          letter-spacing:1x;
-          span{
-            margin:0;
-            font-weight:600;
+const HeaderWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  height: 100%;
+  background-color: var(--body-light-background);
+  z-index: 10;
 
-          }
-       }
-       .page{
-        color:#535353;
-        font-size:30px;
-        font-weight:700;
-       }
+  .left {
+    flex: 35%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    span {
+      line-height: 30px;
+      margin-left: 20px;
     }
-    .right{
-      flex:65%;
-      display: flex;
-      justify-content:space-between;
-      align-items:center;  
-      margin-right:20px; 
-      .btn-right-header{
-        margin-left:20px;
-        display:flex;
-        align-items:center;
-      }  
-      .btn-sign-in{
-        color:#808080
-      } 
-      .icon-header{
-        display: flex;
-     
-      align-items:center;  
+    .link {
+      letter-spacing: 1x;
+      span {
+        margin: 0;
+        font-weight: 600;
       }
     }
-    .avatar{
-      height:50px;
-      width:50px;
-      border-radius:50%;
-      background-image:url('https://sm.ign.com/ign_ap/cover/a/avatar-gen/avatar-generations_hugw.jpg');
-      background-repeat: no-repeat;
-      background-size: cover;
-      background-position: center;
+    .page {
+      color: var(--text-color);
+      font-size: 30px;
+      font-weight: 700;
     }
-  `
-  const CustomSearchWrapper = styled.div`
+  }
+  .right {
+    flex: 65%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-right: 20px;
+    .btn-right-header {
+      margin-left: 20px;
+      display: flex;
+      align-items: center;
+    }
+    .btn-sign-in {
+      color: #808080;
+    }
+    .icon-header {
+      display: flex;
+
+      align-items: center;
+    }
+  }
+  .avatar {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    background-image: url("https://sm.ign.com/ign_ap/cover/a/avatar-gen/avatar-generations_hugw.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+  }
+`;
+const CustomSearchWrapper = styled.div`
+  .ant-input::placeholder {
+    color: white; /* Set the placeholder text color to white */
+  }
   display: flex;
   align-items: center;
-  .ant-input-wrapper{
+  .ant-input-wrapper {
+    /* background-color: var(--body-dark-background); */
     display: block;
-    position: relative  !important;;
-    .ant-input{
-     padding-left:50px;
-      border-radius:10px;
-      height:55px;
+    position: relative !important;
+    /* color: white !important; */
+    .ant-input {
+      background-color: #3a3b3c;
+      padding-left: 50px;
+      border-radius: 10px;
+      border-color: #3a3b3c;
+      height: 45px;
+      color: white !important;
     }
-    .ant-input-search-button{
-      /* background-color:red; */
+    .ant-input-search-button {
+      /* background-color: var(--body-dark-background); */
+      background-color: #3a3b3c;
       position: absolute !important;
-      left:10px;
-      top:-46px;
-      border-radius:10px;
-      border:none;
-      height:40px;
-      z-index:1000;
-     
+      left: 10px;
+      top: -40px;
+      border-radius: 10px;
+      border: none;
+      height: 40px;
+      z-index: 1000;
+      svg {
+        color: white;
+      }
     }
-
   }
-    .ant-input-search-button{}
+
   /* .ant-input-search-button {
     left: 0;
   }
@@ -357,18 +325,15 @@ function HeaderComponent({
   const hideDrawer = () => setVisible(false);
   const [page, setPage] = useState("dashboard");
   const location = useLocation();
-  const pathname=location.pathname.substring(1);
-    
-  useEffect(()=>{
-    
+  const pathname = location.pathname.substring(1);
+
+  useEffect(() => {
     setPage(pathname);
     // console.log(link);
-    
-  },[pathname])
+  }, [pathname]);
 
   // console.log(link);
   return (
-   
     <HeaderWrapper>
       <div className="left">
         {/* <span className="link">PAGES /
@@ -376,37 +341,30 @@ function HeaderComponent({
         <span className="page">{page.toUpperCase()}</span>
       </div>
       <div className="right">
-            <CustomSearchWrapper>
-            <Search
-              placeholder="input search text"
-              style={{
-                width: 500,
-              }}
-              size="large"
-              // enterButton={<SearchOutlined className="icon-search"/>}
-            />
-          </CustomSearchWrapper>
-             <div className="icon-header">
-
-              <Link to="/sign-in" className="btn-right-header btn-sign-in">
-                
-               <img src={Menu1} alt="" />
-              </Link>
-              <Link to="/sign-in" className=" btn-right-header ">
-              <img src={Menu2} alt="" />
-              </Link>
-              <Link to="/sign-in" className="btn-right-header ">
-                <div className="avatar">
-
-                </div>
-              </Link>
-             </div>
-          
+        <CustomSearchWrapper>
+          <Search
+            placeholder="input search text"
+            style={{
+              width: 500,
+            }}
+            size="large"
+            // enterButton={<SearchOutlined className="icon-search"/>}
+          />
+        </CustomSearchWrapper>
+        <div className="icon-header">
+          <Link to="/sign-in" className="btn-right-header btn-sign-in">
+            <img src={Menu1} alt="" />
+          </Link>
+          <Link to="/sign-in" className=" btn-right-header ">
+            <img src={Menu2} alt="" />
+          </Link>
+          <Link to="/sign-in" className="btn-right-header ">
+            <div className="avatar"></div>
+          </Link>
+        </div>
       </div>
-
     </HeaderWrapper>
-  )
-   
+  );
 }
 
 export default HeaderComponent;
