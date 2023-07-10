@@ -85,7 +85,7 @@ public class UserEntity {
         this.email = email;
     }
 
-    public boolean isGender() {
+    public boolean getGender() {
         return gender;
     }
 
