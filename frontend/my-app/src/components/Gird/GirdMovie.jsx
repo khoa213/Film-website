@@ -2,12 +2,12 @@ import { Card } from "components/Card";
 import { styled } from "styled-components";
 
 const StyledGird = styled.div`
-    .gird {
+    .gird-movie {
         display: flex;
         flex-direction: column;
         margin: 0 50px;
     }
-    .gird .title {
+    .gird-movie .title {
         display: flex;
         justify-content: space-between;
         color: #ffff;
@@ -42,25 +42,25 @@ const StyledGird = styled.div`
 export const GirdMovie = () => {
     return (
         <StyledGird>
-            <div className="gird">
+            <div className="gird-movie">
                 <div className="title">
                     <span>POPULAR RIGHT NOW</span>
                     <span><a href="#">SEE ALL &gt;</a></span>
                 </div>
                 <div className="gird-content">
                     <div className="gird-block1">
-                        <Card title={"Avatar"} srcImg={true} width={"210px"} height={"301px"} genres={"Comedy, Horror, Thriller"} isGird={true} font_size={"24px"} font_weight={"400"} line_height={"22px"} radius={"20px"}></Card>
-                        <Card title={"filmBladeRunner"} srcImg={false} width={"210px"} height={"301px"} genres={"Comedy, Horror, Thriller"} isGird={true} font_size={"24px"} font_weight={"400"} line_height={"22px"} radius={"20px"}></Card>
-                        <Card title={"Avatar"} srcImg={true} width={"210px"} height={"301px"} genres={"Comedy, Horror, Thriller"} isGird={true} font_size={"24px"} font_weight={"400"} line_height={"22px"} radius={"20px"}></Card>
-                        <Card title={"filmBladeRunner"} srcImg={false} width={"210px"} height={"301px"} genres={"Comedy, Horror, Thriller"} isGird={true} font_size={"24px"} font_weight={"400"} line_height={"22px"} radius={"20px"}></Card>
-                        <Card title={"Avatar"} srcImg={true} width={"210px"} height={"301px"} genres={"Comedy, Horror, Thriller"} isGird={true} font_size={"24px"} font_weight={"400"} line_height={"22px"} radius={"20px"}></Card>
+                        <Card className="block1-movie1" title={"Avatar"} srcImg={true} width={"210px"} height={"301px"} genres={"Comedy, Horror, Thriller"} isGird={true} font_size={"24px"} font_weight={"400"} line_height={"22px"} radius={"20px"}></Card>
+                        <Card className="block1-movie2" title={"filmBladeRunner"} srcImg={false} width={"210px"} height={"301px"} genres={"Comedy, Horror, Thriller"} isGird={true} font_size={"24px"} font_weight={"400"} line_height={"22px"} radius={"20px"}></Card>
+                        <Card className="block1-movie3" title={"Avatar"} srcImg={true} width={"210px"} height={"301px"} genres={"Comedy, Horror, Thriller"} isGird={true} font_size={"24px"} font_weight={"400"} line_height={"22px"} radius={"20px"}></Card>
+                        <Card className="block1-movie4" title={"filmBladeRunner"} srcImg={false} width={"210px"} height={"301px"} genres={"Comedy, Horror, Thriller"} isGird={true} font_size={"24px"} font_weight={"400"} line_height={"22px"} radius={"20px"}></Card>
+                        <Card className="block1-movie5" title={"Avatar"} srcImg={true} width={"210px"} height={"301px"} genres={"Comedy, Horror, Thriller"} isGird={true} font_size={"24px"} font_weight={"400"} line_height={"22px"} radius={"20px"}></Card>
                     </div>
                     <div className="gird-block2">
-                        <Card title={"Avatar"} srcImg={true} width={"210px"} height={"301px"} genres={"Comedy, Horror, Thriller"} isGird={true} font_size={"24px"} font_weight={"400"} line_height={"22px"} radius={"20px"}></Card>
-                        <Card title={"filmBladeRunner"} srcImg={false} width={"210px"} height={"301px"} genres={"Comedy, Horror, Thriller"} isGird={true} font_size={"24px"} font_weight={"400"} line_height={"22px"} radius={"20px"}></Card>
-                        <Card title={"Avatar"} srcImg={true} width={"210px"} height={"301px"} genres={"Comedy, Horror, Thriller"} isGird={true} font_size={"24px"} font_weight={"400"} line_height={"22px"} radius={"20px"}></Card>
-                        <Card title={"filmBladeRunner"} srcImg={false} width={"210px"} height={"301px"} genres={"Comedy, Horror, Thriller"} isGird={true} font_size={"24px"} font_weight={"400"} line_height={"22px"} radius={"20px"}></Card>
-                        <Card title={"Avatar"} srcImg={true} width={"210px"} height={"301px"} genres={"Comedy, Horror, Thriller"} isGird={true} font_size={"24px"} font_weight={"400"} line_height={"22px"} radius={"20px"}></Card>
+                        <Card className="block2-movie1" title={"Avatar"} srcImg={true} width={"210px"} height={"301px"} genres={"Comedy, Horror, Thriller"} isGird={true} font_size={"24px"} font_weight={"400"} line_height={"22px"} radius={"20px"}></Card>
+                        <Card className="block2-movie2" title={"filmBladeRunner"} srcImg={false} width={"210px"} height={"301px"} genres={"Comedy, Horror, Thriller"} isGird={true} font_size={"24px"} font_weight={"400"} line_height={"22px"} radius={"20px"}></Card>
+                        <Card className="block2-movie3" title={"Avatar"} srcImg={true} width={"210px"} height={"301px"} genres={"Comedy, Horror, Thriller"} isGird={true} font_size={"24px"} font_weight={"400"} line_height={"22px"} radius={"20px"}></Card>
+                        <Card className="block2-movie4" title={"filmBladeRunner"} srcImg={false} width={"210px"} height={"301px"} genres={"Comedy, Horror, Thriller"} isGird={true} font_size={"24px"} font_weight={"400"} line_height={"22px"} radius={"20px"}></Card>
+                        <Card className="block2-movie5" title={"Avatar"} srcImg={true} width={"210px"} height={"301px"} genres={"Comedy, Horror, Thriller"} isGird={true} font_size={"24px"} font_weight={"400"} line_height={"22px"} radius={"20px"}></Card>
                     </div>
                 </div>
             </div>

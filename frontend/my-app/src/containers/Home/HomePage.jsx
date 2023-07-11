@@ -34,6 +34,53 @@ const StyledHomePage = styled.div`
                 top: 245px;
             }
         }
+        .showcase {
+            height: 160px;
+            .showcard11, .showcard12 {
+                display: none;
+            }
+            .card {
+                .avatar img {
+                    width: 75px;
+                }
+            }
+        }
+        .genres {
+            .title {
+                padding: 30px 10px;
+            }
+            table td {
+                padding: 10px 34px;
+                font-size: 20px;
+            }
+            .buttonGenres {
+                margin-top: 35px;
+                button {
+                    height: 35px;
+                    width: 130px;
+                    border-radius: 15px;
+                    svg {
+                        top: 3px;
+                        right: -1px;
+                    }
+                }
+            }
+            .genres-content {
+                padding-bottom: 35px;
+            }
+        }
+        .gird-movie {
+            margin: 0 35px;
+            .gird-content {
+                .card img {
+                    width: 160px;
+                    height: 240px;
+                }
+                .card button {
+                    right: 75px;
+                }
+            }
+        }
     }
     @media screen and (max-width: 1023px) {
         .banner {
@@ -59,6 +106,79 @@ const StyledHomePage = styled.div`
             }
             .banner-right {
                 top: 175px;
+            }
+        }
+        .showcase {
+            height: 160px;
+            .showcard9, .showcard10, .showcard11, .showcard12 {
+                display: none;
+            }
+            .card {
+                .avatar img {
+                    width: 75px;
+                }
+            }
+        }
+        .genres {
+            .title {
+                padding: 30px 10px;
+            }
+            table td {
+                padding: 10px 20px;
+                font-size: 17px;
+            }
+            .buttonGenres {
+                margin-top: 10px;
+                button {
+                    height: 25px;
+                    width: 100px;
+                    border-radius: 15px;
+                    span {
+                        font-size: 12px;
+                    }
+                    svg {
+                        top: -1px;
+                        right: -5px;
+                    }
+                }
+            }
+            .genres-content {
+                padding-bottom: 15px;
+            }
+        }
+        .gird-movie {
+            margin: 0 20px;
+            .title {
+                margin: 30px 0;
+                span {
+                    font-size: 15px;
+                    padding: 0;
+                }
+            }
+            .gird-content {
+                gap: 20px;
+                .card img {
+                    width: 125px;
+                    height: 190px;
+                    border-radius: 20px;
+                }
+                .card span.style-title {
+                    font-size: 15px;
+                    line-height: 20px;
+                }
+                .card span {
+                    font-size: 10px;
+                }
+                .card button {
+                    height: 20px;
+                    width: 35px;
+                    top: -10px;
+                    right: 45px;
+                }
+                
+                .gird-block1, .gird-block2 {
+                    gap: 10px;
+                }
             }
         }
     }
@@ -94,6 +214,94 @@ const StyledHomePage = styled.div`
                 }
             }
         }
+        .showcase {
+            height: 160px;
+            padding: 5px;
+            .showcard7, .showcard8, .showcard9, .showcard10, .showcard11, .showcard12 {
+                display: none;
+            }
+            .card {
+                .avatar img {
+                    width: 75px;
+                }
+            }
+        }
+        .genres {
+            .title {
+                padding: 30px 10px;
+                button {
+                    height: 25px;
+                    border-radius: 5px;
+                    svg {
+                        top: -1px;
+                        right: -4px;
+                    }
+                }
+            }
+            .trGenres4 {
+                display: none;
+            }
+            table td {
+                padding: 5px 8px;
+                font-size: 14px;
+            }
+            .buttonGenres {
+                margin-top: 10px;
+                button {
+                    height: 25px;
+                    width: 80px;
+                    border-radius: 15px;
+                    span {
+                        font-size: 10px;
+                    }
+                    svg {
+                        top: -1px;
+                        right: -5px;
+                    }
+                }
+            }
+            .genres-content {
+                padding-bottom: 15px;
+            }
+        }
+        .gird-movie {
+            margin: 0 20px;
+            .title {
+                margin: 30px 0;
+                span {
+                    font-size: 15px;
+                    padding: 0;
+                }
+            }
+            .gird-content {
+                gap: 20px;
+                .card img {
+                    width: 110px;
+                    height: 175px;
+                    border-radius: 20px;
+                }
+                .card span.style-title {
+                    font-size: 15px;
+                    line-height: 20px;
+                }
+                .card span {
+                    font-size: 10px;
+                }
+                .card button {
+                    height: 20px;
+                    width: 35px;
+                    top: -10px;
+                    right: 45px;
+                }
+                
+                .gird-block1, .gird-block2 {
+                    gap: 10px;
+                    .block1-movie5, .block2-movie5 {
+                        display: none;
+                    }
+                }
+            }
+        }
     }
     @media screen and (max-width: 500px) {
         .banner {
@@ -124,17 +332,106 @@ const StyledHomePage = styled.div`
                 display: none;
             }
         }
+        .showcase {
+            height: 160px;
+            padding: 5px;
+            .showcard5, .showcard6, .showcard7, .showcard8, .showcard9, .showcard10, .showcard11, .showcard12 {
+                display: none;
+            }
+            .card {
+                .avatar img {
+                    width: 75px;
+                }
+            }
+        }
+        .genres {
+            .title {
+                padding: 30px 10px;
+                button {
+                    height: 25px;
+                    border-radius: 5px;
+                    svg {
+                        top: -1px;
+                        right: -4px;
+                    }
+                }
+            }
+            .trGenres3, .trGenres4 {
+                display: none;
+            }
+            table td {
+                padding: 5px 8px;
+                font-size: 10px;
+            }
+            .buttonGenres {
+                margin-top: 10px;
+                button {
+                    height: 25px;
+                    width: 80px;
+                    border-radius: 15px;
+                    span {
+                        font-size: 10px;
+                    }
+                    svg {
+                        top: -1px;
+                        right: -5px;
+                    }
+                }
+            }
+            .genres-content {
+                padding-bottom: 15px;
+            }
+        }
+        .gird-movie {
+            margin: 0 20px;
+            .title {
+                margin: 30px 0;
+                span {
+                    font-size: 12px;
+                    padding: 0;
+                }
+            }
+            .gird-content {
+                gap: 20px;
+                .card img {
+                    width: 70px;
+                    height: 100px;
+                    border-radius: 20px;
+                }
+                .card span.style-title {
+                    font-size: 10px;
+                    line-height: 10px;
+                }
+                .card span {
+                    font-size: 8px;
+                    color: white;
+                }
+                .card button {
+                    height: 15px;
+                    width: 28px;
+                    top: -10px;
+                    right: 25px;
+                }
+                
+                .gird-block1, .gird-block2 {
+                    gap: 10px;
+                    .block1-movie5, .block2-movie5 {
+                        display: none;
+                    }
+                }
+            }
+        }
     }
 `
 const HomePage = () => {
     return (
         <StyledHomePage>
             <Banner></Banner>
-            {/* <ShowCase></ShowCase> */}
+            <ShowCase></ShowCase>
             {/* <Header/> */}
             {/* <Slider></Slider> */}
-            {/* <Genres></Genres>
-            <GirdMovie></GirdMovie> */}
+            <Genres></Genres>
+            <GirdMovie></GirdMovie>
         </StyledHomePage>
     )
 }

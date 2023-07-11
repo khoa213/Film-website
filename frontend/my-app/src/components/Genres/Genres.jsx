@@ -20,9 +20,9 @@ const StyledGenres = styled.div`
         }
         table {
             td {
-                padding: 10px 60px;
+                padding: 10px 61px;
                 color: #ffff;
-                font-size: 24px;
+                font-size: 23px;
                 font-style: normal;
                 font-weight: 400;
                 line-height: 22px;
@@ -56,7 +56,7 @@ export const Genres = () => {
                 <div className="genres-content">
                     <table>
                         <tbody>
-                            <tr>
+                            <tr className="trGenres1">
                                 <td>ACTION</td>
                                 <td>BIOGRAPHY</td>
                                 <td>DRAMA</td>
@@ -64,7 +64,7 @@ export const Genres = () => {
                                 <td>ROMANCE</td>
                                 <td>TV MOVIE</td>
                             </tr>
-                            <tr>
+                            <tr className="trGenres2">
                                 <td>ACTION</td>
                                 <td>COMEDY</td>
                                 <td>FANTASY</td>
@@ -72,7 +72,7 @@ export const Genres = () => {
                                 <td>SERIES</td>
                                 <td>THRILLER</td>
                             </tr>
-                            <tr>
+                            <tr className="trGenres3">
                                 <td>ADVENTURE</td>
                                 <td>BIOGRAPHY</td>
                                 <td>FAMILY</td>
@@ -80,7 +80,7 @@ export const Genres = () => {
                                 <td>SCI-FI</td>
                                 <td>WESTERN</td>
                             </tr>
-                            <tr>
+                            <tr className="trGenres4">
                                 <td>ANIMATION</td>
                                 <td>DOCUMENTARY</td>
                                 <td>HORROR</td>

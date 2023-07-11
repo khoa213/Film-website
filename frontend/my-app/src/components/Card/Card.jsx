@@ -31,9 +31,9 @@ const StyledCard = styled.div`
         }
     }
 `
-export const Card = ({title, genres, srcImg, width, height, isGird, title_center, font_size, font_weight, line_height, radius}) => {
+export const Card = ({title, genres, srcImg, width, height, isGird, title_center, font_size, font_weight, line_height, radius, ...res}) => {
     return (
-        <StyledCard width = {width} height = {height} title_center = {title_center} font_size = {font_size} font_weight = {font_weight} line_height = {line_height} radius = {radius}>
+        <StyledCard width = {width} height = {height} title_center = {title_center} font_size = {font_size} font_weight = {font_weight} line_height = {line_height} radius = {radius} {...res}>
             <div className="card">
                 <div className="avatar">
                     {srcImg ? <img src={filmAvatar} alt="" /> : <img src={filmBladeRunner} alt="" />}
