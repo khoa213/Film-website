@@ -2,7 +2,9 @@ package kits.edu.final_project.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import javax.persistence.*;
 import javax.persistence.Entity;
@@ -24,20 +26,20 @@ public class OrderEntity {
     private int duration;
     @Column(name = "order_type")
     private boolean orderType;
-//    @JsonBackReference(value = "**")
+
     @OneToMany(mappedBy = "order")
     private Set<OrderMovie> orderMovies;
 
-//    @JsonProperty("package_id")
-//    @JsonIgnore
+
     @ManyToOne
     @JoinColumn(name = "package_id")
+    @MapsId
     private PackageEntity pack;
 
-//    @JsonProperty("user_id")
-//    @JsonIgnore
+
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @MapsId
     private UserEntity user;
 
     public int getId() {

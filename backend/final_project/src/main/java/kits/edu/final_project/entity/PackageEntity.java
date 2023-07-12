@@ -1,10 +1,17 @@
 package kits.edu.final_project.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerator;
+
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Set;
+import com.fasterxml.uuid.Generators;
+
 
 @Entity(name="package")
-public class PackageEntity {
+
+public class PackageEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "package_id")
