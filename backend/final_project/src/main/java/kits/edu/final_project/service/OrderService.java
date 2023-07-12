@@ -6,7 +6,9 @@ import kits.edu.final_project.repository.OrderRepository;
 import kits.edu.final_project.service.imp.OrderServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 @Service
@@ -32,7 +34,8 @@ public class OrderService implements OrderServiceImp {
         }
         return responses;
     }
-    public OrderEntity addOrder(OrderEntity orderEntity) {
+    @Transactional
+    public OrderEntity addOrder( OrderEntity orderEntity) {
         return orderRepository.save(orderEntity);
     }
 

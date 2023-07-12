@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
+
 @RestController
 @RequestMapping("/order")
 @CrossOrigin("*")
@@ -25,6 +27,7 @@ public class OrderController {
 
     @PostMapping(value = "/add")
     @ResponseBody
+
     public ResponseEntity<?> addOrder(@RequestBody OrderEntity orderEntity) {
         BaseResponse response = new BaseResponse();
         response.setStatusCode(201);

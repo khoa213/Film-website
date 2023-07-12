@@ -31,13 +31,13 @@ public class OrderEntity {
     private Set<OrderMovie> orderMovies;
 
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.MERGE})
     @JoinColumn(name = "package_id")
     @MapsId
     private PackageEntity pack;
 
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.MERGE})
     @JoinColumn(name = "user_id")
     @MapsId
     private UserEntity user;
