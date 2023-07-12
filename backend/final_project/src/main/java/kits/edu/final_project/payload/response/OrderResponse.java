@@ -1,43 +1,17 @@
-package kits.edu.final_project.entity;
+package kits.edu.final_project.payload.response;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import kits.edu.final_project.entity.OrderMovie;
+import kits.edu.final_project.entity.PackageEntity;
+import kits.edu.final_project.entity.UserEntity;
 
-import javax.persistence.*;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import java.util.Date;
 import java.util.Set;
 
-@Entity(name = "orders")
-public class OrderEntity {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="order_id")
+public class OrderResponse {
     private int id;
-
-    @Column(name = "duration")
     private int duration;
-    @Column(name = "order_type")
     private boolean orderType;
-//    @JsonBackReference(value = "**")
-    @OneToMany(mappedBy = "order")
     private Set<OrderMovie> orderMovies;
-
-//    @JsonProperty("package_id")
-//    @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name = "package_id")
     private PackageEntity pack;
-
-//    @JsonProperty("user_id")
-//    @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name = "user_id")
     private UserEntity user;
 
     public int getId() {

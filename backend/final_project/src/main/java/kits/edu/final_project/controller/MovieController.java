@@ -30,14 +30,14 @@ public class MovieController {
 		response.setData(movieServiceImp.addNewMovie(movieEntity));
 		return new ResponseEntity<>(response,HttpStatus.OK);
 	}
-	@PutMapping("/{id}")
+	@PutMapping("/update/{id}")
 	public ResponseEntity<?> replaceMovieById(@RequestBody MovieEntity movieEntity,@PathVariable("id") int id) {
 		BaseResponse response = new BaseResponse();
 		response.setStatusCode(200);
 		response.setData(movieServiceImp.replaceMovieById(movieEntity,id));
 		return new ResponseEntity<>(response,HttpStatus.OK);
 	}
-	@DeleteMapping("/{id}")
+	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<?> deleteMovieById (@PathVariable("id") int id) {
 		BaseResponse response = new BaseResponse();
 		response.setStatusCode(200);

@@ -44,14 +44,14 @@ public class UserController {
         response.setData(userServiceImp.addNewUser(userEntity));
         return new ResponseEntity<>(response,HttpStatus.OK);
     }
-    @PutMapping("/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<?> replaceUserById(@RequestBody UserEntity userEntity,@PathVariable("id") int id) {
         BaseResponse response = new BaseResponse();
         response.setStatusCode(200);
         response.setData(userServiceImp.replaceUserById(userEntity,id));
         return new ResponseEntity<>(response,HttpStatus.OK);
     }
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
 
     public ResponseEntity<?> deleteUserById (@PathVariable("id") int id) {
         BaseResponse response = new BaseResponse();
