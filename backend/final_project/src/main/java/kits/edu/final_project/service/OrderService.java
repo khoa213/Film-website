@@ -1,6 +1,7 @@
 package kits.edu.final_project.service;
 
 import kits.edu.final_project.entity.OrderEntity;
+import kits.edu.final_project.exception.CustomException;
 import kits.edu.final_project.payload.response.OrderResponse;
 import kits.edu.final_project.repository.OrderRepository;
 import kits.edu.final_project.service.imp.OrderServiceImp;
@@ -23,9 +24,9 @@ public class OrderService implements OrderServiceImp {
             for (OrderEntity order:list) {
                 OrderResponse orderResponse = new OrderResponse();
                 orderResponse.setId(order.getId());
-//                orderResponse.setUser(order.getUser());
-                orderResponse.setOrderMovies(order.getOrderMovies());
-//                orderResponse.setPack(order.getPack());
+                orderResponse.setUser(order.getUser());
+//                orderResponse.setOrderMovies(order.getOrderMovies());
+                orderResponse.setPack(order.getPack());
                 orderResponse.setDuration(order.getDuration());
                 responses.add(orderResponse);
             }
@@ -49,18 +50,24 @@ public class OrderService implements OrderServiceImp {
             return orderRepository.save(orderEntity);
         });
     }
-    public List<OrderEntity> deleteOrderById (int id) {
-        List<OrderEntity> list = orderRepository.findAll();
+    @Override
+    public boolean deleteOrderById (int id) {
+//        List<OrderEntity> list = orderRepository.findAll();
+        boolean isSuccess=false;
         try {
 
 
-            list.remove(orderRepository.findById(id));
+//            list.remove(orderRepository.findById(id));
 
-//            orderRepository.deleteById(id);
+
+            orderRepository.deleteById(id);
+            isSuccess=true;
+//            return true;
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+//            return false;
+            throw new CustomException("Loi xoa Order"+e.getMessage());
         }
 
-        return list;
+        return isSuccess;
     }
 }

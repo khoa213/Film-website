@@ -1,6 +1,8 @@
 package kits.edu.final_project.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerator;
 
 import javax.persistence.*;
@@ -23,6 +25,7 @@ public class PackageEntity implements Serializable {
     private int duration;
     @Column(name = "price")
     private double price;
+    @JsonBackReference
     @OneToMany(mappedBy = "pack")
     private Set<OrderEntity> orders;
 

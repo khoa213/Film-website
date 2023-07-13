@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.persistence.Entity;
@@ -30,16 +32,18 @@ public class OrderEntity {
     @OneToMany(mappedBy = "order")
     private Set<OrderMovie> orderMovies;
 
-
-    @ManyToOne(cascade = {CascadeType.MERGE})
+    @JsonManagedReference
+    @ManyToOne(cascade=CascadeType.REMOVE)
     @JoinColumn(name = "package_id")
-    @MapsId
+//    @MapsId
+
     private PackageEntity pack;
 
-
-    @ManyToOne(cascade = {CascadeType.MERGE})
+    @JsonManagedReference
+    @ManyToOne(cascade=CascadeType.REMOVE)
     @JoinColumn(name = "user_id")
-    @MapsId
+//    @MapsId
+
     private UserEntity user;
 
     public int getId() {

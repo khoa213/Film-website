@@ -1,6 +1,9 @@
 package kits.edu.final_project.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.Set;
@@ -34,6 +37,7 @@ public class UserEntity {
 
     @OneToMany(mappedBy = "user")
     private Set<ReviewEntity> reviews;
+    @JsonBackReference
     @OneToMany(mappedBy = "user")
     private Set<OrderEntity> orders;
 
