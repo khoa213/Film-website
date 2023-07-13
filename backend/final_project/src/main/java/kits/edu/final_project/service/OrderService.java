@@ -35,7 +35,7 @@ public class OrderService implements OrderServiceImp {
         }
         return responses;
     }
-    @Transactional
+
     public OrderEntity addOrder( OrderEntity orderEntity) {
         return orderRepository.save(orderEntity);
     }

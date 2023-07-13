@@ -1,12 +1,12 @@
 package kits.edu.final_project.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+
+
 
 import javax.persistence.*;
 import javax.persistence.Entity;
@@ -16,6 +16,7 @@ import javax.persistence.Id;
 import java.util.Date;
 import java.util.Set;
 
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "id")
 @Entity(name = "orders")
 public class OrderEntity {
 
@@ -29,18 +30,19 @@ public class OrderEntity {
     @Column(name = "order_type")
     private boolean orderType;
 
+
     @OneToMany(mappedBy = "order")
     private Set<OrderMovie> orderMovies;
 
-    @JsonManagedReference
-    @ManyToOne(cascade=CascadeType.REMOVE)
+    @JsonBackReference(value = "pack")
+    @ManyToOne
     @JoinColumn(name = "package_id")
 //    @MapsId
 
     private PackageEntity pack;
 
-    @JsonManagedReference
-    @ManyToOne(cascade=CascadeType.REMOVE)
+    @JsonBackReference(value = "user")
+    @ManyToOne
     @JoinColumn(name = "user_id")
 //    @MapsId
 
@@ -74,6 +76,7 @@ public class OrderEntity {
         return orderMovies;
     }
 
+    @JsonIgnore
     public void setOrderMovies(Set<OrderMovie> orderMovies) {
         this.orderMovies = orderMovies;
     }
@@ -82,6 +85,7 @@ public class OrderEntity {
         return pack;
     }
 
+//    @JsonIgnore
     public void setPack(PackageEntity pack) {
         this.pack = pack;
     }
@@ -90,6 +94,7 @@ public class OrderEntity {
         return user;
     }
 
+//    @JsonIgnore
     public void setUser(UserEntity user) {
         this.user = user;
     }

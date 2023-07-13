@@ -1,6 +1,8 @@
 package kits.edu.final_project.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.Set;
@@ -38,10 +40,13 @@ public class MovieEntity {
 
     @OneToMany(mappedBy = "movie")
     private Set<ReviewEntity> reviews;
+
     @OneToMany(mappedBy = "movie")
     private Set<GenreMovie> genreMovies;
+
     @OneToMany(mappedBy = "movie")
     private Set<MovieActor> movieActors;
+
     @OneToMany(mappedBy = "movie")
     private Set<OrderMovie> orderMovies;
 
@@ -122,6 +127,7 @@ public class MovieEntity {
     public Set<ReviewEntity> getReviews() {
         return reviews;
     }
+    @JsonIgnore
 
     public void setReviews(Set<ReviewEntity> reviews) {
         this.reviews = reviews;
@@ -130,6 +136,7 @@ public class MovieEntity {
     public Set<GenreMovie> getGenreMovies() {
         return genreMovies;
     }
+    @JsonIgnore
 
     public void setGenreMovies(Set<GenreMovie> genreMovies) {
         this.genreMovies = genreMovies;
@@ -138,6 +145,7 @@ public class MovieEntity {
     public Set<MovieActor> getMovieActors() {
         return movieActors;
     }
+    @JsonIgnore
 
     public void setMovieActors(Set<MovieActor> movieActors) {
         this.movieActors = movieActors;
@@ -146,6 +154,7 @@ public class MovieEntity {
     public Set<OrderMovie> getOrderMovies() {
         return orderMovies;
     }
+    @JsonIgnore
 
     public void setOrderMovies(Set<OrderMovie> orderMovies) {
         this.orderMovies = orderMovies;

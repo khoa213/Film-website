@@ -1,16 +1,13 @@
 package kits.edu.final_project.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerator;
+import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Set;
 import com.fasterxml.uuid.Generators;
 
-
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "id")
 @Entity(name="package")
 
 public class PackageEntity implements Serializable {
@@ -25,7 +22,8 @@ public class PackageEntity implements Serializable {
     private int duration;
     @Column(name = "price")
     private double price;
-    @JsonBackReference
+
+    @JsonManagedReference(value = "pack")
     @OneToMany(mappedBy = "pack")
     private Set<OrderEntity> orders;
 
