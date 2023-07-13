@@ -105,7 +105,8 @@ function MainLayout({ children }) {
           className="site-layout"
           style={{
             marginLeft: collapsed ? 80 : 300,
-            backgroundColor: "var(--body-light-background)",
+            // backgroundColor: "var(--body-light-background)",
+            backgroundColor: "var(--body-dark-background)",
           }}
           // className="site-layout"
           // style={{

@@ -2,7 +2,7 @@ import { Menu } from "antd";
 import Sider from "antd/es/layout/Sider";
 import SubMenu from "antd/es/menu/SubMenu";
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { MenuOutlined } from "@ant-design/icons";
 const SideNavWrapper = styled.div`
@@ -13,6 +13,8 @@ const SideNavWrapper = styled.div`
   .ant-menu {
     border-inline-end: none !important;
     background-color: var(--body-light-background);
+    background-color: var(--body-light-background);
+
     /* background-color: blue; */
     .ant-menu-submenu-title {
       font-weight: 600;
@@ -116,21 +118,34 @@ const SideNavWrapper = styled.div`
   }
 `;
 const Sidenav = ({ collapsed, items, onCollapse }) => {
+  const location = useLocation();
   // const [collapsed, setCollapsed] = useState(false);
 
-  const renderMenuItems = (items) => {
+  const renderMenuItems = (items, parentPath = "") => {
     return items.map((item) => {
       if (item.children && item.children.length > 0) {
+        const itemPath = `${parentPath}/${item.label
+          .toLowerCase()
+          .replace(" ", "-")}`;
         return (
           <SubMenu key={item.key} icon={item.icon} title={item.label}>
-            {renderMenuItems(item.children)}
+            {renderMenuItems(item.children, itemPath)}
           </SubMenu>
         );
       }
+      const itemPath =
+        parentPath === ""
+          ? `/${item.label.toLowerCase().replace(" ", "-")}`
+          : `${parentPath}/${item.label.toLowerCase().replace(" ", "-")}`;
 
       return (
         <Menu.Item key={item.key} icon={item.icon}>
-          <NavLink to={item.link}>{item.label}</NavLink>
+          <Link
+            to={itemPath}
+            className={location.pathname === itemPath ? "active" : ""}
+          >
+            {item.label}
+          </Link>
         </Menu.Item>
       );
     });

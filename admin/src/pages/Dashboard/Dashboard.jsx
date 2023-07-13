@@ -1,4 +1,4 @@
-import { Col, Row, Table } from "antd";
+import { Button, Col, Row, Table } from "antd";
 import CardTransfer from "components/CardTransfer";
 import React from "react";
 import styled from "styled-components";
@@ -9,6 +9,10 @@ import BarChartComponent from "components/BarChart/BarChart";
 import DropDown from "components/Dropdown/Dropdown";
 import PieChartComponent from "components/PieChart/PieChart";
 import CardCategory from "components/CardCategory";
+import Search from "antd/es/input/Search";
+const primaryButtonStyle = { backgroundColor: "#1890ff" };
+const dangerButtonStyle = { backgroundColor: "#ff4d4f" };
+const customButtonStyle = { backgroundColor: "#fadb14", color: "#000000" };
 const DashboardWrapper = styled.div`
   .top-category {
     .top-category-top {
@@ -40,6 +44,12 @@ const DashboardWrapper = styled.div`
     min-height: 400px;
     background-color: var(--body-content-light-background) !important;
     /* margin-right: -12px; */
+    .ant-space {
+      background-color: var(--body-dark-background);
+      padding: 0 20px;
+      margin-right: 12px;
+      margin-top: 6px;
+    }
   }
   width: 100%;
   overflow-x: hidden;
@@ -74,6 +84,20 @@ const DashboardWrapper = styled.div`
   .custom-table .ant-table-tbody > tr:hover td {
     color: red;
     background-color: darkslategray;
+  }
+  .recent-film {
+    display: flex;
+    justify-content: space-between !important;
+    width: 100%;
+    align-items: center;
+    .search-input {
+      margin-left: auto;
+    }
+  }
+  .btn-users {
+    width: 70px;
+    height: 40px;
+    margin-right: 10px;
   }
 `;
 const GridContainer = styled.div`
@@ -118,83 +142,88 @@ const COLORS = [
 ];
 const columns = [
   {
-    title: "Full Name",
-    width: 100,
+    title: "Movie",
+    width: 200,
     dataIndex: "name",
     key: "name",
     fixed: "left",
   },
   {
-    title: "Age",
+    title: "Rating",
     width: 100,
-    dataIndex: "age",
-    key: "age",
+    dataIndex: "rate",
+    key: "rate",
     fixed: "left",
     sorter: (a, b) => a.age - b.age,
   },
   {
-    title: "Column 1",
-    dataIndex: "address",
+    title: "Category",
+    dataIndex: "category",
     key: "1",
   },
   {
-    title: "Column 2",
-    dataIndex: "address",
+    title: "Download/View",
+    dataIndex: "dov",
     key: "2",
   },
   {
-    title: "Column 3",
-    dataIndex: "address",
+    title: "Date",
+    dataIndex: "date",
     key: "3",
   },
+
   {
-    title: "Column 4",
-    dataIndex: "address",
+    title: "Liked",
+    dataIndex: "liked",
     key: "4",
   },
-  {
-    title: "Column 5",
-    dataIndex: "address",
-    key: "5",
-  },
-  {
-    title: "Column 6",
-    dataIndex: "address",
-    key: "6",
-  },
-  {
-    title: "Column 7",
-    dataIndex: "address",
-    key: "7",
-  },
-  {
-    title: "Column 8",
-    dataIndex: "address",
-    key: "8",
-  },
-  {
-    title: "Action",
-    key: "operation",
-    fixed: "right",
-    width: 100,
-    render: () => <a>action</a>,
-  },
+
+  // {
+  //   title: "Action",
+  //   key: "operation",
+  //   fixed: "right",
+  //   width: 200,
+  //   render: (_, user) => (
+  //     <div>
+  //       <Button
+  //         className=" btn-delete btn-users"
+  //         type="primary"
+  //         danger
+  //         id={user.id}
+  //         onClick={() => {
+  //           // handleDeleteUser(user.id);
+  //           // console.log(user.key)
+  //         }}
+  //       >
+  //         Xóa
+  //       </Button>
+  //       <Button
+  //         className="btn-users"
+  //         // onClick={() => handleUpdateUser(user.id)}
+  //         style={customButtonStyle}
+  //       >
+  //         Sửa
+  //       </Button>
+  //     </div>
+  //   ),
+  // },
 ];
 const dataTable = [
   {
     key: "1",
     name: "John Brown",
-    age: 32,
-    address: "New York Park",
+    rate: 3.1,
+    category: "New York Park",
   },
   {
     key: "2",
-    name: "Jim Green",
-    age: 40,
-    address: "London Park",
+    name: "John Brown 2",
+    rate: 3.2,
+    category: "New York Park",
   },
 ];
 const Dashboard = () => {
+  const onSearch = (value) => console.log(value);
   return (
     <DashboardWrapper>
       <Row gutter={48} style={marginBottom}>
@@ -255,7 +284,7 @@ const Dashboard = () => {
           </div>
         </Col>
       </Row>
-      <Row gutter={24}>
+      <Row gutter={24} style={marginBottom}>
         <Col className="gutter-row " span={8}>
           <div className="part-two">
             <div className="category" style={style}>
@@ -290,6 +319,17 @@ const Dashboard = () => {
         </Col>
       </Row>
       <Row>
+        <div className="recent-film">
+          <h1>Recently Viewed Film</h1>
+          <Search
+            // className="search-input "
+            placeholder="input search text"
+            onSearch={onSearch}
+            style={{
+              width: 200,
+            }}
+          />
+        </div>
         <Table
           columns={columns}
           dataSource={dataTable}

@@ -1,49 +1,41 @@
+import React from "react";
 import styled from "styled-components";
-
-const StyledButton = styled.button`
-  margin-top: 1px;
-  padding: 0 !important;
+const StyledInput = styled.input`
+  padding: 0 0 0 10px;
   width: ${(props) => props.width + "px"};
   height: ${(props) => props.height + "px"};
-  /* border: 0.6px solid; */
-  /* border-style: solid;*/
-  border-width: ${(props) => (props.boderColor ? `1px ` : "0px")};
-  border-color: ${(props) =>
+  border: ${(props) =>
     props.boderColor ? `1px solid ${props.boderColor}` : "none"};
-  /* border-color: ${(props) =>
-    props.boderColor ? ` ${props.boderColor}` : "none"}; */
-
-  background-color: ${(props) => props.bgColor};
-
   border-radius: ${(props) => props.borderRadius + "px"};
+  background: ${(props) => props.bgColor};
   font-weight: 500;
   line-height: 21px;
   color: ${(props) => props.textColor};
-  font-size: ${(props) => props.fontSize}px;
+  /* color: ${(props) => props.fontSize}; */
   img {
     margin-right: 8px;
   }
 `;
-export const Button = ({
+const Input = ({
   label,
   width,
   height,
   textColor,
   bgColor,
   boderColor,
-  percent,
   fontSize,
   borderRadius,
   children,
   type,
   id,
-  className,
-  borderImage,
+  name,
+  placeholder,
+  onChange,
+
   ...rest
 }) => {
   return (
-    <StyledButton
-      percent={percent}
+    <StyledInput
       width={width}
       height={height}
       textColor={textColor}
@@ -51,17 +43,19 @@ export const Button = ({
       boderColor={boderColor}
       fontSize={fontSize}
       borderRadius={borderRadius}
-      type={type}
+      placeholder={placeholder}
       id={id}
-      className={className}
-      borderImage={borderImage}
+      name={name}
+      onChange={onChange}
+      type={type}
       {...rest}
     >
       {children}
-    </StyledButton>
+    </StyledInput>
   );
 };
-Button.defaultProps = {
+export default Input;
+Input.defaultProps = {
   bgColor: "#FFFFFF",
   textColor: "#5429FF",
   width: "128px",

@@ -5,15 +5,15 @@ const onClick = ({ key }) => {
 };
 const items = [
   {
-    label: "1st menu item",
+    label: "Today",
     key: "1",
   },
   {
-    label: "2nd menu item",
+    label: "Last week",
     key: "2",
   },
   {
-    label: "3rd menu item",
+    label: "Last month",
     key: "3",
   },
 ];
@@ -26,7 +26,7 @@ const DropDown = () => (
   >
     {/* <a onClick={(e) => e.preventDefault()}> */}
     <Space>
-      Hover me, Click menu item
+      Choose Time
       <DownOutlined />
     </Space>
     {/* </a> */}

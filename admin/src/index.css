@@ -2,9 +2,12 @@
   --body-dark-background: #141414;
   --body-light-background: #191919;
   --body-content-light-background: #242526;
+  --background-signin-color: #252525;
   --body_color: white;
   --link_color: cyan;
   --text-color: #d1d0cf;
+  --text-color-input: #555555;
+  --color-primary: #5d51a8;
   --text-primary-color: #e40813;
   --btn-color: white;
 }
