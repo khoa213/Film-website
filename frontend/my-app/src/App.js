@@ -5,6 +5,8 @@ import { PrimaryLayout } from 'components/Layout';
 import HomePage from 'containers/Home';
 import NotFoundPage from 'containers/404Page';
 import DetailPage from 'containers/Detail';
+import InfoPage from 'containers/InfoPage';
+import Filmpage from 'containers/Filmpage';
 
 function App() {
   return (
@@ -13,6 +15,8 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/detail" element={<DetailPage />} />
       </Route>
+      <Route path="/infopage" element={<InfoPage />} />
+      <Route path="/filmpage" element={<Filmpage />} />
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );
