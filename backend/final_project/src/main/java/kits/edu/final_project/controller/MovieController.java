@@ -11,6 +11,7 @@ import kits.edu.final_project.service.imp.MovieServiceImp;
 
 @RestController
 @RequestMapping("/movie")
+@CrossOrigin("*")
 public class MovieController {
 	@Autowired
 	private MovieServiceImp movieServiceImp;
