@@ -22,7 +22,13 @@ export const ShowCase = () => {
     useEffect(() => {
         dispatch.movie.getAll();
     }, [])
-    let data = rawData.slice(0, 12);
+    let data = [];
+    if (rawData.length >= 12) {
+        data = rawData.slice(0, 12);
+    } else {
+        data = rawData;
+    }
+    console.log("raw : " + rawData);
     var listCard = [];
     for (var movieObj of data.entries()) {
         let [index, movie] = movieObj;
@@ -31,7 +37,7 @@ export const ShowCase = () => {
         let src = "https://drive.google.com/uc?export=download&id=" + fileId[0];
         if (!driveLink) { src = "https://drive.google.com/uc?export=download&id="}
         listCard.push(
-            <Card className={"showcard" + (index + 1)} title={movie.title} srcImg={src} title_center={"center"} font_size={"12px"} font_weight={"400"} radius={"10px"}></Card>
+            <Card key={index} className={"showcard" + (index + 1)} title={movie.title} srcImg={src} title_center={"center"} font_size={"12px"} font_weight={"400"} radius={"10px"}></Card>
         );
     }
     return (
