@@ -215,9 +215,9 @@ const InfoPage = () => {
 
                 {/* <Slider dots={true}>{renderSlides()}</Slider> */}
                 <div className="season">
-                SEASON 1
+                    SEASON 1
                 </div>
-                
+
                 <div className="carousel">
                     <Carousel
                         plugins={[
@@ -232,18 +232,12 @@ const InfoPage = () => {
                             },
                         ]}
                     >
-
-                        {/* <Img srcLink={"https://drive.google.com/uc?export=download&id=16wJvfbbSZlu8YkFlbbTTDOThOC9SQR8x"} /> */}
-                        {/* <Img srcLink={"https://drive.google.com/uc?export=download&id=1MVIcUcwyBDdgGr_YPD9UUg3vP2jSxeT7"}/> */}
-                        {/* <Img srcLink={"https://drive.google.com/uc?export=download&id=1mVsDYTHnC2uPhUTHnRGqeVvuclGF6uAe"}/> */}
-                        {/* <img src={imgtrailer} />
-                    <img src={imgtrailer} /> */}
                         <CardVideoTrailer srcLink={epidode2} movieName={'EPISODE 01'} />
                         <CardVideoTrailer srcLink={epidode3} movieName={'EPISODE 02'} />
                         <CardVideoTrailer srcLink={epidode4} movieName={'EPISODE 03'} />
                     </Carousel>
                 </div>
-                
+
 
 
             </Trailer>

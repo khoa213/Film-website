@@ -1,10 +1,16 @@
 import { Banner } from 'components/Banner';
 import { Header } from 'components/Header';
 import { ShowCase } from 'components/ShowCase';
-import { Slider } from 'components/Slider/Slider';
-import styled from 'styled-components';
+import { Slider } from 'components/Slider';
+
+
+
+import styled from 'styled-components/';
 
 const StyledHomePage = styled.div`
+.carousel {
+            height: 200px;
+        }
     
 `
 const HomePage = () => {
@@ -12,9 +18,10 @@ const HomePage = () => {
         <StyledHomePage>
             <Banner></Banner>
             <ShowCase></ShowCase>
-            <Header/>
-            <Slider></Slider>
+            <Header />
+            
         </StyledHomePage>
+       
     )
 }
 
