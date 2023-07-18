@@ -28,6 +28,7 @@ import '@brainhubeu/react-carousel/lib/style.css';
 // import Slider from "react-slick";
 
 import styled from 'styled-components';
+import { Slider } from "components/Slider"
 
 
 
@@ -217,8 +218,8 @@ const InfoPage = () => {
                 <div className="season">
                     SEASON 1
                 </div>
-
-                <div className="carousel">
+                <Slider></Slider>
+                {/* <div className="carousel">
                     <Carousel
                         plugins={[
                             'centered',
@@ -236,7 +237,7 @@ const InfoPage = () => {
                         <CardVideoTrailer srcLink={epidode3} movieName={'EPISODE 02'} />
                         <CardVideoTrailer srcLink={epidode4} movieName={'EPISODE 03'} />
                     </Carousel>
-                </div>
+                </div> */}
 
 
 

@@ -39,8 +39,6 @@ export const Slider = () => {
                     <CardVideoTrailer srcLink={epidode4} movieName={'EPISODE 03'} />
                 </Carousel>
             </div>
-            
-            123
         </StyledSlider>
     )
 
