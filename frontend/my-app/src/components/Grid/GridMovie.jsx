@@ -48,8 +48,10 @@ export const GridMovie = () => {
     let rawData = useSelector(state => state.movie.filterData);
     console.log('rawData: ' + rawData);
     let data = [];
-    if (rawData) {
+    if (rawData.length >= 10) {
         data = rawData.slice(0, 10);
+    } else {
+        data = rawData;
     }
     // useEffect(() => {
     //     dispatch.movie.;

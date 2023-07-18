@@ -436,8 +436,8 @@ const StyledHomePage = styled.div`
         }
     }
     .carousel {
-            height: 200px;
-    }
+            width: 375px;
+        }
 `
 const HomePage = () => {
     
@@ -446,7 +446,7 @@ const HomePage = () => {
             <Banner></Banner>
             <ShowCase></ShowCase>
             {/* <Header/> */}
-            {/* <Slider></Slider> */}
+            <Slider></Slider>
             <Genres></Genres>
             <GridMovie></GridMovie>
         </StyledHomePage>
