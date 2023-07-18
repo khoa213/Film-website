@@ -435,6 +435,9 @@ const StyledHomePage = styled.div`
             }
         }
     }
+    .carousel {
+            height: 200px;
+    }
 `
 const HomePage = () => {
     
