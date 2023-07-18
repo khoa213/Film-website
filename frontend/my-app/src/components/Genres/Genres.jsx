@@ -42,8 +42,10 @@ const StyledGenres = styled.div`
 `
 export const Genres = () => {
     const dispatch = useDispatch();
-    let rawDataMovies = useSelector(state => state.movie.movies);
+    // let rawDataMovies = useSelector(state => state.movie.movies);
+    let rawDataMovies = [];
     let rawDataGenres = useSelector(state => state.genre.genres);
+    console.log('Genres: ' + rawDataGenres);
     useEffect(() => {
         dispatch.genre.getAll();
     }, [])
@@ -58,7 +60,7 @@ export const Genres = () => {
         });
         dispatch.movie.setDataFilterData(newData);
     }
-    console.log('Genres: ' + rawDataGenres.length + ' rawData: ' + rawDataMovies);
+    console.log('Genres: ' + rawDataGenres);
     let listGenres = [];
     let count = 1;
     for (let i = 0; i < rawDataGenres.length; i+=6) {
