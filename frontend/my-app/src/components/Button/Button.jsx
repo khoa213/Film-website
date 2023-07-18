@@ -33,9 +33,9 @@ const StyledButton = styled.button`
         }
     }
 `
-export const Button = ({ title, text_color, bg_color, width, height, radius, border_custom, fontSize, fontWeight, font_size_text, bg_color1, bg_color2, bg_color3, isGenres, border_bottom_text }) => {
+export const Button = ({ title, text_color, bg_color, width, height, radius, border_custom, fontSize, fontWeight, font_size_text, bg_color1, bg_color2, bg_color3, isGenres, border_bottom_text, ...rest }) => {
     return (
-        <StyledButton text_color={text_color} bg_color={bg_color} width={width} height={height} radius={radius} border_custom = {border_custom} fontSize = {fontSize} fontWeight = {fontWeight} font_size_text = {font_size_text} bg_color1 = {bg_color1} bg_color2 = {bg_color2} bg_color3 = {bg_color3} border_bottom_text = {border_bottom_text}>
+        <StyledButton text_color={text_color} bg_color={bg_color} width={width} height={height} radius={radius} border_custom = {border_custom} fontSize = {fontSize} fontWeight = {fontWeight} font_size_text = {font_size_text} bg_color1 = {bg_color1} bg_color2 = {bg_color2} bg_color3 = {bg_color3} border_bottom_text = {border_bottom_text} {...rest}>
             <span> {title} </span>
             {isGenres ? <ArrowDown /> : " "}
         </StyledButton>

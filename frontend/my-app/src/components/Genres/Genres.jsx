@@ -2,6 +2,8 @@ import { Button } from "components/Button";
 import { styled } from "styled-components";
 import menu from 'assets/menu1.svg';
 import filter from 'assets/filter.svg';
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
 
 
 const StyledGenres = styled.div`
@@ -20,12 +22,7 @@ const StyledGenres = styled.div`
         }
         table {
             td {
-                padding: 10px 61px;
-                color: #ffff;
-                font-size: 23px;
-                font-style: normal;
-                font-weight: 400;
-                line-height: 22px;
+                padding: 10px 53px;
             }
         }
         .buttonGenres {
@@ -44,11 +41,102 @@ const StyledGenres = styled.div`
     }
 `
 export const Genres = () => {
+    const dispatch = useDispatch();
+    let rawDataMovies = useSelector(state => state.movie.movies);
+    let rawDataGenres = useSelector(state => state.genre.genres);
+    useEffect(() => {
+        dispatch.genre.getAll();
+    }, [])
+    const filterByGenre = (value) => {
+        let newData = [];
+        rawDataMovies.map(data => {
+            data.genreName.map(genre => {
+                if (genre.toUpperCase() == value) {
+                    newData.push(data);
+                }
+            })
+        });
+        dispatch.movie.setDataFilterData(newData);
+    }
+    console.log('Genres: ' + rawDataGenres.length + ' rawData: ' + rawDataMovies);
+    let listGenres = [];
+    let count = 1;
+    for (let i = 0; i < rawDataGenres.length; i+=6) {
+        if (i+5 > rawDataGenres.length) {break;}
+        listGenres.push(
+            <tr className={"trGenres" + count}>
+                <td>
+                    <Button title={rawDataGenres[i].name}
+                        text_color={"#E4E4E4"}
+                        border_custom={"none"}
+                        bg_color={"transparent"}
+                        fontSize={"23px"}
+                        onClick={() => filterByGenre(rawDataGenres[i].name)}>
+                    </Button>
+                </td>
+                <td>
+                    <Button title={rawDataGenres[i+1].name}
+                        text_color={"#E4E4E4"}
+                        border_custom={"none"}
+                        bg_color={"transparent"}
+                        fontSize={"23px"}
+                        onClick={() => filterByGenre(rawDataGenres[i+1].name)}>
+                    </Button>
+                </td>
+                <td>
+                    <Button title={rawDataGenres[i+2].name}
+                        text_color={"#E4E4E4"}
+                        border_custom={"none"}
+                        bg_color={"transparent"}
+                        fontSize={"23px"}
+                        onClick={() => filterByGenre(rawDataGenres[i+2].name)}>
+                    </Button>
+                </td>
+                <td>
+                    <Button title={rawDataGenres[i+3].name}
+                        text_color={"#E4E4E4"}
+                        border_custom={"none"}
+                        bg_color={"transparent"}
+                        fontSize={"23px"}
+                        onClick={() => filterByGenre(rawDataGenres[i+3].name)}>
+                    </Button>
+                </td>
+                <td>
+                    <Button title={rawDataGenres[i+4].name}
+                        text_color={"#E4E4E4"}
+                        border_custom={"none"}
+                        bg_color={"transparent"}
+                        fontSize={"23px"}
+                        onClick={() => filterByGenre(rawDataGenres[i+4].name)}>
+                    </Button>
+                </td>
+                <td>
+                    <Button title={rawDataGenres[i+5].name}
+                        text_color={"#E4E4E4"}
+                        border_custom={"none"}
+                        bg_color={"transparent"}
+                        fontSize={"23px"}
+                        onClick={() => filterByGenre(rawDataGenres[i+5].name)}>
+                    </Button>
+                </td>
+            </tr>
+        );
+        count++;
+    }
     return (
         <StyledGenres>
             <div className="genres">
                 <div className="title">
-                    <Button title={"Genres"} text_color={"#E4E4E4"} width={"140px"} height={"40px"} radius={"10px"} border_custom={"1px solid #E4E4E4"} font_size_text={"13px"} isGenres={true} bg_color={"#171616"}></Button>
+                    <Button title={"Genres"}
+                        text_color={"#E4E4E4"}
+                        width={"140px"}
+                        height={"40px"}
+                        radius={"10px"}
+                        border_custom={"1px solid #E4E4E4"}
+                        font_size_text={"13px"}
+                        isGenres={true}
+                        bg_color={"#171616"}>
+                    </Button>
                     <hr className="line-white" />
                     <img src={menu} alt="photo" />
                     <img src={filter} alt="photo" />
@@ -56,8 +144,17 @@ export const Genres = () => {
                 <div className="genres-content">
                     <table>
                         <tbody>
-                            <tr className="trGenres1">
-                                <td>ACTION</td>
+                            {listGenres}
+                            {/* <tr className="trGenres1">
+                                <td>
+                                    <Button title={"ACTION"}
+                                        text_color={"#E4E4E4"}
+                                        border_custom={"none"}
+                                        bg_color={"transparent"}
+                                        fontSize={"23px"}
+                                        onClick={() => filterByGenre("ACTION")}>
+                                    </Button>
+                                </td>
                                 <td>BIOGRAPHY</td>
                                 <td>DRAMA</td>
                                 <td>HISTORY</td>
@@ -87,7 +184,7 @@ export const Genres = () => {
                                 <td>POLITICS</td>
                                 <td>TALK</td>
                                 <td>WAR</td>
-                            </tr>
+                            </tr> */}
                         </tbody>
                     </table>
                     <div className="buttonGenres">
