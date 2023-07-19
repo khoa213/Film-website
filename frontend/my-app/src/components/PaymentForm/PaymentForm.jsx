@@ -4,6 +4,7 @@ import React from "react";
 import { useState } from "react";
 import styled from "styled-components";
 import BgPayment from "../../assets/payment2.png";
+import { useEffect } from "react";
 const Wrapper = styled.div`
   background-color: #191919;
   margin: 100px 150px;
@@ -14,6 +15,9 @@ const Wrapper = styled.div`
   .left {
     flex: 50%;
     padding: 45px;
+    .hidden {
+      display: none !important;
+    }
     h3 {
       margin: 0 0 30px 0;
     }
@@ -35,6 +39,7 @@ const Wrapper = styled.div`
       width: 440px;
       justify-content: space-between;
       /* margin-right: 20%; */
+      margin-top: 20px;
     }
     label {
       display: flex;
@@ -125,6 +130,18 @@ const RightContent = styled.div`
 `;
 const PaymentForm = () => {
   const [selectedOption, setSelectedOption] = useState("");
+  const [total, setTotal] = useState(0);
+
+  useEffect(() => {
+    const selectedPackage = JSON.parse(localStorage.getItem("selectedPackage"));
+    setSelectedOption(selectedPackage.id);
+  }, []);
+
+  useEffect(() => {
+    const selectedPackage = JSON.parse(localStorage.getItem("selectedPackage"));
+    const price = selectedPackage.price;
+    setTotal(price);
+  }, [selectedOption]);
 
   const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
@@ -213,30 +230,41 @@ const PaymentForm = () => {
             <label>
               <input
                 type="radio"
-                value="option1"
-                checked={selectedOption === "option1"}
+                value="2"
+                checked={selectedOption === 2}
                 onChange={handleOptionChange}
+                disabled={selectedOption !== 2}
               />
-              <span className="custom-radio"></span>
-              <span tex> Premium-$39 / 3 Months with a 5 day free trial</span>
+              <span
+                className={`custom-radio ${selectedOption !== 2 && "hidden"}`}
+              ></span>
+              <span className={selectedOption !== 2 && "hidden"}>
+                {" "}
+                Premium-$10 / 1 Month with a 5-day free trial
+              </span>
             </label>
             <br />
             <label>
               <input
                 type="radio"
-                value="option2"
-                checked={selectedOption === "option2"}
+                value="3"
+                checked={selectedOption === 3}
                 onChange={handleOptionChange}
+                disabled={selectedOption !== 3}
               />
-              <span className="custom-radio"></span>
-              <span>Basic- $19 / 1 Month</span>
+              <span
+                className={`custom-radio ${selectedOption !== 3 && "hidden"}`}
+              ></span>
+              <span className={selectedOption !== 3 && "hidden"}>
+                {" "}
+                Premium-$100 / 1 Year with a 5-day free trial
+              </span>
             </label>
-            <br />
-            <p>Selected option: {selectedOption}</p>
           </div>
+
           <div className="pricing-total">
             <span>Total:</span>
-            <span>200$</span>
+            <span>{total}$</span>
           </div>
           <div className="btn-form">
             <Button

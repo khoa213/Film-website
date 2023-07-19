@@ -17,7 +17,7 @@ const Wrapper = styled.div`
 const Pricing = () => {
   return (
     <Wrapper>
-      <BannerPricing></BannerPricing>
+      <BannerPricing title={"Pricing"}></BannerPricing>
       <PackMovie />
     </Wrapper>
   );

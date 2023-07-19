@@ -3,6 +3,8 @@ import { styled } from "styled-components";
 import CheckIcon from "assets/checkmark.png";
 import CancelIcon from "assets/cancelmark.svg";
 import { Button } from "components/Button";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 const Wrapper = styled.div`
   background-color: #191919;
@@ -86,46 +88,53 @@ const GridItem = styled.div`
   font-weight: 500;
 `;
 const PackMovie = () => {
-  const handlePurchase = (id) => {
-    console.log("Grid ID:", id);
+  const history = useNavigate();
+  const [selectedPackage, setSelectedPackage] = useState(null);
+  const handlePurchase = (data) => {
+    setSelectedPackage(data.id);
+    const dataToString = JSON.stringify(data);
+    localStorage.setItem("selectedPackage", dataToString); // Store the selected package ID in localStorage
+    history("/payment");
+    // console.log("Selected Package", data);
   };
+  const dataPack = [
+    {
+      id: 1,
+      duration: 9999,
+      name: "Free",
+      price: 0,
+    },
+    {
+      id: 2,
+      duration: 30,
+      name: "Month",
+      price: 10,
+    },
+    {
+      id: 3,
+      duration: 365,
+      name: "Year",
+      price: 100,
+    },
+  ];
 
   return (
     <Wrapper>
       <div className="container">
         <GridContainer>
           <GridHead className="none-bg"></GridHead>
-          <GridHead id="1" className="pack">
-            <div className="tag">
-              <span>Free</span>
-            </div>
+          {dataPack.map((e) => (
+            <GridHead id={e.id} className="pack">
+              <div className="tag">
+                <span>{e.name}</span>
+              </div>
 
-            <div className="pack-price">
-              <span className="price-item">$0</span>
-              <span className="time-pack">/ month</span>
-            </div>
-          </GridHead>
-
-          <GridHead id="2" className="pack">
-            <div className="tag">
-              <span>Free</span>
-            </div>
-
-            <div className="pack-price">
-              <span className="price-item">$0</span>
-              <span className="time-pack">/ month</span>
-            </div>
-          </GridHead>
-          <GridHead id="3" className="pack">
-            <div className="tag">
-              <span>Free</span>
-            </div>
-
-            <div className="pack-price">
-              <span className="price-item">$0</span>
-              <span className="time-pack">/ month</span>
-            </div>
-          </GridHead>
+              <div className="pack-price">
+                <span className="price-item">${e.price}</span>
+                <span className="time-pack">/ {e.duration} days</span>
+              </div>
+            </GridHead>
+          ))}
 
           <GridItem className="title-pack-item">
             Ad Free Entertainment{" "}
@@ -175,15 +184,28 @@ const PackMovie = () => {
 
           <GridItem className="title-pack-item"></GridItem>
           <GridItem>
-            <Button
+            {/* <Button
               height={"50px"}
               title={"Purchase"}
               text_color={"#fff"}
               width={"100px"}
-              bg_color={"red"}
+              bg_color={selectedPackage === 1 ? "black" : "red"}
               border_custom={"1px solid red"}
               fontSize={"16px"}
               onClick={() => handlePurchase(1)}
+              disabled={selectedPackage === 1}
+            /> */}
+          </GridItem>
+          <GridItem>
+            <Button
+              height={"50px"}
+              title={"Purchase"}
+              text_color={"#fff"}
+              width={"100px"}
+              bg_color={"red"}
+              border_custom={"1px solid red"}
+              fontSize={"16px"}
+              onClick={() => handlePurchase(dataPack[1])}
             />
           </GridItem>
           <GridItem>
@@ -195,19 +217,7 @@ const PackMovie = () => {
               bg_color={"red"}
               border_custom={"1px solid red"}
               fontSize={"16px"}
-              onClick={() => handlePurchase(2)}
-            />
-          </GridItem>
-          <GridItem>
-            <Button
-              height={"50px"}
-              title={"Purchase"}
-              text_color={"#fff"}
-              width={"100px"}
-              bg_color={"red"}
-              border_custom={"1px solid red"}
-              fontSize={"16px"}
-              onClick={() => handlePurchase(3)}
+              onClick={() => handlePurchase(dataPack[2])}
             />
           </GridItem>
         </GridContainer>
