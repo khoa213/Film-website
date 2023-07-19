@@ -7,6 +7,7 @@ import NotFoundPage from 'containers/404Page';
 import DetailPage from 'containers/Detail';
 import InfoPage from 'containers/InfoPage';
 import Filmpage from 'containers/Filmpage';
+import AboutUs from 'containers/AboutUs';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
       <Route path="/infopage" element={<InfoPage />} />
       <Route path="/filmpage" element={<Filmpage />} />
       <Route path="*" element={<NotFoundPage />} />
+      <Route path="/about-us" element={<AboutUs />} />
     </Routes>
   );
 }
