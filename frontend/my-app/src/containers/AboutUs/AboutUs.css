@@ -116,6 +116,7 @@ div .main{
 .footer-left-1 {
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
     padding-top: 20px;
     padding-bottom: 20px;
 }
@@ -130,4 +131,13 @@ div .main{
     background-color: white;
     border-radius: 50px;
     margin-right: 10px;
+}
+@media only screen and (max-width: 900px) {
+    .footer {
+        max-width: 1440px;
+        background-color: black;
+        opacity: 0.8;
+        padding: 0 100px;
+        display: block;
+    }
 }
