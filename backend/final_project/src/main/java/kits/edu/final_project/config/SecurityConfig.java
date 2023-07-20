@@ -48,7 +48,7 @@ public class SecurityConfig {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()//quy dinh rule xac thuc nguoi dung
-                    .antMatchers("/signin","/signup","/demo/**").permitAll()//java 11 la antMatcher,17 la requestAntmatcher
+                    .antMatchers("/signin","/signup","/demo/**", "/movies/**", "/genres/**").permitAll()//java 11 la antMatcher,17 la requestAntmatcher
 
                     .anyRequest().authenticated()//cac route con lai bi chan
                 .and()

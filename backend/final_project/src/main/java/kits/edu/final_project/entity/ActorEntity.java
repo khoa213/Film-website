@@ -6,7 +6,6 @@ import java.util.Set;
 
 @Entity(name = "actor")
 public class ActorEntity {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "actor_id")

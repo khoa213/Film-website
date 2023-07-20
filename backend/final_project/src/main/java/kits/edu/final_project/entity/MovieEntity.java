@@ -35,6 +35,11 @@ public class MovieEntity {
     private String bgColor;
     @Column(name = "item_color")
     private String itemColor;
+    @Column(name = "movie_link")
+    private String movieLink;
+
+    @Column(name = "movie_image")
+    private String movieImage;
 
     @OneToMany(mappedBy = "movie")
     private Set<ReviewEntity> reviews;
@@ -115,6 +120,22 @@ public class MovieEntity {
 
     public void setItemColor(String itemColor) {
         this.itemColor = itemColor;
+    }
+
+    public String getMovieLink() {
+        return movieLink;
+    }
+
+    public void setMovieLink(String movieLink) {
+        this.movieLink = movieLink;
+    }
+
+    public String getMovieImage() {
+        return movieImage;
+    }
+
+    public void setMovieImage(String movieImage) {
+        this.movieImage = movieImage;
     }
 
     public Set<ReviewEntity> getReviews() {

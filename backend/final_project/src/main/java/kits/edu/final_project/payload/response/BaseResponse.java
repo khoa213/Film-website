@@ -1,9 +1,8 @@
 package kits.edu.final_project.payload.response;
-
-public class BaseResponse {
+public class BaseResponse<D> {
     private int statusCode;
     private String message;
-    private Object data;
+    private D data;
 
     public int getStatusCode() {
         return statusCode;
@@ -21,11 +20,11 @@ public class BaseResponse {
         this.message = message;
     }
 
-    public Object getData() {
+    public D getData() {
         return data;
     }
 
-    public void setData(Object data) {
+    public void setData(D data) {
         this.data = data;
     }
 }

@@ -1,6 +1,5 @@
 package kits.edu.final_project.entity;
 
-import kits.edu.final_project.entity.ids.GenreMovieIds;
 import kits.edu.final_project.entity.ids.MovieActorIds;
 
 import javax.persistence.EmbeddedId;
