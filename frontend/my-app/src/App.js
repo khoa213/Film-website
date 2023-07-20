@@ -7,6 +7,7 @@ import NotFoundPage from 'containers/404Page';
 import DetailPage from 'containers/Detail';
 import InfoPage from 'containers/InfoPage';
 import Filmpage from 'containers/Filmpage';
+import { MoviesPage } from 'containers/Movie/MoviesPage';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
       <Route element={<PrimaryLayout />}>
         <Route path="/" element={<HomePage />} />
         <Route path="/detail" element={<DetailPage />} />
+        <Route path="/movies" element={<MoviesPage />} />
       </Route>
       <Route path="/infopage" element={<InfoPage />} />
       <Route path="/filmpage" element={<Filmpage />} />

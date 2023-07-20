@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import logoIcon from 'assets/logo.svg';
 import menuIconLight from 'assets/menu-icon-light.svg';
 import { Button } from 'components/Button';
+import { Link } from 'react-router-dom';
 
 const StyledHeader = styled.div`
     .header {
@@ -28,6 +29,9 @@ const StyledHeader = styled.div`
             display: inline-block;
             margin-left: 12px;
         }
+        a {
+            text-decoration: none;
+        }
     }
     .login {
         display: flex;
@@ -48,8 +52,8 @@ export const Header = () => {
                 <div className='menu-nav'>
                     <ul>
                         <li><Button title={"ABOUT"} text_color={"white"} width={"98px"} height={"19px"} radius={"40px"} border_custom={"2px solid transparent"} font_size_text={"12px"}></Button></li>
-                        <li><Button title={"MOVIES"} text_color={"white"} width={"98px"} height={"19px"} radius={"40px"} border_custom={"2px solid transparent"} font_size_text={"12px"}></Button></li>
-                        <li className='logo'><img src={logoIcon} alt="" /></li>
+                        <li> <Link to={'/movies'}><Button title={"MOVIES"} text_color={"white"} width={"98px"} height={"19px"} radius={"40px"} border_custom={"2px solid transparent"} font_size_text={"12px"}> </Button> </Link></li>
+                        <li className='logo'> <Link to={'/'}><img src={logoIcon} alt="" /></Link></li>
                         <li><Button title={"SERIES"} text_color={"white"} width={"98px"} height={"19px"} radius={"40px"} border_custom={"2px solid transparent"} font_size_text={"12px"}></Button></li>
                         <li><Button title={"UPCOMING"} text_color={"white"} width={"98px"} height={"19px"} radius={"40px"} border_custom={"2px solid transparent"} font_size_text={"12px"}></Button></li>
                     </ul>
