@@ -1,5 +1,6 @@
 package kits.edu.final_project.controller;
 
+import io.lettuce.core.dynamic.annotation.Param;
 import kits.edu.final_project.entity.OrderEntity;
 import kits.edu.final_project.payload.response.BaseResponse;
 import kits.edu.final_project.payload.response.OrderResponse;
@@ -28,6 +29,13 @@ public class OrderController {
         return  new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @GetMapping("/payment/{userId}")
+    public ResponseEntity<?> getPackageById(@PathVariable int userId) {
+        BaseResponse response=new BaseResponse();
+        response.setStatusCode(200);
+        response.setData(orderService.payment(userId));
+        return  new ResponseEntity<>(response, HttpStatus.OK);
+    }
 
     @PostMapping(value = "/add")
     @ResponseBody

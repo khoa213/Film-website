@@ -17,6 +17,7 @@ import java.util.List;
 public interface OrderService  {
 
     List<OrderResponse> getOrders();
+    List<OrderEntity> payment(@PathVariable int userId);
     OrderEntity addOrder( OrderEntity orderEntity);
     OrderEntity updateOrderById(OrderEntity orderEntity,int id);
     boolean deleteOrderById(@PathVariable int id);

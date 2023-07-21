@@ -6,6 +6,7 @@ import kits.edu.final_project.payload.response.OrderResponse;
 import kits.edu.final_project.repository.OrderRepository;
 import kits.edu.final_project.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -34,6 +35,13 @@ public class OrderServiceImp implements OrderService {
             System.out.println(e.getMessage());
         }
         return responses;
+    }
+
+    @Override
+//    @Query(value = "select * from orders o where o.user_id = :userId",nativeQuery = true)
+    public List<OrderEntity> payment(@PathVariable int userId) {
+//        List<OrderEntity> list = orderRepository.findAll();
+        return orderRepository.getPackagebyId(userId);
     }
 
     public OrderEntity addOrder( OrderEntity orderEntity) {
