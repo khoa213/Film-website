@@ -11,7 +11,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Users from "pages/Users";
 import Pricing from "pages/Pricing";
 import Movies from "pages/Movies";
-import Genres from "pages/Genres";
+import Genres, { AddGenre } from "pages/Genres";
 // import Users from "pages/Users";
 
 // import { UserProvider } from "../src/context/UserContext";
@@ -34,6 +34,7 @@ function App() {
             <Route path="/user" element={<Users />}></Route>
             <Route path="/movie/list-movies" element={<Movies />}></Route>
             <Route path="/genre/list-genres" element={<Genres />}></Route>
+            <Route path="/genre/add-genre" element={<AddGenre />}></Route>
 
             {/* <Route path="tables" element={<Tables />} />
               <Route path="billing" />
