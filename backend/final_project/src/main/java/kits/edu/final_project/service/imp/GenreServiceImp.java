@@ -2,7 +2,9 @@ package kits.edu.final_project.service.imp;
 
 import kits.edu.final_project.entity.GenreEntity;
 import kits.edu.final_project.entity.ReviewEntity;
+import kits.edu.final_project.entity.UserEntity;
 import kits.edu.final_project.exception.CustomException;
+import kits.edu.final_project.payload.request.SignupRequest;
 import kits.edu.final_project.payload.response.GenreResponse;
 import kits.edu.final_project.payload.response.ReviewResponse;
 import kits.edu.final_project.repository.GenreRepository;
@@ -26,6 +28,27 @@ public class GenreServiceImp implements GenreService {
             genreResponseList.add(genreResponse.mapGenreToResponse(genreMap));
         }
         return genreResponseList;
+    }
+
+    @Override
+    public boolean addGenre(GenreEntity genreEntity) {
+
+            boolean isSuccess =false;
+            try {
+                GenreEntity genre = new GenreEntity();
+                genre.setId(genreEntity.getId());
+                genre.setDesc(genreEntity.getDesc());
+                genre.setName(genreEntity.getName());
+                genre.setStatus(genreEntity.getStatus());
+
+                genreRepository.save(genre);
+                isSuccess=true;
+            }catch (Exception e)
+            {
+                throw new CustomException("Loi them Genre"+e.getMessage());
+            }
+            return isSuccess;
+
     }
 
 }
