@@ -10,9 +10,9 @@ import java.util.Map;
 
 @Repository
 public interface GenreRepository extends JpaRepository<GenreEntity, Integer> {
-    @Query( value = "SELECT g.genre_id, name, description, count(g.genre_id) as countMovies " +
+    @Query( value = "SELECT g.genre_id, name, description, count(gm.genre_id) as countMovies " +
             "FROM m_movies.genre g " +
-            "JOIN genre_movie gm ON gm.genre_id = g.genre_id " +
+            "LEFT JOIN genre_movie gm ON gm.genre_id = g.genre_id " +
             "Group by g.genre_id", nativeQuery = true)
     public List<Map<String, Object>> getGenre();
 }
