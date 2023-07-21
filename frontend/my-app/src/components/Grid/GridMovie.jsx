@@ -46,7 +46,6 @@ export const GridMovie = () => {
     const SRC_DEFAULT = "https://drive.google.com/uc?export=download&id=";
     // const dispatch = useDispatch();
     let rawData = useSelector(state => state.movie.filterData);
-    console.log('rawData: ' + rawData);
     let data = [];
     if (rawData.length >= 10) {
         data = rawData.slice(0, 10);
@@ -88,7 +87,7 @@ export const GridMovie = () => {
             <div className="grid-movie">
                 <div className="title">
                     <span>POPULAR RIGHT NOW</span>
-                    <span><Link to={'/detail'}>SEE ALL</Link></span>
+                    <span><Link to={'/movies'}>SEE ALL</Link></span>
                 </div>
                 <div className="grid-content">
                     <div className="grid-block1">

@@ -28,7 +28,6 @@ export const ShowCase = () => {
     } else {
         data = rawData;
     }
-    console.log("raw : " + rawData);
     var listCard = [];
     for (var movieObj of data.entries()) {
         let [index, movie] = movieObj;
