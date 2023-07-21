@@ -14,6 +14,9 @@ const StyledBanner = styled.div`
     background-color: #190401;
     .banner {
         position: relative;
+        .movie-bg{
+            width: 1440px;
+        }
     }
 
     .banner-left {
@@ -23,8 +26,17 @@ const StyledBanner = styled.div`
         top: 107px;
         left: 54px;
         gap: 25px;
-        div.movie-logo{
+        .movie-logo {
             text-align: center;
+            img {
+                width: 280px;
+            }
+        }
+        .movie-name img {
+            width: 490px;
+        }
+        .movie-rate img {
+            width: 210px;
         }
         div {
             ul {
@@ -63,11 +75,11 @@ export const Banner = () => {
     return (
         <StyledBanner>
             <div className='banner'>
-                <img src={backgroudFilm} alt="avatar film" />
+                <img className='movie-bg' src={backgroudFilm} alt="avatar film" />
                 <div className='banner-left'>
                     <div className='movie-logo' ><img src={marvelLogo} alt="photo" /></div>
-                    <div><img src={blackWidow} alt="photo" /></div>
-                    <div><img src={rating} alt="photo" /></div>
+                    <div className='movie-name'><img src={blackWidow} alt="photo" /></div>
+                    <div className='movie-rate'><img src={rating} alt="photo" /></div>
                     <div>
                         <ul>
                             <li>Drama</li>
