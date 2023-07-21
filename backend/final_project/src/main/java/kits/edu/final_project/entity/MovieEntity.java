@@ -54,7 +54,7 @@ public class MovieEntity {
     private Set<MovieActor> movieActors;
 
     @OneToMany(mappedBy = "movie")
-    private Set<OrderMovie> orderMovies;
+//    private Set<OrderMovie> orderMovies;
 
     public int getId() {
         return id;
@@ -173,12 +173,12 @@ public class MovieEntity {
         this.movieActors = movieActors;
     }
 
-    public Set<OrderMovie> getOrderMovies() {
-        return orderMovies;
-    }
-    @JsonIgnore
-
-    public void setOrderMovies(Set<OrderMovie> orderMovies) {
-        this.orderMovies = orderMovies;
-    }
+//    public Set<OrderMovie> getOrderMovies() {
+//        return orderMovies;
+//    }
+//    @JsonIgnore
+//
+//    public void setOrderMovies(Set<OrderMovie> orderMovies) {
+//        this.orderMovies = orderMovies;
+//    }
 }

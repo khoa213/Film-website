@@ -2,6 +2,7 @@ package kits.edu.final_project.controller;
 
 import kits.edu.final_project.entity.ActorEntity;
 import kits.edu.final_project.payload.response.BaseResponse;
+import kits.edu.final_project.service.ActorService;
 import kits.edu.final_project.service.imp.ActorServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,13 +14,13 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin("*")
 public class ActorController {
     @Autowired
-    private ActorServiceImp actorServiceImp;
+    private ActorService actorService;
 
     @GetMapping("")
     public ResponseEntity<?> getActor() {
         BaseResponse response=new BaseResponse();
         response.setStatusCode(200);
-        response.setData(actorServiceImp.getActor());
+        response.setData(actorService.getActor());
         return  new ResponseEntity<>(response, HttpStatus.OK);
     }
     @PostMapping("/add")
@@ -27,21 +28,21 @@ public class ActorController {
     public ResponseEntity<?> addActor(@RequestBody ActorEntity actorEntity) {
         BaseResponse response = new BaseResponse();
         response.setStatusCode(201);
-        response.setData(actorServiceImp.addActor(actorEntity));
+        response.setData(actorService.addActor(actorEntity));
         return new ResponseEntity<>(response,HttpStatus.OK);
     }
     @PutMapping("/update/{id}")
     public ResponseEntity<?> replaceActorById(@RequestBody ActorEntity actorEntity,@PathVariable("id") int id) {
         BaseResponse response = new BaseResponse();
         response.setStatusCode(200);
-        response.setData(actorServiceImp.replaceActorById(actorEntity,id));
+        response.setData(actorService.replaceActorById(actorEntity,id));
         return new ResponseEntity<>(response,HttpStatus.OK);
     }
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteActorById(@PathVariable("id") int id) {
         BaseResponse response = new BaseResponse();
         response.setStatusCode(200);
-        response.setData(actorServiceImp.deleteActorById(id));
+        response.setData(actorService.deleteActorById(id));
         return new ResponseEntity<>(response,HttpStatus.OK);
     }
 }

@@ -31,8 +31,8 @@ public class OrderEntity {
     private boolean orderType;
 
 
-    @OneToMany(mappedBy = "order")
-    private Set<OrderMovie> orderMovies;
+//    @OneToMany(mappedBy = "order")
+//    private Set<OrderMovie> orderMovies;
 
     @JsonBackReference(value = "pack")
     @ManyToOne
@@ -72,14 +72,14 @@ public class OrderEntity {
         this.orderType = orderType;
     }
 
-    public Set<OrderMovie> getOrderMovies() {
-        return orderMovies;
-    }
-
-    @JsonIgnore
-    public void setOrderMovies(Set<OrderMovie> orderMovies) {
-        this.orderMovies = orderMovies;
-    }
+//    public Set<OrderMovie> getOrderMovies() {
+//        return orderMovies;
+//    }
+//
+//    @JsonIgnore
+//    public void setOrderMovies(Set<OrderMovie> orderMovies) {
+//        this.orderMovies = orderMovies;
+//    }
 
     public PackageEntity getPack() {
         return pack;

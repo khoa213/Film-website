@@ -22,13 +22,13 @@ import java.util.List;
 @CrossOrigin("*")
 public class UserController {
     @Autowired
-    UserServiceImp userServiceImp;
+    UserService userService;
 
     @GetMapping("")
    public ResponseEntity<?> getAllUsers(){
         BaseResponse response=new BaseResponse();
         response.setStatusCode(200);
-        response.setData(userServiceImp.getAllUsers());
+        response.setData(userService.getAllUsers());
 
 //        List<UserEntity> list =userServiceImp.getAllUsers();
 //        for (UserEntity user:list) {
@@ -42,14 +42,14 @@ public class UserController {
 //        ResponseEntity.status(201).body(userServiceImp.addNewUser(userEntity));
         BaseResponse response = new BaseResponse();
         response.setStatusCode(201);
-        response.setData(userServiceImp.addNewUser(userEntity));
+        response.setData(userService.addNewUser(userEntity));
         return new ResponseEntity<>(response,HttpStatus.OK);
     }
     @PutMapping("/update/{id}")
     public ResponseEntity<?> replaceUserById(@RequestBody UserEntity userEntity,@PathVariable("id") int id) {
         BaseResponse response = new BaseResponse();
         response.setStatusCode(200);
-        response.setData(userServiceImp.replaceUserById(userEntity,id));
+        response.setData(userService.replaceUserById(userEntity,id));
         return new ResponseEntity<>(response,HttpStatus.OK);
     }
     @DeleteMapping("/delete/{id}")
@@ -57,7 +57,7 @@ public class UserController {
     public ResponseEntity<?> deleteUserById (@PathVariable("id") int id) {
         BaseResponse response = new BaseResponse();
         response.setStatusCode(200);
-        response.setData(userServiceImp.deleteUserById(id));
+        response.setData(userService.deleteUserById(id));
         return new ResponseEntity<>(response,HttpStatus.OK);
     }
 }

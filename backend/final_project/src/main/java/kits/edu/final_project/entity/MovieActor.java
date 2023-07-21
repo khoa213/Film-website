@@ -1,5 +1,6 @@
 package kits.edu.final_project.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import kits.edu.final_project.entity.ids.GenreMovieIds;
 import kits.edu.final_project.entity.ids.MovieActorIds;
 
@@ -34,6 +35,8 @@ public class MovieActor {
         return actor;
     }
 
+    @JsonIgnore
+
     public void setActor(ActorEntity actor) {
         this.actor = actor;
     }
@@ -42,6 +45,7 @@ public class MovieActor {
         return movie;
     }
 
+    @JsonIgnore
     public void setMovie(MovieEntity movie) {
         this.movie = movie;
     }
