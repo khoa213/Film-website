@@ -9,7 +9,6 @@ import InfoPage from "containers/InfoPage";
 import Filmpage from "containers/Filmpage";
 import Pricing from "containers/Pricing";
 import Payment from "containers/Payment";
-import AboutUs from "containers/AboutUs";
 
 function App() {
   return (
@@ -22,7 +21,7 @@ function App() {
       </Route>
       <Route path="/infopage" element={<InfoPage />} />
       <Route path="/filmpage" element={<Filmpage />} />
-      <Route path="/about-us" element={<AboutUs />} />
+
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );
