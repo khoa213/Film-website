@@ -1,13 +1,15 @@
-import logo from './logo.svg';
-import './App.css';
-import { Route, Routes } from 'react-router-dom';
-import { PrimaryLayout } from 'components/Layout';
-import HomePage from 'containers/Home';
-import NotFoundPage from 'containers/404Page';
-import DetailPage from 'containers/Detail';
-import InfoPage from 'containers/InfoPage';
-import Filmpage from 'containers/Filmpage';
-import AboutUs from 'containers/AboutUs';
+import logo from "./logo.svg";
+import "./App.css";
+import { Route, Routes } from "react-router-dom";
+import { PrimaryLayout } from "components/Layout";
+import HomePage from "containers/Home";
+import NotFoundPage from "containers/404Page";
+import DetailPage from "containers/Detail";
+import InfoPage from "containers/InfoPage";
+import Filmpage from "containers/Filmpage";
+import Pricing from "containers/Pricing";
+import Payment from "containers/Payment";
+import AboutUs from "containers/AboutUs";
 
 function App() {
   return (
@@ -15,11 +17,13 @@ function App() {
       <Route element={<PrimaryLayout />}>
         <Route path="/" element={<HomePage />} />
         <Route path="/detail" element={<DetailPage />} />
+        <Route path="/pricing" element={<Pricing />} />
+        <Route path="/payment" element={<Payment />} />
       </Route>
       <Route path="/infopage" element={<InfoPage />} />
       <Route path="/filmpage" element={<Filmpage />} />
-      <Route path="*" element={<NotFoundPage />} />
       <Route path="/about-us" element={<AboutUs />} />
+      <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );
 }
