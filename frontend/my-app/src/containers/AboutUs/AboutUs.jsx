@@ -1,13 +1,9 @@
 import  "./AboutUs.css";
-import { Header } from "components/Header";
-import logo from "assets/logo.svg";
 import image1 from "assets/02.jpg";
-import image2 from "assets/06.jpg";
 import facebookLogo from "assets/icons8-facebook.svg";
 import twitterLogo from "assets/icons8-twitter.svg";
 import googleplayLogo from "assets/icons8-google-play-50.svg";
 import appStoreLogo from "assets/icons8-app-store.svg";
-import { Banner } from "components/Banner";
 import BannerPricing from "components/BannerPricing";
 import React from "react";
 import styled from "styled-components";
