@@ -8,9 +8,12 @@ import kits.edu.final_project.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -23,9 +26,12 @@ public class CustomAuthProvider implements AuthenticationProvider {
     @Autowired
     @Lazy
     private PasswordEncoder passwordEncoder;
+//    @Autowired
+//    UserDetailsService userDetailsService;
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+
       //Lay username nguoi dung truyen vao
         String username= authentication.getName();
         //Lay password nguoi dung truyen vao

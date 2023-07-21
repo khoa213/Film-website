@@ -1,6 +1,8 @@
 package kits.edu.final_project.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.Set;
@@ -31,7 +33,9 @@ public class UserEntity {
     private String image;
     @Column(name = "birthday")
     private Date birthday ;
-
+    @Column(name = "status")
+    private int status ;
+    @JsonManagedReference(value = "user")
     @OneToMany(mappedBy = "user")
     private Set<ReviewEntity> reviews;
     @OneToMany(mappedBy = "user")
@@ -123,5 +127,13 @@ public class UserEntity {
 
     public void setOrders(Set<OrderEntity> orders) {
         this.orders = orders;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 }

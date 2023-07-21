@@ -1,5 +1,6 @@
 package kits.edu.final_project.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import kits.edu.final_project.entity.ids.GenreMovieIds;
 
 import javax.persistence.*;
@@ -9,6 +10,7 @@ public class GenreMovie {
 
     @EmbeddedId
     private GenreMovieIds ids;
+
 
     @ManyToOne
     @JoinColumn(name = "genre_id", insertable = false,updatable = false)

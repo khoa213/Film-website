@@ -1,23 +1,120 @@
 package kits.edu.final_project.service.imp;
 
 import kits.edu.final_project.entity.UserEntity;
+import kits.edu.final_project.exception.CustomException;
+import kits.edu.final_project.payload.request.ReviewRequest;
 import kits.edu.final_project.payload.request.SignupRequest;
 import kits.edu.final_project.payload.response.UserResponse;
+import kits.edu.final_project.repository.UserRepository;
+import kits.edu.final_project.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
-public interface UserServiceImp {
-    boolean addUser(SignupRequest request);
-    List<UserResponse> getAllUsers();
-    UserEntity addNewUser(@RequestBody UserEntity userEntity);
-    UserEntity replaceUserById(@RequestBody UserEntity userEntity, @PathVariable int id);
-//    @Modifying
-//    @Query(value = "delete from users u where u.user_id= :id")
-    List<UserEntity> deleteUserById(@PathVariable int id);
+public class UserServiceImp implements UserService {
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+    @Override
+    public boolean addUser(SignupRequest request) {
+        boolean isSuccess =false;
+        try {
+            UserEntity user = new UserEntity();
+            user.setUsername(request.getUsername());
+            user.setPassword(passwordEncoder.encode(request.getPassword()));
+            user.setEmail(request.getEmail());
+            userRepository.save(user);
+            isSuccess=true;
+        }catch (Exception e)
+        {
+            throw new CustomException("Loi them User"+e.getMessage());
+        }
+        return isSuccess;
+    }
+
+    @Override
+    public List<UserResponse> getAllUsers() {
+//        return userRepository.findAll();
+        List<UserEntity> list=userRepository.findAll();
+        List<UserResponse> responseList=new ArrayList<>();
+        try {
+//            UserEntity user = new UserEntity();
+            for(UserEntity u:list){
+                UserResponse userResponse=new UserResponse();
+                userResponse.setEmail(u.getEmail());
+                userResponse.setId(u.getId());
+                userResponse.setUsername(u.getUsername());
+                userResponse.setGender(u.getGender());
+                userResponse.setBirthday(u.getBirthday());
+                userResponse.setStatus(u.getStatus());
+                responseList.add(userResponse);
+            }
+        }catch (Exception e)
+        {
+            throw new CustomException("Loi get List users"+e.getMessage());
+        }
+        return responseList;
+    }
+
+
+    @Override
+    public UserEntity replaceUserById(UserEntity userEntity, int id) {
+        return userRepository.findById(id).map(u->{
+                    u.setUsername(userEntity.getUsername());
+                    u.setFirstname(userEntity.getFirstname());
+                    u.setLastname(userEntity.getLastname());
+                    u.setPassword(userEntity.getPassword());
+                    u.setImage(userEntity.getImage());
+                    u.setEmail(userEntity.getEmail());
+                    u.setGender(userEntity.getGender());
+                    u.setStatus(userEntity.getStatus());
+                    return userRepository.save(u);
+                })
+                .orElseGet(()->{
+                    return userRepository.save(userEntity);
+                });
+//        return null;
+    }
+
+    @Override
+    public boolean replaceStatusUserById(UserEntity userEntity, int id) {
+        try {
+            Optional<UserEntity> optionalUser = userRepository.findById(id);
+            if (optionalUser.isPresent()) {
+                UserEntity user = optionalUser.get();
+
+                // Thực hiện cập nhật các giá trị mới cho review
+                user.setStatus(userEntity.getStatus());
+
+
+                // Lưu lại review đã cập nhật vào cơ sở dữ liệu
+                userRepository.save(user);
+
+                return true; // Trả về true để chỉ ra rằng việc cập nhật thành công
+            }
+            return false; // Trả về false nếu không tìm thấy review với ID đã cho
+
+        } catch (Exception e) {
+            throw new CustomException("Lỗi khi cập nhật status user: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public List<UserEntity> deleteUserById(int id) {
+        userRepository.deleteById(id);
+        return userRepository.findAll();
+    }
+
+
+
 }

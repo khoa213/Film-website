@@ -1,4 +1,4 @@
-import { login } from "Redux/Actions/UserActions";
+import { login, register } from "Redux/Actions/UserActions";
 import { Button } from "components/Button";
 import Logo from "components/Logo/Logo";
 import React, { useEffect, useState } from "react";
@@ -6,9 +6,6 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import Input from "components/Input";
-import EmailIcon from "../../assets/images/email-icon.svg";
-import PasswordIcon from "../../assets/images/password-icon.svg";
-import { Divider } from "antd";
 
 const Wrapper = styled.div`
   background-color: var(--background-signin-color);
@@ -22,93 +19,17 @@ const Wrapper = styled.div`
     color: white;
   }
   .input_group {
-    margin-bottom: 60px;
+    margin-bottom: 30px;
     display: flex;
     flex-direction: column;
   }
   .input {
     position: relative;
-    box-shadow: -14.719192504882812px 17.347618103027344px 84.10966491699219px
-      0px #0038ff26;
+    box-shadow: 0px 4px 4px 0px #00000040;
 
-    box-shadow: 15.770564079284668px -13.667821884155273px 112.49666595458984px 0px
-      #f8003b26;
+    box-shadow: 15.770000457763672px -13.670000076293945px 112.5px 0px #f8003b40;
   }
 
-  .input-user::after,
-  .input-password::after {
-    position: absolute;
-    content: "";
-    display: block;
-    width: 50px;
-    height: 50px;
-    background-color: var(--color-primary);
-    right: 0;
-    top: 0;
-    border-radius: 8px;
-
-    /* background-size: cover; */
-  }
-  .input-user::after {
-    background-image: url(${EmailIcon});
-    background-repeat: no-repeat;
-    background-position: center;
-  }
-  .input-password::after {
-    background-image: url(${PasswordIcon});
-    background-repeat: no-repeat;
-    background-position: center;
-  }
-  .input::after svg {
-    width: 20px; /* Đặt kích thước mong muốn cho SVG */
-    height: 20px; /* Đặt kích thước mong muốn cho SVG */
-    fill: var(--color-primary);
-  }
-  .remember-part {
-    display: flex;
-    justify-content: space-between;
-
-    align-items: center;
-  }
-  .forgot-span {
-    margin-top: -80px !important;
-    color: #c4a5bc;
-    font-size: 14px;
-    text-decoration: underline;
-  }
-  .remember-password {
-    display: flex;
-    align-items: center;
-  }
-
-  .remember-password input[type="checkbox"] {
-    display: none;
-  }
-
-  .remember-password label {
-    margin-top: -80px;
-    margin-left: 10px;
-    font-size: 14px;
-    text-decoration: underline;
-    cursor: pointer;
-  }
-
-  .remember-password label:before {
-    content: "";
-    display: inline-block;
-    width: 16px;
-    height: 16px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-    margin-right: 6px;
-    vertical-align: text-bottom;
-    background-color: white;
-  }
-
-  .remember-password input[type="checkbox"]:checked + label:before {
-    background-color: var(--color-primary);
-    box-shadow: 0px 0px 9px 1px #780eff, 0px 4px 4px 0px #00000040;
-  }
   .btn-form {
     display: flex;
     flex-direction: column;
@@ -128,19 +49,21 @@ const Wrapper = styled.div`
     cursor: pointer;
     /* margin-top: 30px; */
   }
-  /*
-  .btn-signin:hover {
-    background-color: #3311b9;
-    cursor: pointer;
-  } */
+  .policy {
+    margin-top: 10px;
+    color: #fff;
+    text-align: center;
+  }
 `;
 const SignUp = () => {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
-  const userLogin = useSelector((state) => state.userLogin);
-  const { error, loading, userInfo } = userLogin;
+  const userRegister = useSelector((state) => state.userRegister);
+  const { error, loading, userInfo } = userRegister;
   useEffect(() => {
     if (userInfo) {
       navigate("/");
@@ -148,17 +71,18 @@ const SignUp = () => {
   }, [userInfo, navigate]);
   const submitHandler = (e) => {
     e.preventDefault();
-    console.log(username, password);
+    console.log(username, password, email);
 
     const formData = {
       username: username,
       password: password,
+      email: email,
     };
-    dispatch(login(formData));
+    dispatch(register(formData));
   };
   return (
     <Wrapper>
-      <Logo desc={"Login into your"} />
+      <Logo desc={"Register"} />
 
       <form onSubmit={submitHandler}>
         <div className="input_group">
@@ -170,7 +94,7 @@ const SignUp = () => {
               type="text"
               id="username"
               name="username"
-              placeholder={"marvelous@email.com"}
+              placeholder={"Username"}
               textColor={"var(--text-color-input)"}
               onChange={(e) => setUsername(e.target.value)}
             />
@@ -183,11 +107,11 @@ const SignUp = () => {
               height={50}
               borderRadius={8}
               type="text"
-              id="username"
-              name="username"
-              placeholder={"marvelous@email.com"}
+              id="email"
+              name="email"
+              placeholder={"Email"}
               textColor={"var(--text-color-input)"}
-              onChange={(e) => setUsername(e.target.value)}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
         </div>
@@ -215,9 +139,9 @@ const SignUp = () => {
               type="password"
               id="password"
               name="password"
-              placeholder={"Enter your password"}
+              placeholder={"Confirm your password"}
               textColor={"var(--text-color-input)"}
-              onChange={(e) => setPassword(e.target.value)}
+              // onChange={(e) => setPassword(e.target.value)}
             />
           </div>
         </div>
@@ -251,6 +175,10 @@ const SignUp = () => {
           </div>
         </div>
       </form>
+      <span className="policy">
+        By clicking “Create Account” you agree to our
+        <br /> <b>terms</b> and <b>privacy policy</b>.
+      </span>
     </Wrapper>
   );
 };

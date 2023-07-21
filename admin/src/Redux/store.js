@@ -2,21 +2,44 @@ import { createStore, combineReducers, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 import {
-  productCreateReducer,
-  productDeleteReducer,
-  // productCreateReviewReducer,
-  // productDetailsReducer,
-  productListReducer,
-} from "./Reducers/ProductReducers";
-import { userListReducer, userLoginReducer } from "./Reducers/UserReducers";
+  movieCreateReducer,
+  movieDeleteReducer,
+  // movieCreateReviewReducer,
+  // movieDetailsReducer,
+  movieListReducer,
+} from "./Reducers/MovieReducers";
+import {
+  userListReducer,
+  userLoginReducer,
+  userRegisterReducer,
+  userDeleteReducer,
+  userUpdateReducer,
+} from "./Reducers/UserReducers";
+import {
+  reviewListReducer,
+  reviewDeleteReducer,
+  reviewUpdateReducer,
+} from "./Reducers/ReviewReducers";
+import {
+  genreListReducer,
+  genreDeleteReducer,
+  genreUpdateReducer,
+} from "./Reducers/GenreReducers";
 const reducer = combineReducers({
-  productList: productListReducer,
-  productCreate: productCreateReducer,
-  productDelete: productDeleteReducer,
+  movieList: movieListReducer,
+  movieCreate: movieCreateReducer,
+  movieDelete: movieDeleteReducer,
   userLogin: userLoginReducer,
   userList: userListReducer,
-  // productDetails: productDetailsReducer,
-  // productReviewCreate: productCreateReviewReducer,
+  userRegister: userRegisterReducer,
+  reviewList: reviewListReducer,
+  reviewDelete: reviewDeleteReducer,
+  reviewUpdate: reviewUpdateReducer,
+  userDelete: userDeleteReducer,
+  userUpdate: userUpdateReducer,
+  genreList: genreListReducer,
+  // movieDetails: movieDetailsReducer,
+  // movieReviewCreate: movieCreateReviewReducer,
 });
 
 // const initialState = {

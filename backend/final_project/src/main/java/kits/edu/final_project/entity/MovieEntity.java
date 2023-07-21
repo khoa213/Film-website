@@ -1,6 +1,9 @@
 package kits.edu.final_project.entity;
 
 
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.Set;
@@ -35,9 +38,16 @@ public class MovieEntity {
     private String bgColor;
     @Column(name = "item_color")
     private String itemColor;
+    @Column(name = "movie_link")
+    private String movieLink;
 
+    @Column(name = "movie_image")
+    private String movieImage;
+
+    @JsonManagedReference(value = "movie")
     @OneToMany(mappedBy = "movie")
     private Set<ReviewEntity> reviews;
+
     @OneToMany(mappedBy = "movie")
     private Set<GenreMovie> genreMovies;
     @OneToMany(mappedBy = "movie")
@@ -115,6 +125,22 @@ public class MovieEntity {
 
     public void setItemColor(String itemColor) {
         this.itemColor = itemColor;
+    }
+
+    public String getMovieLink() {
+        return movieLink;
+    }
+
+    public void setMovieLink(String movieLink) {
+        this.movieLink = movieLink;
+    }
+
+    public String getMovieImage() {
+        return movieImage;
+    }
+
+    public void setMovieImage(String movieImage) {
+        this.movieImage = movieImage;
     }
 
     public Set<ReviewEntity> getReviews() {

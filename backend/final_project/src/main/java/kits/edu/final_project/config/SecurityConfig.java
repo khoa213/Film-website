@@ -10,7 +10,9 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -18,18 +20,20 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig {
+public class SecurityConfig  {
     //khai bao chuan ma hoa Bcrypt va luu tren IOC
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
 
+
     @Autowired
     private CustomAuthProvider customAuthProvider;
 
     @Autowired
     private JwtFilter jwtFilter;
+
     @Bean
     public AuthenticationManager authenticationManager(HttpSecurity httpSecurity) throws Exception{
         return
@@ -48,7 +52,7 @@ public class SecurityConfig {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()//quy dinh rule xac thuc nguoi dung
-                    .antMatchers("/signin","/signup","/demo/**","/user","/user/**").permitAll()//java 11 la antMatcher,17 la requestAntmatcher
+                    .antMatchers("/signin","/signup","/demo/**","/user","/user/**","/movies/**","/review/**").permitAll()//java 11 la antMatcher,17 la requestAntmatcher
 
 //                    .anyRequest().authenticated()//cac route con lai bi chan
                 .and()

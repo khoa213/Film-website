@@ -1,4 +1,4 @@
-import { Button, Col, Row, Table } from "antd";
+import { Button, Col, Row, Table, message } from "antd";
 import CardTransfer from "components/CardTransfer";
 import React from "react";
 import styled from "styled-components";
@@ -208,6 +208,23 @@ const columns = [
   //   ),
   // },
 ];
+const onClick = ({ key }) => {
+  message.info(`Click on item ${key}`);
+};
+const items = [
+  {
+    label: "Today",
+    key: "1",
+  },
+  {
+    label: "Last week",
+    key: "2",
+  },
+  {
+    label: "Last month",
+    key: "3",
+  },
+];
 const dataTable = [
   {
     key: "1",
@@ -298,7 +315,14 @@ const Dashboard = () => {
             <div className="top-category" style={style}>
               <div className="top-category-top">
                 <h1>Top Category</h1>
-                <DropDown />
+                <DropDown
+                  items={items}
+                  // onClick={onClick}
+                  defaultValue={"Today"}
+                  onChange={(value) => {
+                    console.log(value); // In giá trị mới của DropDown khi thay đổi
+                  }}
+                />
               </div>
               <div className="top-category-bot">
                 <div className="left">

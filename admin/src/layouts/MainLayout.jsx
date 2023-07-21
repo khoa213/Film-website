@@ -26,6 +26,7 @@ import Footer from "../components/Footer/Footer";
 import Sidenav from "../components/Sidenav";
 
 import styled from "styled-components";
+import Toast from "components/LoadingError/Toast";
 const LayoutContainer = styled.div``;
 const SiderWrapper = styled.div`
   .ant-layout-sider::-webkit-scrollbar {
@@ -65,21 +66,18 @@ function MainLayout({ children }) {
   const items = [
     getItem("Dashboard", "1", <PieChartOutlined />),
     getItem("Rating", "2", <DesktopOutlined />),
-    getItem("Comment", "3", <DesktopOutlined />),
-    getItem("User", "sub1", <UserOutlined />, [
-      getItem("Add User", "4"),
-      getItem("List Users", "5"),
+    // getItem("Comment", "3", <DesktopOutlined />),
+    getItem("User", "3", <UserOutlined />),
+    getItem("Genre", "sub1", <UserOutlined />, [
+      getItem("Add Genre", "4"),
+      getItem("List Genres", "5"),
     ]),
-    getItem("Genre", "sub2", <UserOutlined />, [
-      getItem("Add Genre", "6"),
-      getItem("List Genres", "7"),
-    ]),
-    getItem("Movie", "sub3", <UserOutlined />, [
-      getItem("Add Movies", "8"),
-      getItem("List Movies", "9"),
+    getItem("Movie", "sub2", <UserOutlined />, [
+      getItem("Add Movies", "6"),
+      getItem("List Movies", "7"),
     ]),
 
-    getItem("Package", "10", <FileOutlined />),
+    getItem("Package", "8", <FileOutlined />),
   ];
 
   const {
@@ -138,6 +136,7 @@ function MainLayout({ children }) {
           <Footer />
         </Layout>
       </Layout>
+      {/* <Toast /> */}
     </LayoutContainer>
   );
 }

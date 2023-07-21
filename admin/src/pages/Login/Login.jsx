@@ -8,7 +8,13 @@ import { useNavigate } from "react-router-dom";
 import Input from "components/Input";
 import EmailIcon from "../../assets/images/email-icon.svg";
 import PasswordIcon from "../../assets/images/password-icon.svg";
-import { Divider } from "antd";
+import { Divider, Switch } from "antd";
+import Message from "components/LoadingError/Error";
+import Loading from "components/LoadingError/Loading";
+import { toast } from "react-toastify";
+import LightMode from "../../assets/images/light-mode-icon.svg";
+import DarkModeIcon from "../../assets/images/dark-mode-icon.svg";
+import Toast from "components/LoadingError/Toast";
 
 const Wrapper = styled.div`
   background-color: var(--background-signin-color);
@@ -26,15 +32,18 @@ const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
   }
+  .input_group_label {
+    color: var(--bg-color-input);
+  }
   .input {
     position: relative;
-    box-shadow: -14.719192504882812px 17.347618103027344px 84.10966491699219px
-      0px #0038ff26;
+    box-shadow: var(--box-shadow-1);
 
-    box-shadow: 15.770564079284668px -13.667821884155273px 112.49666595458984px 0px
-      #f8003b26;
+    box-shadow: var(--box-shadow-2);
   }
-
+  .input-user {
+    position: relative;
+  }
   .input-user::after,
   .input-password::after {
     position: absolute;
@@ -62,7 +71,7 @@ const Wrapper = styled.div`
   .input::after svg {
     width: 20px; /* Đặt kích thước mong muốn cho SVG */
     height: 20px; /* Đặt kích thước mong muốn cho SVG */
-    fill: var(--color-primary);
+    fill: var(--bg-color-input);
   }
   .remember-part {
     display: flex;
@@ -75,6 +84,7 @@ const Wrapper = styled.div`
     color: #c4a5bc;
     font-size: 14px;
     text-decoration: underline;
+    color: var(--bg-color-input);
   }
   .remember-password {
     display: flex;
@@ -91,6 +101,7 @@ const Wrapper = styled.div`
     font-size: 14px;
     text-decoration: underline;
     cursor: pointer;
+    color: var(--bg-color-input);
   }
 
   .remember-password label:before {
@@ -107,7 +118,7 @@ const Wrapper = styled.div`
 
   .remember-password input[type="checkbox"]:checked + label:before {
     background-color: var(--color-primary);
-    box-shadow: 0px 0px 9px 1px #780eff, 0px 4px 4px 0px #00000040;
+    box-shadow: var(--box-shadow-check), 0px 4px 4px 0px #00000040;
   }
   .btn-form {
     display: flex;
@@ -117,7 +128,7 @@ const Wrapper = styled.div`
   .btn-signin {
     font-weight: 700;
     font-size: 22px;
-    box-shadow: 0px 0px 9px 1px #780eff, 0px 4px 4px 0px #00000040;
+    box-shadow: var(--box-shadow-check), 0px 4px 4px 0px #00000040;
     cursor: pointer;
     margin-top: 30px;
   }
@@ -127,6 +138,19 @@ const Wrapper = styled.div`
     /* box-shadow: 0px 0px 9px 1px #780eff, 0px 4px 4px 0px #00000040; */
     cursor: pointer;
     /* margin-top: 30px; */
+  }
+  .login-center {
+    padding: 50px 0;
+  }
+  .container-toast {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .error-text {
+    color: red;
+    font-size: 12px;
   }
   /*
   .btn-signin:hover {
@@ -141,14 +165,59 @@ const Login = () => {
   const dispatch = useDispatch();
   const userLogin = useSelector((state) => state.userLogin);
   const { error, loading, userInfo } = userLogin;
+  const [isDarkMode, setIsDarkMode] = useState(true);
+  const [validEmail, setValidEmail] = useState(true);
+  const [signInClicked, setSignInClicked] = useState(false);
+  // document.querySelector("body").setAttribute("data-mode", "dark");
+  const handleSignInClick = () => {
+    setSignInClicked(true);
+  };
+  function validateEmail(username) {
+    // Biểu thức chính quy để kiểm tra định dạng email
+    var pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    // Kiểm tra định dạng email bằng biểu thức chính quy
+    if (pattern.test(username)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  const setDarkMode = () => {
+    document.querySelector("body").setAttribute("data-mode", "dark");
+  };
+  const setLightMode = () => {
+    document.querySelector("body").setAttribute("data-mode", "light");
+  };
+
+  const handleToggleDarkMode = () => {
+    setIsDarkMode(!isDarkMode);
+    if (!isDarkMode) setDarkMode();
+    else setLightMode();
+  };
+
   useEffect(() => {
+    if (error) {
+      toast.error(error); // Hiển thị message error dưới dạng toast
+      // toast.success("Successfully logged in");
+    }
     if (userInfo) {
+      toast.success("Successfully logged in");
       navigate("/");
     }
-  }, [userInfo, navigate]);
+  }, [userInfo, navigate, error]);
+
   const submitHandler = (e) => {
     e.preventDefault();
     console.log(username, password);
+
+    // Kiểm tra định dạng email trước khi gửi request
+    if (!validateEmail(username)) {
+      // Đánh dấu email không hợp lệ
+      setValidEmail(false);
+      return;
+    }
 
     const formData = {
       username: username,
@@ -156,125 +225,167 @@ const Login = () => {
     };
     dispatch(login(formData));
   };
+  // Xử lý sự kiện thay đổi của ô input email
+  const handleEmailChange = (e) => {
+    const email = e.target.value;
+    setUsername(email);
+
+    // Kiểm tra định dạng email và cập nhật trạng thái hợp lệ
+    if (validateEmail(email)) {
+      setValidEmail(true);
+    } else {
+      setValidEmail(false);
+    }
+  };
+  const showErrorMessage = signInClicked && !validEmail;
   return (
     <Wrapper>
-      <Logo desc={"Login into your"} />
+      <>
+        <Logo desc={"Login into your"} />
+        <div style={{ display: "none" }} className="">
+          {/* {error && toast.error(error)} */}
+          {/* {error && <Toast />} */}
+          {loading && <Loading />}
+        </div>
+        <form onSubmit={submitHandler}>
+          <div className="input_group">
+            <label className="input_group_label " htmlFor="username">
+              Email address
+            </label>
+            <div className={`input input-user ${validEmail ? "" : "invalid"}`}>
+              <Input
+                width={430}
+                height={50}
+                borderRadius={8}
+                type="text"
+                id="username"
+                name="username"
+                placeholder={"marvelous@email.com"}
+                textColor={"var(--text-color-input)"}
+                bgColor={"var(--bg-color-input)"}
+                onChange={handleEmailChange}
+              />
+              {showErrorMessage && (
+                <p
+                  className="error-text"
+                  style={{ position: "absolute", top: "40px" }}
+                >
+                  Invalid email format
+                </p>
+              )}
+            </div>
+          </div>
+          <div className="input_group input_group_pass ">
+            {/* <p className="forgot-label">Forgot password?</p> */}
+            <label className="input_group_label " htmlFor="password">
+              Password
+            </label>
+            <div className="input input-password">
+              <Input
+                width={430}
+                height={50}
+                borderRadius={8}
+                type="password"
+                id="password"
+                name="password"
+                placeholder={"Enter your password"}
+                textColor={"var(--text-color-input)"}
+                bgColor={"var(--bg-color-input)"}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </div>
+          </div>
+          <div className="remember-part">
+            <div className="remember-password">
+              <input type="checkbox" id="remember" />
+              <label htmlFor="remember">Remember Me</label>
+            </div>
 
-      <form onSubmit={submitHandler}>
-        <div className="input_group">
-          <label className="input_group_label " htmlFor="username">
-            Email address
-          </label>
-          <div className="input input-user">
-            <Input
-              width={430}
-              height={50}
-              borderRadius={8}
-              type="text"
-              id="username"
-              name="username"
-              placeholder={"marvelous@email.com"}
-              textColor={"var(--text-color-input)"}
-              onChange={(e) => setUsername(e.target.value)}
-            />
+            <span className="forgot-span">Forgot password?</span>
           </div>
-        </div>
-        <div className="input_group input_group_pass ">
-          {/* <p className="forgot-label">Forgot password?</p> */}
-          <label className="input_group_label " htmlFor="password">
-            Password
-          </label>
-          <div className="input input-password">
-            <Input
-              width={430}
-              height={50}
-              borderRadius={8}
-              type="password"
-              id="password"
-              name="password"
-              placeholder={"Enter your password"}
-              textColor={"var(--text-color-input)"}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
-        </div>
-        <div className="remember-part">
-          <div class="remember-password">
-            <input type="checkbox" id="remember" />
-            <label for="remember">Remember Me</label>
-          </div>
-
-          <span className="forgot-span">Forgot password?</span>
-        </div>
-        <div className="btn-form">
-          <Button
-            label="LOGIN NOW"
-            width={420}
-            height={60}
-            textColor="var(--color-primary)"
-            bgColor="#fff"
-            fontSize={22}
-            borderRadius={50}
-            type="submit"
-            id="btn-signin"
-            className="btn-signin"
-          >
-            LOGIN NOW
-          </Button>
-          <Divider
-            style={{
-              color: "#fff",
-              backgroundColor: "#ccc",
-              height: "1px",
-              marginTop: "40px",
-              // zIndex: -1,
-            }}
-            orientation="center"
-            plain
-          >
-            <span
-              style={{
-                color: "#fff",
-                backgroundColor: "var(--background-signin-color)",
-                height: "60px",
-                width: "60px",
-                padding: "20px",
-                fontSize: "22px",
-                // zIndex: -1,
-              }}
-            >
-              OR
-            </span>
-          </Divider>
-          <div
-            style={{
-              marginTop: "30px",
-              height: "62px",
-              position: "relative",
-              border: "none",
-              borderRadius: "50px",
-              backgroundImage:
-                "linear-gradient(228.09deg, #FF2CF7 -9.95%, rgba(251, 4, 123, 0.796875) 12.47%, rgba(255, 126, 188, 0.81) 30.87%, rgba(255, 255, 255, 0) 53.87%, rgba(73, 255, 233, 0.65) 70.34%, #130EFF 100.44%)",
-              backgroundOrigin: "border-box",
-              backgroundClip: "content-box, border-box",
-            }}
-          >
+          <div className="btn-form">
             <Button
+              label="LOGIN NOW"
               width={420}
               height={60}
-              textColor="#fff"
-              bgColor="var(--background-signin-color)"
+              textColor="var(--color-primary)"
+              bgColor="var(--bg-color-input)"
               fontSize={22}
               borderRadius={50}
               type="submit"
-              id="btn-signup"
-              className="btn-signup"
+              id="btn-signin"
+              className="btn-signin"
+              onClick={handleSignInClick}
             >
-              SIGNUP NOW
+              LOGIN NOW
             </Button>
+            <Divider
+              style={{
+                color: "#fff",
+                backgroundColor: "#ccc",
+                height: "1px",
+                marginTop: "40px",
+                // zIndex: -1,
+              }}
+              orientation="center"
+              plain
+            >
+              <span
+                style={{
+                  color: "var(--bg-color-input)",
+                  backgroundColor: "var(--background-signin-color)",
+                  height: "20px",
+                  width: "20px",
+                  padding: "10px",
+                  fontSize: "22px",
+                  // zIndex: -1,
+                }}
+              >
+                OR
+              </span>
+            </Divider>
+            <div
+              style={{
+                marginTop: "30px",
+                height: "62px",
+                position: "relative",
+                border: "none",
+                borderRadius: "50px",
+                backgroundImage:
+                  "linear-gradient(228.09deg, #FF2CF7 -9.95%, rgba(251, 4, 123, 0.796875) 12.47%, rgba(255, 126, 188, 0.81) 30.87%, rgba(255, 255, 255, 0) 53.87%, rgba(73, 255, 233, 0.65) 70.34%, #130EFF 100.44%)",
+                backgroundOrigin: "border-box",
+                backgroundClip: "content-box, border-box",
+              }}
+            >
+              <Button
+                width={420}
+                height={60}
+                textColor="var(--bg-color-input)"
+                bgColor="var(--background-signin-color)"
+                fontSize={22}
+                borderRadius={50}
+                type="submit"
+                id="btn-signup"
+                className="btn-signup"
+              >
+                SIGNUP NOW
+              </Button>
+            </div>
           </div>
-        </div>
-      </form>
+        </form>
+
+        <Switch
+          style={{
+            position: "absolute",
+            bottom: "20px",
+            right: "20px",
+          }}
+          onClick={handleToggleDarkMode}
+          checkedChildren={""}
+          unCheckedChildren={""}
+          defaultChecked={true}
+        />
+      </>
     </Wrapper>
   );
 };
