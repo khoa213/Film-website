@@ -10,7 +10,8 @@ const Wrapper = styled.div`
     margin: 0 0 20px 0;
     font-size: 20px;
   }
-  .ant-input-affix-wrapper {
+  .ant-input-affix-wrapper textarea {
+    border: 1px #000 solid !important;
     background-color: var(--body-dark-background);
   }
 `;
@@ -34,10 +35,11 @@ export const AddGenre = () => {
         // value={value}
       ></Input>
       <TextArea
+        className="textarea"
         showCount
         maxLength={100}
         style={{
-          height: 200,
+          height: 300,
           marginBottom: 24,
         }}
         // onChange={onChange}
