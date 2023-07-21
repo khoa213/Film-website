@@ -1,10 +1,16 @@
 package kits.edu.final_project.entity;
 
-import javax.persistence.*;
-import java.util.Set;
+import com.fasterxml.jackson.annotation.*;
 
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.Set;
+import com.fasterxml.uuid.Generators;
+
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "id")
 @Entity(name="package")
-public class PackageEntity {
+
+public class PackageEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "package_id")
@@ -16,6 +22,8 @@ public class PackageEntity {
     private int duration;
     @Column(name = "price")
     private double price;
+
+    @JsonManagedReference(value = "pack")
     @OneToMany(mappedBy = "pack")
     private Set<OrderEntity> orders;
 

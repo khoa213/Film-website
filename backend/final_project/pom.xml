@@ -80,6 +80,32 @@
 			<artifactId>lettuce-core</artifactId>
 			<version>6.2.4.RELEASE</version>
 		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.uuid</groupId>
+			<artifactId>java-uuid-generator</artifactId>
+			<version>4.2.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-annotations</artifactId>
+			<version>2.14.2</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+			<version>2.14.2</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.14.2</version>
+		</dependency>
+        <dependency>
+            <groupId>se.wfh.tools</groupId>
+            <artifactId>propertygenerator</artifactId>
+            <version>0.7</version>
+        </dependency>
+
 	</dependencies>
 
 	<build>

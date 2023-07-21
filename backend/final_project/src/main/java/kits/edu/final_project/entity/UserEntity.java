@@ -1,10 +1,13 @@
 package kits.edu.final_project.entity;
 
 
+import com.fasterxml.jackson.annotation.*;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.Set;
 
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "id")
 @Entity(name = "users")
 public class UserEntity {
 
@@ -31,9 +34,11 @@ public class UserEntity {
     private String image;
     @Column(name = "birthday")
     private Date birthday ;
-
+    @JsonIgnore
     @OneToMany(mappedBy = "user")
     private Set<ReviewEntity> reviews;
+    @JsonIgnore
+    @JsonManagedReference(value = "user")
     @OneToMany(mappedBy = "user")
     private Set<OrderEntity> orders;
 
@@ -112,6 +117,7 @@ public class UserEntity {
     public Set<ReviewEntity> getReviews() {
         return reviews;
     }
+
 
     public void setReviews(Set<ReviewEntity> reviews) {
         this.reviews = reviews;
