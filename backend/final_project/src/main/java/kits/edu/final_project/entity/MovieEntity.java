@@ -1,6 +1,8 @@
 package kits.edu.final_project.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.Set;
@@ -27,7 +29,7 @@ public class MovieEntity {
     private int duration;
 
     @Column(name = "price")
-    private int price;
+    private double price;
 
     @Column(name = "language")
     private String language;
@@ -36,14 +38,23 @@ public class MovieEntity {
     @Column(name = "item_color")
     private String itemColor;
 
+    @Column(name = "movie_link")
+    private String movieLink;
+
+    @Column(name = "movie_image")
+    private String movieImage;
+
     @OneToMany(mappedBy = "movie")
     private Set<ReviewEntity> reviews;
+
     @OneToMany(mappedBy = "movie")
     private Set<GenreMovie> genreMovies;
+
     @OneToMany(mappedBy = "movie")
     private Set<MovieActor> movieActors;
+
     @OneToMany(mappedBy = "movie")
-    private Set<OrderMovie> orderMovies;
+//    private Set<OrderMovie> orderMovies;
 
     public int getId() {
         return id;
@@ -85,15 +96,17 @@ public class MovieEntity {
         this.duration = duration;
     }
 
-    public int getPrice() {
-        return price;
-    }
+    
 
-    public void setPrice(int price) {
-        this.price = price;
-    }
+    public double getPrice() {
+		return price;
+	}
 
-    public String getLanguage() {
+	public void setPrice(double price) {
+		this.price = price;
+	}
+
+	public String getLanguage() {
         return language;
     }
 
@@ -117,9 +130,26 @@ public class MovieEntity {
         this.itemColor = itemColor;
     }
 
+    public String getMovieLink() {
+        return movieLink;
+    }
+
+    public void setMovieLink(String movieLink) {
+        this.movieLink = movieLink;
+    }
+
+    public String getMovieImage() {
+        return movieImage;
+    }
+
+    public void setMovieImage(String movieImage) {
+        this.movieImage = movieImage;
+    }
+
     public Set<ReviewEntity> getReviews() {
         return reviews;
     }
+    @JsonIgnore
 
     public void setReviews(Set<ReviewEntity> reviews) {
         this.reviews = reviews;
@@ -128,6 +158,7 @@ public class MovieEntity {
     public Set<GenreMovie> getGenreMovies() {
         return genreMovies;
     }
+    @JsonIgnore
 
     public void setGenreMovies(Set<GenreMovie> genreMovies) {
         this.genreMovies = genreMovies;
@@ -136,16 +167,18 @@ public class MovieEntity {
     public Set<MovieActor> getMovieActors() {
         return movieActors;
     }
+    @JsonIgnore
 
     public void setMovieActors(Set<MovieActor> movieActors) {
         this.movieActors = movieActors;
     }
 
-    public Set<OrderMovie> getOrderMovies() {
-        return orderMovies;
-    }
-
-    public void setOrderMovies(Set<OrderMovie> orderMovies) {
-        this.orderMovies = orderMovies;
-    }
+//    public Set<OrderMovie> getOrderMovies() {
+//        return orderMovies;
+//    }
+//    @JsonIgnore
+//
+//    public void setOrderMovies(Set<OrderMovie> orderMovies) {
+//        this.orderMovies = orderMovies;
+//    }
 }

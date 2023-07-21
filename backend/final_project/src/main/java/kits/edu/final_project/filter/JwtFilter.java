@@ -20,7 +20,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 //tat ca request deu chay vao
-@Component
+//@Component
 public class JwtFilter extends OncePerRequestFilter {
 
     /*
