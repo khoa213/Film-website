@@ -1,58 +1,30 @@
 import { styled } from "styled-components";
-import { Button } from "components/Button";
+import filmAvatar from "assets/film-avatar.svg";
+import filmBladeRunner from "assets/film-blade-runner.svg";
 
 const StyledCard = styled.div`
     .card {
         display: flex;
         flex-direction: column;
-        align-items: ${props => props.title_center};
+        align-items: center;
         border: 10px;
         transition-duration: 0.5s;
-        position: relative;
-        cursor: pointer;
         span {
             color: white;
-        }
-        span.style-title {
-            font-size: ${props => props.font_size};
-            font-weight: ${props => props.font_weight};
-            line-height: ${props => props.line_height};
-        }
-        img {
-            width: ${props => props.width} ;
-            height: ${props => props.height};
-            border-radius: ${props => props.radius};
-        }
-        button {
-            position: absolute;
-            top: -15px;
-            right: 90px;
+            font-size: 12px;
+            font-weight: 400;
         }
     }
 `
-export const Card = ({title, genres, srcImg, width, height, isGrid, title_center, font_size, font_weight, line_height, radius, ...res}) => {
-
+export const Card = ({title, srcImg}) => {
     return (
-        <StyledCard width = {width} height = {height} title_center = {title_center} font_size = {font_size} font_weight = {font_weight} line_height = {line_height} radius = {radius} {...res}>
+        <StyledCard>
             <div className="card">
-                
                 <div className="avatar">
-                    {/* {srcImg ? <img src={filmAvatar} alt="" /> : <img src={filmBladeRunner} alt="" />} */}
-                    <img src={srcImg} alt="" />
+                    {srcImg ? <img src={filmAvatar} alt="" /> : <img src={filmBladeRunner} alt="" />}
                 </div>
-                <span className="style-title">{title}</span>
-                {isGrid ? 
-                (<>
-                    <span className="genres">{genres}</span>
-                    <Button title={"7.5"} text_color={"white"} width={"40px"} height={"19px"} radius={"40px"} border_custom={"2px solid transparent"} font_size_text={"12px"}></Button>
-                </>)
-                 : ""}
+                <span>{title}</span>
             </div>
         </StyledCard>
     )
 }
-
-Card.defaultProps = {
-    font_size: '12px',
-    font_weight: 400,
-};

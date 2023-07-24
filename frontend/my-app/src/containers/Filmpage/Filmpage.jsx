@@ -243,9 +243,9 @@ const Filmpage = () => {
                     <div className='trailertxt'>
                         WATCH MOIVE NOW
                     </div>
-
+                    
                     <div  className="trailervideo">
-
+                    
                         <iframe  className='border' src="https://www.youtube.com/embed/aOC8E8z_ifw">
                         </iframe>
                     </div>
@@ -253,10 +253,6 @@ const Filmpage = () => {
                     123
 
                     </button>
-                    <div className="trailervideo">
-                        <iframe className='border' src="https://www.youtube.com/embed/aOC8E8z_ifw">
-                        </iframe>
-                    </div>
                     <div className='poster'>
                         <div>
                             <div>
