@@ -1,3 +1,18 @@
+import menubar from "assets/menubar.svg"
+import logo from "assets/logo.svg"
+import account from "assets/account.svg"
+import notification from "assets/notification.svg"
+import mandobackbround from "assets/mandobackbround.svg"
+import disneylogo from "assets/disneylogo.svg"
+import MandoLogo from "assets/MandoLogo.svg"
+import imgtrailer from "assets/imgtrailer.svg"
+import dot from "assets/dot.svg"
+import Line4 from "assets/Line4.svg"
+import React from "react";
+import Carousel, { slidesToShowPlugin } from '@brainhubeu/react-carousel';
+import { slidesToScrollPlugin } from '@brainhubeu/react-carousel';
+import { Img } from "components/Img"
+import { CardVideoTrailer } from "components/CardVideoTrailer"
 import epidode2 from "assets/episode2.svg";
 import epidode3 from "assets/episode3.svg";
 import epidode4 from "assets/episode4.svg";
@@ -20,8 +35,10 @@ import redline from "assets/redline.png"
 
 import '@brainhubeu/react-carousel/lib/style.css';
 //import "./styles.css";
+
 // import "slick-carousel/slick/slick.css";
 // import "slick-carousel/slick/slick-theme.css";
+
 // import Slider from "react-slick";
 
 import styled from 'styled-components';
@@ -44,7 +61,10 @@ const StyleInfoPage = styled.div`
         height: 40px;
         width: 300px;
     }
+
 }
+
+
     
 `
 const Header = styled.div`
@@ -52,6 +72,7 @@ const Header = styled.div`
     padding: 20px;
     display:flex;
     justify-content: space-between;
+
     .account{
         display: flex;
         gap: 10px;
@@ -62,6 +83,7 @@ background-color: black;
 padding: 50px;
 color: white;
 font-family: 'Blinker';
+
 .name1{
     display: flex;
     gap:10px;
@@ -74,6 +96,8 @@ font-family: 'Blinker';
     padding-top: 25px;
     font-size: 20px;
     align-items: center;
+
+
 }
 .view{
     align-items: center;
@@ -83,6 +107,7 @@ font-family: 'Blinker';
     display: flex;
     gap:10px;
     align-items: center;
+
 }
 .view{
     display: flex;
@@ -158,6 +183,7 @@ font-family: 'Blinker';
 .save{
     padding-top: 10px;
 }
+
 `
 const Banner = styled.div`
 background-image: url(${mandobackbround});
@@ -171,6 +197,7 @@ flex-direction: column;
 gap:20px;
         font-family: 'Blinker';
         color: white;
+
 padding: 50px;
 background-color: black;
 display: flex;
@@ -196,6 +223,7 @@ display: flex;
 `
 
 const Trailer = styled.div`
+
     height: 100vh;
     margin-left: 50px;
     width: 50%;
@@ -205,6 +233,7 @@ const Trailer = styled.div`
         color: white;
         padding-top: 5px;
         padding-left: 25px;
+
     }
     .logo{
         display: flex;
@@ -239,8 +268,11 @@ const Trailer = styled.div`
                 gap:10px;
                 justify-content: center;
             }
+
+
         }
         .year{
+
         }
         .dot{
             display: flex;
@@ -249,6 +281,7 @@ const Trailer = styled.div`
         }
         .category
         {
+
         }
         .trailervideo{
             width: 380px;
@@ -257,8 +290,10 @@ const Trailer = styled.div`
             /* Đặt giá trị border-radius theo ý muốn */
             /* overflow: hidden; */
             /* scale: 1; */
+
             
                 
+
             }
             
         
@@ -294,6 +329,8 @@ const Trailer = styled.div`
             background-color: red;
         }
 `
+
+
 const InfoPage = () => {
     return (
         <StyleInfoPage>
@@ -456,22 +493,31 @@ const InfoPage = () => {
 
                         </div>
                         {/* <div className="nameemail">
+
                             <div className="name2">
                                 <div>
                                     Name*
                                 </div>
                                 <input type="text" className="review1" />
+
+
                             </div>
                             <div className="email">
                                 <div>
                                     Email*
                                 </div>
                                 <input type="text" className="review1" />
+
+
                             </div>
+
+
+
                         </div> */}
                         {/* <div className="save">
                             <input type="checkbox" ></input>
                             Save my name, email, and website in this browser for the next time I comment.
+
                         </div> */}
                         <button className="btnsubmit">
                             SUBMIT
@@ -663,7 +709,12 @@ const InfoPage = () => {
 
 
 
+
+
+
         </StyleInfoPage>
+
     )
 }
+
 export default InfoPage;
