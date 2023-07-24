@@ -455,49 +455,56 @@ const StyledHomePage = styled.div`
       }
     }
   }
-  .BrainhubCarousel__trackContainer {
+ 
+  .BrainhubCarousel__trackContainer{
     width: 100px;
-
+    
 }
-
-.slide {
+    .slide{
+        display: flex;
+        flex-direction: column;
+        width: 100vw;
+        align-items: center;
+        
+    }
+    
+    .BrainhubCarousel__trackContainer{
+        padding-top: 30px;
+        width: 65vw;
+        padding-left: 30px;
+        gap:10px;
+        
+    }
+    .BrainhubCarouselItem{
+        width: 300px;
+        
+       
+    }
+    .BrainhubCarousel__arrowRight{
+        border-radius: 50%;
+        margin-left: 10px;
+        background-color:red;
+    }
+    .BrainhubCarousel__arrowLeft{
+        border-radius: 50%;
+        margin-right: 10px;
+        background-color:red;
+    }
+    .BrainhubCarouselItem--active{
+        scale: 1.2;
+    }
+    .carousel-wrapper{
+    font-family: sans-serif;
     display: flex;
-    flex-direction: column;
-    width: 100vw;
     align-items: center;
-
-}
-
-.BrainhubCarousel__trackContainer {
-    padding-top: 30px;
-    width: 65vw;
-    padding-left: 30px;
-    gap: 10px;
-
-}
-
-.BrainhubCarouselItem {
-    width: 300px;
+    justify-content: center;
+    height: 100px;
+    width: 100px;
+    }
+`
 
 
-}
 
-.BrainhubCarousel__arrowRight {
-    border-radius: 50%;
-    margin-left: 10px;
-    background-color: red;
-}
-
-.BrainhubCarousel__arrowLeft {
-    border-radius: 50%;
-    margin-right: 10px;
-    background-color: red;
-}
-
-.BrainhubCarouselItem--active {
-    scale: 1.2;
-}
-`;
 const Item = styled.div` display: flex;
 justify-content: center;
 align-items: center;
@@ -511,6 +518,7 @@ font-size: 4em;
 const HomePage = () => {
   return (
     <StyledHomePage>
+      <BestSeller></BestSeller>
       <ShowCase></ShowCase>
       {/* <Header/> */}
       {/* <Slider></Slider> */}
