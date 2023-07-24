@@ -1,3 +1,4 @@
+import { Footer } from 'components/Footer';
 import { Header } from 'components/Header';
 import { Outlet } from 'react-router-dom';
 import styled from 'styled-components';
@@ -13,6 +14,7 @@ export const PrimaryLayout = ({children}) => {
         <StyledPrimaryLayout>
             <Header/>
             <Outlet></Outlet>
+            <Footer></Footer>
         </StyledPrimaryLayout>
     )
 }
