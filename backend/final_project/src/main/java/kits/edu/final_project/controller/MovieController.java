@@ -63,6 +63,7 @@ public class MovieController {
     private Gson gson=new Gson();
     @PostMapping("/{movieId}/reviews")
     public ResponseEntity<?> addReviewForMovie(@PathVariable int movieId, @RequestBody ReviewRequest reviewRequest, Principal principal) {
+        System.out.println("ok");
         // Gọi phương thức của MovieService để thêm review cho phim
         movieService.addReviewForMovie(movieId, reviewRequest, principal);
 

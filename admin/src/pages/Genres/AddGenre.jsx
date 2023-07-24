@@ -1,8 +1,14 @@
+import { createGenre } from "Redux/Actions/GenreActions";
+import { GENRE_CREATE_RESET } from "Redux/Constants/GenreConstants";
 import { Radio } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import { Button } from "components/Button";
 import Input from "components/Input";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import styled from "styled-components";
 const Wrapper = styled.div`
   padding: 20px;
@@ -50,18 +56,56 @@ const Wrapper = styled.div`
     justify-content: space-between;
   }
 `;
+//Login
+const ToastObjects = {
+  pauseOnFocusLoss: false,
+  draggable: false,
+  pauseOnHover: false,
+  autoClose: 2000,
+};
 export const AddGenre = () => {
-  const [selectedValue, setSelectedValue] = useState("option1");
+  const [selectedValue, setSelectedValue] = useState(1);
   const [name, setName] = useState("");
   const [desc, setDesc] = useState("");
+  const dispatch = useDispatch();
+  const genreCreate = useSelector((state) => state.genreCreate);
+  const { loading, error, genre } = genreCreate;
+  const nameRef = useRef(null); // Thêm refs cho input Name
+  const descRef = useRef(null); // Thêm refs cho input Description
+  const navigate = useNavigate();
   // console.log(name, desc);
   const formData = {
     name: name,
     desc: desc,
     status: selectedValue === 1 ? true : false,
   };
+
+  useEffect(() => {
+    if (genre && !loading && !error) {
+      // toast.success("Genre Added", ToastObjects);
+      dispatch({ type: GENRE_CREATE_RESET });
+      setName("");
+      setDesc("");
+      setSelectedValue(1);
+      // Đặt lại giá trị của các input sau khi thêm thành công
+      // nameRef.current.value = "";
+      // descRef.current.value = "";
+    } else if (error) {
+      // Xử lý thông báo lỗi ở đây nếu cần thiết
+      toast.error("Error occurred while adding genre", ToastObjects);
+    }
+  }, [genre, loading, error, dispatch]);
   const handleSubmit = () => {
-    console.log(formData);
+    // e.preventDefault();
+    dispatch(createGenre(formData));
+    navigate("genre/list-genres");
+    // alert("ok");
+  };
+  const handleCancel = () => {
+    // e.preventDefault();
+    // nameRef.current.value = "";
+    // descRef.current.value = "";
+    // alert("ok");
   };
   const handleRadioChange = (e) => {
     setSelectedValue(e.target.value);
@@ -70,6 +114,7 @@ export const AddGenre = () => {
     <Wrapper>
       <h3>Add Genre</h3>
       <Input
+        ref={nameRef} // Sử dụng ref cho input Name
         width={400}
         height={40}
         textColor={"#fff"}
@@ -86,6 +131,7 @@ export const AddGenre = () => {
         style={{ marginBottom: "20px" }}
       ></Input>
       <TextArea
+        ref={descRef} // Sử dụng ref cho input Name
         className="textarea"
         showCount
         maxLength={10000}
@@ -137,6 +183,7 @@ export const AddGenre = () => {
           // id={id}
           // className={className}
           // borderImage={borderImage}
+          onClick={() => handleCancel()}
         >
           Cancel
         </Button>

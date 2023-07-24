@@ -20,7 +20,7 @@ export const listMovie = () => async (dispatch, getState) => {
 
     const config = {
       headers: {
-        Authorization: `Bearer ${userInfo.token}`,
+        Authorization: `Bearer ${userInfo}`,
       },
     };
     const { data } = await axios.get(`http://localhost:8080/movies`, config);

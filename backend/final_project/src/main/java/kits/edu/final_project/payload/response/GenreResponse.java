@@ -8,6 +8,7 @@ public class GenreResponse {
     private String name;
     private String desc;
     private BigInteger countMovies;
+    private boolean status;
 
     public int getId() {
         return id;
@@ -54,6 +55,15 @@ public class GenreResponse {
         genreResponse.setDesc((String) objMap.get("description"));
         genreResponse.setName((String) objMap.get("name"));
         genreResponse.setCountMovies((BigInteger) objMap.get("countMovies"));
+//        genreResponse.setStatus((boolean) objMap.get("status"));
         return genreResponse;
     }
+
+//    public boolean getStatus() {
+//        return status;
+//    }
+//
+//    public void setStatus(boolean status) {
+//        this.status = status;
+//    }
 }

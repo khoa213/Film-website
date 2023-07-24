@@ -104,7 +104,7 @@ public class ReviewServiceImp implements ReviewService {
 
 
     @Override
-    public void addReview(ReviewRequest reviewRequest, Principal principal) {
+    public void addReview(int movieId,ReviewRequest reviewRequest, Principal principal) {
         try{
 //            System.out.println(principal);
             // Lấy thông tin người dùng đã đăng nhập từ Principal
@@ -119,7 +119,7 @@ public class ReviewServiceImp implements ReviewService {
             UserEntity user = userRepository.findByEmail(username);
             System.out.println(user);
             // Lấy thông tin phim từ cơ sở dữ liệu dựa trên movieId
-            MovieEntity movie = movieRepository.findById(reviewRequest.getMovieId())
+            MovieEntity movie = movieRepository.findById(movieId)
                     .orElseThrow(() -> new CustomException("Không tìm thấy phim với ID đã cho."));
 
             ReviewEntity review = new ReviewEntity();

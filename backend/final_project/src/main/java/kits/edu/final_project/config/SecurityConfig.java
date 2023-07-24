@@ -3,10 +3,13 @@ package kits.edu.final_project.config;
 
 import kits.edu.final_project.filter.JwtFilter;
 import kits.edu.final_project.provider.CustomAuthProvider;
+import kits.edu.final_project.service.userDetails.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -20,7 +23,14 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig  {
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
+    @Autowired
+    private JWTEntryPoint jwtEntryPoint;
+//    @Autowired
+//    private CustomUserDetailsService customUserDetailsService;
+
+
+
     //khai bao chuan ma hoa Bcrypt va luu tren IOC
     @Bean
     public PasswordEncoder passwordEncoder(){
@@ -29,34 +39,77 @@ public class SecurityConfig  {
 
 
     @Autowired
-    private CustomAuthProvider customAuthProvider;
+private  CustomAuthProvider customAuthProvider;
+
+
 
     @Autowired
     private JwtFilter jwtFilter;
 
-    @Bean
-    public AuthenticationManager authenticationManager(HttpSecurity httpSecurity) throws Exception{
-        return
-                httpSecurity.getSharedObject(AuthenticationManagerBuilder.class)
-               //khai bao custom details service
-//                .userDetailsService(customUserDetailService)
-//                //khai bao chuan ma hoa pass
-//                .passwordEncoder(passwordEncoder())
-                        .authenticationProvider(customAuthProvider)
+//    @Bean
+//    public AuthenticationManager authenticationManager(HttpSecurity httpSecurity) throws Exception{
+//        return
+//                httpSecurity.getSharedObject(AuthenticationManagerBuilder.class)
+//               //khai bao custom details service
+////                .userDetailsService(customUserDetailService)
+////                //khai bao chuan ma hoa pass
+////                .passwordEncoder(passwordEncoder())
+//                        .authenticationProvider(customAuthProvider)
+////                .and()
+//                .build();
+//    }
+//    @Bean
+//    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+//        return http.csrf().disable() //tat cau hinh tan cong csrf
+//                .exceptionHandling()
+//                .authenticationEntryPoint(jwtEntryPoint)
 //                .and()
-                .build();
-    }
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        return http.csrf().disable() //tat cau hinh tan cong csrf
+//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+//                .and()
+//                .authorizeRequests()//quy dinh rule xac thuc nguoi dung
+//                    .antMatchers("/signin","/signup","/demo/**","/movies/**","/review/**").permitAll()//java 11 la antMatcher,17 la requestAntmatcher
+//                .antMatchers("/user","/user/**").hasRole("ADMIN")
+////                    .anyRequest().authenticated()//cac route con lai bi chan
+//                .and()
+//                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
+//                .build();
+//    }
+
+    // Các phần cấu hình khác không thay đổi
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.csrf().disable()
+                .cors() // enable CORS support
+                .and()
+                .exceptionHandling()
+                .authenticationEntryPoint(jwtEntryPoint)
+                .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .authorizeRequests()//quy dinh rule xac thuc nguoi dung
-                    .antMatchers("/signin","/signup","/demo/**","/user","/user/**","/movies/**","/review/**").permitAll()//java 11 la antMatcher,17 la requestAntmatcher
-
-//                    .anyRequest().authenticated()//cac route con lai bi chan
-                .and()
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
-                .build();
+                .authorizeRequests()
+                .antMatchers("/signin","/signup").permitAll()
+//                .antMatchers("/user", "/user/**").hasAuthority("ADMIN")
+                .anyRequest().authenticated();
+    }
+
+//@Bean
+//    public AuthenticationProvider authenticationProvider(){
+//    DaoAuthenticationProvider authenticationProvider=new DaoAuthenticationProvider();
+//    authenticationProvider.setUserDetailsService(customUserDetailsService);
+//    authenticationProvider.setPasswordEncoder(passwordEncoder());
+//    return authenticationProvider;
+//}
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        // Xác định customAuthProvider là authenticationProvider cho AuthenticationManagerBuilder
+//        auth.userDetailsService(customUserDetailsService);
+        auth.authenticationProvider(customAuthProvider);
+    }
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
     }
 }

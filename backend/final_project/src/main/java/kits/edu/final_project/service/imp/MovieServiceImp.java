@@ -68,7 +68,7 @@ public class MovieServiceImp implements MovieService {
         // Thực hiện các kiểm tra và xử lý liên quan đến phim (nếu cần)
 
         // Gọi phương thức của ReviewService để thêm review
-        reviewService.addReview(reviewRequest,principal);
+        reviewService.addReview(movieId,reviewRequest,principal);
     }
 
     @Override

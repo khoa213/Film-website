@@ -93,10 +93,10 @@ export const listUser = () => async (dispatch, getState) => {
 
     const config = {
       headers: {
-        Authorization: `Bearer ${userInfo.token}`,
+        Authorization: `Bearer ${userInfo}`,
       },
     };
-
+    console.log(userInfo);
     const { data } = await axios.get(`http://localhost:8080/user`, config);
 
     dispatch({ type: USER_LIST_SUCCESS, payload: data });
@@ -131,18 +131,20 @@ export const register = (formData) => async (dispatch) => {
       formData,
       config
     );
+    toast.success("Register Success", config);
     dispatch({ type: USER_REGISTER_SUCCESS, payload: data });
-    dispatch({ type: USER_LOGIN_SUCCESS, payload: data });
+    // dispatch({ type: USER_LOGIN_SUCCESS, payload: data });
 
-    localStorage.setItem("userInfo", JSON.stringify(data.data));
+    // localStorage.setItem("userInfo", JSON.stringify(data.data));
   } catch (error) {
     dispatch({
       type: USER_REGISTER_FAIL,
       payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
+        error.response && error.response.data
+          ? error.response.data
           : error.message,
     });
+    toast.error(error.response.data.data, ToastObjects);
   }
 };
 //delete user

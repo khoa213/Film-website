@@ -22,6 +22,7 @@ import {
 } from "./Reducers/ReviewReducers";
 import {
   genreListReducer,
+  genreCreateReducer,
   genreDeleteReducer,
   genreUpdateReducer,
 } from "./Reducers/GenreReducers";
@@ -38,6 +39,9 @@ const reducer = combineReducers({
   userDelete: userDeleteReducer,
   userUpdate: userUpdateReducer,
   genreList: genreListReducer,
+  genreCreate: genreCreateReducer,
+  genreUpdate: genreUpdateReducer,
+
   // movieDetails: movieDetailsReducer,
   // movieReviewCreate: movieCreateReviewReducer,
 });

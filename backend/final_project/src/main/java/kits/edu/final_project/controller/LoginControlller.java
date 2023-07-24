@@ -53,10 +53,6 @@ public class LoginControlller {
 
         return new ResponseEntity<>(response, HttpStatus.OK);
 
-
-
-
-
     }
 
     @RequestMapping(value = "/signup",method= RequestMethod.POST)
@@ -64,15 +60,32 @@ public class LoginControlller {
             @Valid SignupRequest request,
             BindingResult bindingResult
             ){
-        List<FieldError> list = bindingResult.getFieldErrors();
-        for (FieldError data:
-             list) {
-            throw new CustomException(data.getDefaultMessage());
-//            System.out.println("kiem tra "+data.getField()+ " - "+data.getDefaultMessage());
+//        List<FieldError> list = bindingResult.getFieldErrors();
+//        for (FieldError data:
+//             list) {
+//            throw new CustomException(data.getDefaultMessage());
+////            System.out.println("kiem tra "+data.getField()+ " - "+data.getDefaultMessage());
+//        }
+//
+//        boolean isSuccess = userService.addUser(request);
+//
+//        BaseResponse response =new BaseResponse();
+//        response.setStatusCode(200);
+//        response.setData(isSuccess);
+//
+//        return new ResponseEntity<>(response, HttpStatus.OK);
+        if (bindingResult.hasErrors()) {
+            List<FieldError> fieldErrors = bindingResult.getFieldErrors();
+            StringBuilder errorMessage = new StringBuilder();
+            for (FieldError fieldError : fieldErrors) {
+                errorMessage.append(fieldError.getDefaultMessage()).append(". ");
+            }
+            throw new CustomException(errorMessage.toString());
         }
+
         boolean isSuccess = userService.addUser(request);
 
-        BaseResponse response =new BaseResponse();
+        BaseResponse response = new BaseResponse();
         response.setStatusCode(200);
         response.setData(isSuccess);
 

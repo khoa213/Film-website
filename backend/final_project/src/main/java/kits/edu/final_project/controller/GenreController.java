@@ -44,4 +44,11 @@ public class GenreController {
         response.setData(isSuccess);
         return new ResponseEntity<>(response,HttpStatus.OK);
     }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteGenreById (@PathVariable("id") int id) {
+        BaseResponse response = new BaseResponse();
+        response.setStatusCode(200);
+        response.setData(genreService.deleteGenreById(id));
+        return new ResponseEntity<>(response,HttpStatus.OK);
+    }
 }

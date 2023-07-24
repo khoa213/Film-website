@@ -30,4 +30,12 @@ public class JwtHelper {
                 .getBody();
       return claims;
     }
+    public String getUsernameByJWT(String token){
+        Key key= Keys.hmacShaKeyFor(Decoders.BASE64.decode(secretKey));
+        Claims claims= Jwts.parserBuilder().setSigningKey(key)
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+        return claims.getSubject();
+    }
 }

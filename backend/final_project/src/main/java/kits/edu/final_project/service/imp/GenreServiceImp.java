@@ -51,4 +51,19 @@ public class GenreServiceImp implements GenreService {
 
     }
 
+    @Override
+    public boolean deleteGenreById(int id) {
+        boolean isSuccess =false;
+        try {
+
+            genreRepository.deleteById(id);
+            isSuccess=true;
+        }catch (Exception e)
+        {
+
+            throw new CustomException("Loi xoa genre "+e.getMessage());
+        }
+        return isSuccess;
+    }
+
 }
