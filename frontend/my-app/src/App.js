@@ -10,6 +10,7 @@ import Filmpage from "containers/Filmpage";
 import Pricing from "containers/Pricing";
 import Payment from "containers/Payment";
 import UserProfile from 'containers/UserProfile';
+import { MoviesPage } from "containers/Movie";
 
 
 
@@ -20,6 +21,7 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/detail" element={<DetailPage />} />
         <Route path="/pricing" element={<Pricing />} />
+        <Route path="/moives" element={<MoviesPage />} />
         <Route path="/payment" element={<Payment />} />
         <Route path="/userprofile" element={<UserProfile/>} />
       </Route>
