@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 const StyledHeader = styled.div`
     .header {
         background-color: #190401;
-        width: 1406px;
+        width: 95vw;
         display: flex;
         justify-content: space-between;
         align-items: center;

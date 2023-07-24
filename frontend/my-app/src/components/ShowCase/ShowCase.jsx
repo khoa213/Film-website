@@ -6,6 +6,7 @@ import { styled } from "styled-components";
 const StyledShowCase = styled.div`
     .showcase {
         display: flex;
+        width: 100vw;
         justify-content: space-around;
         height: 213px;
         padding: 15px;
