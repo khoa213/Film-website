@@ -1,4 +1,3 @@
-import { Banner } from "components/Banner";
 import { styled } from "styled-components";
 import searchIcon from "assets/searchIcon.svg";
 import { Genres } from "components/Genres";
@@ -6,6 +5,7 @@ import { Card } from "components/Card";
 import { Button } from "components/Button";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
+import { BestSeller } from "components/Seller/Seller";
 
 const StyleMovies = styled.div`
    @media screen and (max-width: 1439px) {
@@ -293,7 +293,7 @@ const StyleMovies = styled.div`
         img {
             padding: 5px;
             position: absolute;
-            right: 660px;
+            right: 705px;
             top: 2px;
         }
     }
@@ -384,7 +384,7 @@ export const MoviesPage = () => {
     }
     return (
         <StyleMovies>
-            <Banner></Banner>
+            <BestSeller></BestSeller>
             <Genres></Genres>
             <div className="search-input">
                 <input id="name" type="text" placeholder="Enter Name. ex: Spider"/>

@@ -1,6 +1,7 @@
 import { Genres } from "components/Genres/Genres";
 import { GridMovie } from "components/Grid";
 import { Header } from "components/Header";
+import { BestSeller } from "components/Seller/Seller";
 import { ShowCase } from "components/ShowCase";
 import SliderComponent from "components/SliderComponent";
 import styled from "styled-components";
