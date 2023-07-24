@@ -11,13 +11,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.transaction.Transactional;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public interface OrderService  {
 
     List<OrderResponse> getOrders();
-    List<OrderEntity> payment(@PathVariable int userId);
+    List<OrderEntity> payment(@PathVariable String username, Principal principal);
     OrderEntity addOrder( OrderEntity orderEntity);
     OrderEntity updateOrderById(OrderEntity orderEntity,int id);
     boolean deleteOrderById(@PathVariable int id);

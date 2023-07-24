@@ -6,10 +6,13 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.security.Principal;
 import java.util.List;
 
 @Repository
 public interface OrderRepository extends JpaRepository<OrderEntity,Integer> {
-    @Query(value = "select * from orders o where o.user_id = :userId",nativeQuery = true)
-    List<OrderEntity> getPackagebyId(@PathVariable int userId);
+
+
+    @Query(value = "select * from users u join orders o on u.user_id = o.user_id where username = :username",nativeQuery = true)
+    List<OrderEntity> getPackagebyId(@PathVariable String username);
 }

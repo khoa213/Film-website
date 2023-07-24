@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 @Service
@@ -39,9 +40,13 @@ public class OrderServiceImp implements OrderService {
 
     @Override
 //    @Query(value = "select * from orders o where o.user_id = :userId",nativeQuery = true)
-    public List<OrderEntity> payment(@PathVariable int userId) {
+    public List<OrderEntity> payment(@PathVariable String username, Principal principal) {
 //        List<OrderEntity> list = orderRepository.findAll();
-        return orderRepository.getPackagebyId(userId);
+        if (principal == null) {
+            throw new CustomException("you are not logged in");
+        }
+          username = principal.getName();
+        return orderRepository.getPackagebyId(username);
     }
 
     public OrderEntity addOrder( OrderEntity orderEntity) {

@@ -2,6 +2,7 @@ package kits.edu.final_project.controller;
 
 import io.lettuce.core.dynamic.annotation.Param;
 import kits.edu.final_project.entity.OrderEntity;
+import kits.edu.final_project.entity.UserEntity;
 import kits.edu.final_project.payload.response.BaseResponse;
 import kits.edu.final_project.payload.response.OrderResponse;
 import kits.edu.final_project.service.OrderService;
@@ -9,9 +10,11 @@ import kits.edu.final_project.service.imp.OrderServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -29,11 +32,12 @@ public class OrderController {
         return  new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @GetMapping("/payment/{userId}")
-    public ResponseEntity<?> getPackageById(@PathVariable int userId) {
+
+    @GetMapping("/payment/{username}")
+    public ResponseEntity<?> getPackageById(@PathVariable String username, Principal principal) {
         BaseResponse response=new BaseResponse();
         response.setStatusCode(200);
-        response.setData(orderService.payment(userId));
+        response.setData(orderService.payment(username,principal));
         return  new ResponseEntity<>(response, HttpStatus.OK);
     }
 
