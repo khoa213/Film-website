@@ -28,5 +28,5 @@ public interface ReviewService  {
     boolean deleteReviewById(@PathVariable int id);
 //    void addReview(ReviewRequest reviewRequest);
     boolean replaceReviewById(@RequestBody ReviewRequest reviewRequest, @PathVariable int id);
-    void addReview(ReviewRequest reviewRequest, Principal principal);
+    void addReview(int movieId,ReviewRequest reviewRequest, Principal principal);
 }

@@ -68,4 +68,11 @@ public class MovieController {
 
         return ResponseEntity.ok("Đã thêm review thành công!");
     }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteMovieById (@PathVariable("id") int id) {
+        BaseResponse response = new BaseResponse();
+        response.setStatusCode(200);
+        response.setData(movieService.deleteMovieById(id));
+        return new ResponseEntity<>(response,HttpStatus.OK);
+    }
 }

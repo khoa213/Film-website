@@ -17,7 +17,7 @@ public class GenreEntity {
     @Column(name = "description")
     private String desc;
     @Column(name = "status")
-    private boolean status;
+    private int status;
     @OneToMany(mappedBy = "genre")
     private Set<GenreMovie> genreMovies;
 
@@ -53,11 +53,11 @@ public class GenreEntity {
         this.genreMovies = genreMovies;
     }
 
-    public boolean getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 }

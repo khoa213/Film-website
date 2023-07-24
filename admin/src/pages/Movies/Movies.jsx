@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import Input from "components/Input";
 import DropDown from "components/Dropdown/Dropdown";
-import { listMovie } from "Redux/Actions/MovieActions";
+import { deleteMovie, listMovie } from "Redux/Actions/MovieActions";
 const Wrapper = styled.div`
   .custom-table .ant-table-wrapper {
     background-color: var(--body-content-light-background);
@@ -390,14 +390,14 @@ const Movies = () => {
   };
 
   const deleteRow = (id) => {
-    // dispatch(deleteUser(id))
-    //   .then(() => dispatch(listUser()))
-    //   .then((response) => {
-    //     setData(response.data);
-    //   })
-    //   .catch((error) => {
-    //     // Handle error if necessary
-    //   });
+    dispatch(deleteMovie(id))
+      .then(() => dispatch(listMovie()))
+      .then((response) => {
+        setData(response.data);
+      })
+      .catch((error) => {
+        // Handle error if necessary
+      });
   };
 
   useEffect(() => {

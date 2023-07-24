@@ -10,7 +10,7 @@ import SignUp from "pages/SignUp/SignUp";
 import "react-toastify/dist/ReactToastify.css";
 import Users from "pages/Users";
 import Pricing from "pages/Pricing";
-import Movies from "pages/Movies";
+import Movies, { AddMovie } from "pages/Movies";
 import Genres, { AddGenre } from "pages/Genres";
 // import Users from "pages/Users";
 
@@ -33,6 +33,7 @@ function App() {
 
             <Route path="/user" element={<Users />}></Route>
             <Route path="/movie/list-movies" element={<Movies />}></Route>
+            <Route path="/movie/add-movies" element={<AddMovie />}></Route>
             <Route path="/genre/list-genres" element={<Genres />}></Route>
             <Route path="/genre/add-genre" element={<AddGenre />}></Route>
 

@@ -2,6 +2,7 @@ package kits.edu.final_project.controller;
 
 import kits.edu.final_project.entity.GenreEntity;
 import kits.edu.final_project.entity.MovieEntity;
+import kits.edu.final_project.entity.UserEntity;
 import kits.edu.final_project.payload.response.BaseResponse;
 import kits.edu.final_project.payload.response.GenreResponse;
 import kits.edu.final_project.service.GenreService;
@@ -42,6 +43,21 @@ public class GenreController {
         BaseResponse response = new BaseResponse();
         response.setStatusCode(201);
         response.setData(isSuccess);
+        return new ResponseEntity<>(response,HttpStatus.OK);
+    }
+    @PutMapping("/{id}")
+    public ResponseEntity<?> replaceGereById(@RequestBody GenreEntity genreEntity, @PathVariable("id") int id) {
+
+        BaseResponse response = new BaseResponse();
+        response.setStatusCode(200);
+        response.setData(genreService.replaceGenreById(genreEntity,id));
+        return new ResponseEntity<>(response,HttpStatus.OK);
+    }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteGenreById (@PathVariable("id") int id) {
+        BaseResponse response = new BaseResponse();
+        response.setStatusCode(200);
+        response.setData(genreService.deleteGenreById(id));
         return new ResponseEntity<>(response,HttpStatus.OK);
     }
 }

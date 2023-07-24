@@ -208,6 +208,9 @@ public class MovieResponse {
         movieEntity.setDuration(movieResponse.getDuration());
         movieEntity.setMovieLink(movieResponse.getMovieLink());
         movieEntity.setMovieImage(movieResponse.getMovieImage());
+        movieEntity.setReleaseDate(movieResponse.getReleaseDate());
+        movieEntity.setDesc(movieResponse.getDesc());
+        movieEntity.setPrice(movieResponse.getPrice());
         return movieEntity;
     }
 }

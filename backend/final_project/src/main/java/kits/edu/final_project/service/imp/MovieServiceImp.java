@@ -2,6 +2,7 @@ package kits.edu.final_project.service.imp;
 
 
 import kits.edu.final_project.entity.MovieEntity;
+import kits.edu.final_project.entity.UserEntity;
 import kits.edu.final_project.exception.CustomException;
 import kits.edu.final_project.payload.request.ReviewRequest;
 import kits.edu.final_project.payload.response.MovieResponse;
@@ -57,6 +58,7 @@ public class MovieServiceImp implements MovieService {
     public void addReviewForMovie(int movieId, ReviewRequest reviewRequest, Principal principal) {
 
         // Kiểm tra xem người dùng đã xác thực hay chưa
+        System.out.println("dsadsa"+principal);
         if (principal == null) {
             // Người dùng chưa xác thực, không thêm review
             throw new CustomException("Bạn phải đăng nhập để thêm review.");
@@ -68,13 +70,25 @@ public class MovieServiceImp implements MovieService {
         // Thực hiện các kiểm tra và xử lý liên quan đến phim (nếu cần)
 
         // Gọi phương thức của ReviewService để thêm review
-        reviewService.addReview(reviewRequest,principal);
+        reviewService.addReview(movieId,reviewRequest,principal);
     }
 
     @Override
     public void createMovie(MovieEntity movieEntity) {
         movieRepository.save(movieEntity);
     }
+    @Override
+    public List<MovieEntity> deleteMovieById(int id) {
+        try {
+            movieRepository.deleteById(id);
+            return movieRepository.findAll();
+        }
 
+
+       catch (Exception e)
+       {
+           throw new CustomException("No permit delete");
+       }
+    }
 
 }

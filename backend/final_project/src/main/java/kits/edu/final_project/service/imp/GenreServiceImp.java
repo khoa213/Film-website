@@ -22,6 +22,7 @@ public class GenreServiceImp implements GenreService {
     GenreRepository genreRepository;
     public List<GenreResponse> getGenres() {
         List<Map<String, Object>> genreList = genreRepository.getGenre();
+//        System.out.println(genreList.toString());
         GenreResponse genreResponse = new GenreResponse();
         List<GenreResponse> genreResponseList = new ArrayList<>();
         for (Map genreMap: genreList) {
@@ -49,6 +50,27 @@ public class GenreServiceImp implements GenreService {
             }
             return isSuccess;
 
+    }
+    @Override
+    public GenreEntity replaceGenreById(GenreEntity genreEntity, int id) {
+//        System.out.println(id);
+        return genreRepository.findById(id).map(u->{
+                    u.setName(genreEntity.getName());
+                    u.setDesc(genreEntity.getDesc());
+                    u.setStatus(genreEntity.getStatus());
+
+                    return genreRepository.save(u);
+                })
+                .orElseGet(()->{
+                    return genreRepository.save(genreEntity);
+                });
+//        return null;
+    }
+
+    @Override
+    public List<GenreEntity> deleteGenreById(int id) {
+        genreRepository.deleteById(id);
+        return genreRepository.findAll();
     }
 
 }

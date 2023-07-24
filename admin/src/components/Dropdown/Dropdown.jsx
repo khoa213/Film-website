@@ -21,9 +21,9 @@ const DropDown = ({ items, label, defaultValue, onChange }) => {
         onChange={handleSelect}
       >
         {items.map((item) => (
-          <Option value={item.label} key={item.key}>
+          <Select.Option value={item.label} key={item.key}>
             {item.label}
-          </Option>
+          </Select.Option>
         ))}
       </Select>
       {/* <p>Selected Gender: {selected}</p> */}

@@ -11,7 +11,12 @@ import { useDispatch, useSelector } from "react-redux";
 
 import Input from "components/Input";
 import DropDown from "components/Dropdown/Dropdown";
-import { listGenre } from "Redux/Actions/GenreActions";
+import {
+  deleteGenre,
+  listGenre,
+  updateGenre,
+} from "Redux/Actions/GenreActions";
+import TextArea from "antd/es/input/TextArea";
 const Wrapper = styled.div`
   .custom-table .ant-table-wrapper {
     background-color: var(--body-content-light-background);
@@ -157,8 +162,8 @@ const Genres = () => {
           >
             {selectedGenre && (
               <div className="modal-container">
-                {/* <div className="input-field">
-                  <label>Username:</label>
+                <div className="input-field">
+                  <label>Name:</label>
                   <br />
                   <Input
                     boderColor={"#000"}
@@ -166,17 +171,41 @@ const Genres = () => {
                     borderRadius={10}
                     width={400}
                     type="text"
-                    value={selectedGenre.username}
+                    value={selectedGenre.name}
                     onChange={(e) =>
                       setselectedGenre({
                         ...selectedGenre,
-                        username: e.target.value,
+                        name: e.target.value,
                       })
                     }
                   />
                 </div>
                 <div className="input-field">
-                  <label>Email:</label>
+                  <label>Description:</label>
+                  <br />
+
+                  <TextArea
+                    name="description"
+                    maxLength={10000}
+                    style={{
+                      height: 200,
+                      width: 410,
+                      marginBottom: 24,
+                      border: "1px solid black",
+                      color: "#000",
+                    }}
+                    type="text"
+                    value={selectedGenre.desc}
+                    onChange={(e) =>
+                      setselectedGenre({
+                        ...selectedGenre,
+                        desc: e.target.value,
+                      })
+                    }
+                  />
+                </div>
+                <div className="input-field">
+                  <label>Movie:</label>
                   <br />
                   <Input
                     boderColor={"#000"}
@@ -184,78 +213,16 @@ const Genres = () => {
                     borderRadius={10}
                     width={400}
                     type="text"
-                    value={selectedGenre.email}
+                    value={selectedGenre.countMovies}
                     onChange={(e) =>
                       setselectedGenre({
                         ...selectedGenre,
-                        email: e.target.value,
+                        countMovies: e.target.value,
                       })
                     }
                   />
                 </div>
-                <div className="input-field">
-                  <label>Phone:</label>
-                  <br />
-                  <Input
-                    boderColor={"#000"}
-                    height={36}
-                    borderRadius={10}
-                    width={400}
-                    type="text"
-                    // value={}
-                    onChange={(e) =>
-                      setselectedGenre({
-                        ...selectedGenre,
-                        // email: e.target.value,
-                      })
-                    }
-                  />
-                </div>
-                <div className="input-field">
-                  <br />
-                  <DropDown
-                    onClick={onClick}
-                    items={[
-                      {
-                        label: "Nam",
-                        key: "1",
-                      },
-                      {
-                        label: "Nữ",
-                        key: "0",
-                      },
-                    ]}
-                    label={"Gender"}
-                    // defaultValue={getGenderLabel(
-                    //   selectedGenre && selectedGenre.gender
-                    // )}
-                    defaultValue={selectedGenre.gender ? "Nam" : "Nữ"}
-                    onChange={(value) =>
-                      setselectedGenre({
-                        ...selectedGenre,
-                        gender: value === "Nam" ? true : false,
-                      })
-                    }
-                  />
-                </div>
-                <div className="input-field">
-                  <label>Birthday:</label>
-                  <br />
-                  <Input
-                    boderColor={"#000"}
-                    height={36}
-                    borderRadius={10}
-                    width={400}
-                    type="text"
-                    value={selectedGenre.birthday}
-                    onChange={(e) =>
-                      setselectedGenre({
-                        ...selectedGenre,
-                        birthday: e.target.value,
-                      })
-                    }
-                  />
-                </div>
+
                 <div className="input-field">
                   <br />
                   <DropDown
@@ -282,11 +249,11 @@ const Genres = () => {
                       })
                     }
                   />
-                </div> */}
+                </div>
                 <Popconfirm
                   title="Are you sure to update this genre?"
                   onConfirm={() => {
-                    // updateRow(params.row.id);
+                    updateRow(params.row.id);
 
                     handlePopconfirmOk();
                   }}
@@ -345,13 +312,12 @@ const Genres = () => {
     if (selectedGenre) {
       const updatedgenre = {
         ...selectedGenre,
-        // username: selectedGenre.username,
-        // email: selectedGenre.email,
-        // // phone: selectedGenre.phone,
-        // gender: selectedGenre.gender,
+        name: selectedGenre.name,
+        desc: selectedGenre.desc,
+        // phone: selectedGenre.phone,
+        countMovies: selectedGenre.countMovies,
 
-        // birthday: selectedGenre.birthday,
-        // status: selectedGenre.status,
+        status: selectedGenre.status,
       };
       console.log(updatedgenre);
       // console.log(updatedgenre);
@@ -378,25 +344,27 @@ const Genres = () => {
   );
 
   const updateRow = (updatedgenre) => {
-    // dispatch(updateUser(updatedgenre))
-    //   .then(() => dispatch(listUser()))
-    //   .then((response) => {
-    //     setData(response.data);
-    //   })
-    //   .catch((error) => {
-    //     // Handle error if necessary
-    //   });
+    // console.log(updatedgenre.id);
+    dispatch(updateGenre(updatedgenre))
+      .then(() => dispatch(listGenre()))
+      .then((response) => {
+        setData(response.data);
+      })
+      .catch((error) => {
+        // Handle error if necessary
+      });
   };
 
   const deleteRow = (id) => {
-    // dispatch(deleteUser(id))
-    //   .then(() => dispatch(listUser()))
-    //   .then((response) => {
-    //     setData(response.data);
-    //   })
-    //   .catch((error) => {
-    //     // Handle error if necessary
-    //   });
+    console.log(id);
+    dispatch(deleteGenre(id))
+      .then(() => dispatch(listGenre()))
+      .then((response) => {
+        setData(response.data);
+      })
+      .catch((error) => {
+        // Handle error if necessary
+      });
   };
 
   useEffect(() => {

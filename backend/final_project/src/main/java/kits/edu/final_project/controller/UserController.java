@@ -58,7 +58,6 @@ public class UserController {
         return new ResponseEntity<>(response,HttpStatus.OK);
     }
     @DeleteMapping("/{id}")
-
     public ResponseEntity<?> deleteUserById (@PathVariable("id") int id) {
         BaseResponse response = new BaseResponse();
         response.setStatusCode(200);

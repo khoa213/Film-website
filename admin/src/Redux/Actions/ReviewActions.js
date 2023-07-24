@@ -20,7 +20,7 @@ export const listReview = () => async (dispatch, getState) => {
 
     const config = {
       headers: {
-        Authorization: `Bearer ${userInfo.token}`,
+        Authorization: `Bearer ${userInfo}`,
       },
     };
 
@@ -55,7 +55,7 @@ export const deleteReview = (id) => async (dispatch, getState) => {
 
     const config = {
       headers: {
-        Authorization: `Bearer ${userInfo.token}`,
+        Authorization: `Bearer ${userInfo}`,
       },
     };
 
@@ -90,7 +90,7 @@ export const updateReview = (review) => async (dispatch, getState) => {
     const config = {
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${userInfo.token}`,
+        Authorization: `Bearer ${userInfo}`,
       },
     };
 

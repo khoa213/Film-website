@@ -8,7 +8,7 @@ public class GenreResponse {
     private String name;
     private String desc;
     private BigInteger countMovies;
-
+    private int status;
     public int getId() {
         return id;
     }
@@ -40,6 +40,15 @@ public class GenreResponse {
     public void setDesc(String desc) {
         this.desc = desc;
     }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
     //    public GenreResponse mapGenreToResponse(GenreEntity genreEntity) {
 //        GenreResponse genreResponse = new GenreResponse();
 //        genreResponse.setId(genreEntity.getId());
@@ -54,6 +63,8 @@ public class GenreResponse {
         genreResponse.setDesc((String) objMap.get("description"));
         genreResponse.setName((String) objMap.get("name"));
         genreResponse.setCountMovies((BigInteger) objMap.get("countMovies"));
+//        System.out.println(objMap.get("status"));
+        genreResponse.setStatus((int) objMap.get("status"));
         return genreResponse;
     }
 }

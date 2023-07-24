@@ -11,6 +11,13 @@ import {
   MOVIE_DELETE_FAIL,
 } from "../Constants/MovieConstants";
 import { logout } from "./UserActions";
+import { toast } from "react-toastify";
+const ToastObjects = {
+  pauseOnFocusLoss: false,
+  draggable: false,
+  pauseOnHover: false,
+  autoClose: 2000,
+};
 export const listMovie = () => async (dispatch, getState) => {
   try {
     dispatch({ type: MOVIE_LIST_REQUEST });
@@ -20,7 +27,7 @@ export const listMovie = () => async (dispatch, getState) => {
 
     const config = {
       headers: {
-        Authorization: `Bearer ${userInfo.token}`,
+        Authorization: `Bearer ${userInfo}`,
       },
     };
     const { data } = await axios.get(`http://localhost:8080/movies`, config);
@@ -42,25 +49,36 @@ export const listMovie = () => async (dispatch, getState) => {
   }
 };
 
-//create product
-export const createMovie = (product) => async (dispatch, getState) => {
+//create movie
+export const createMovie = (formData) => async (dispatch, getState) => {
   try {
     dispatch({ type: MOVIE_CREATE_REQUEST });
 
-    const newMovie = {
-      key: Math.floor(Math.random() * (1000000 - 31 + 1)) + 31,
-      id: Math.floor(Math.random() * (1000000 - 31 + 1)) + 31,
-      ...product,
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo}`,
+      },
     };
 
-    dispatch({ type: MOVIE_CREATE_SUCCESS, payload: newMovie });
+    const { data } = await axios.post(
+      `http://localhost:8080/movies/create`,
+      formData,
+      config
+    );
+
+    dispatch({ type: MOVIE_CREATE_SUCCESS, payload: data });
+    toast.success("Movie created successfully", ToastObjects);
   } catch (error) {
     const message =
-      error.response && error.response.data.message
-        ? error.response.data.messagae
+      error.response && error.response.data.data
+        ? error.response.data.data
         : error.message;
     if (message === "Not authorized, token failed") {
-      // dispatch(logout());
+      dispatch(logout());
     }
 
     dispatch({
@@ -74,18 +92,35 @@ export const deleteMovie = (id) => async (dispatch, getState) => {
   try {
     dispatch({ type: MOVIE_DELETE_REQUEST });
 
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo}`,
+      },
+    };
+
+    await axios.delete(`http://localhost:8080/movies/${id}`, config);
+    toast.success("Delete User Successfully", ToastObjects);
     dispatch({ type: MOVIE_DELETE_SUCCESS });
   } catch (error) {
     const message =
-      error.response && error.response.data.message
-        ? error.response.data.messagae
+      error.response && error.response.data.data
+        ? error.response.data.data
         : error.message;
+    toast.error(message, ToastObjects);
     if (message === "Not authorized, token failed") {
+      dispatch(logout());
+      return;
     }
-
-    dispatch({
-      type: MOVIE_DELETE_FAIL,
-      payload: message,
-    });
+    if (message === "Not permit delete because this have data linked in page") {
+      toast.error(message, ToastObjects);
+      dispatch({
+        type: MOVIE_DELETE_FAIL,
+        payload: message,
+      });
+    }
   }
 };
