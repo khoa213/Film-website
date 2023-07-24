@@ -1,4 +1,3 @@
-import { Banner } from 'components/Banner';
 // import { Genres } from 'components/Genres/Genres';
 // import { GridMovie } from 'components/Grid';
 import { Header } from 'components/Header';
@@ -521,10 +520,6 @@ const HomePage = () => {
         <StyledHomePage>
             <BestSeller></BestSeller>
             <ShowCase></ShowCase>
-            
-
-            
-
         </StyledHomePage>
 
     )
