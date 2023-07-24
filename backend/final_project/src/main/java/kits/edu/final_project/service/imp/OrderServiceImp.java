@@ -1,12 +1,17 @@
 package kits.edu.final_project.service.imp;
 
 import kits.edu.final_project.entity.OrderEntity;
+import kits.edu.final_project.entity.UserEntity;
 import kits.edu.final_project.exception.CustomException;
 import kits.edu.final_project.payload.response.OrderResponse;
 import kits.edu.final_project.repository.OrderRepository;
+import kits.edu.final_project.repository.UserRepository;
 import kits.edu.final_project.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,6 +23,8 @@ import java.util.List;
 public class OrderServiceImp implements OrderService {
     @Autowired
     private OrderRepository orderRepository;
+    @Autowired
+    UserRepository userRepository;
 
     public List<OrderResponse> getOrders() {
         List<OrderEntity> list= orderRepository.findAll();
@@ -40,12 +47,13 @@ public class OrderServiceImp implements OrderService {
 
     @Override
 //    @Query(value = "select * from orders o where o.user_id = :userId",nativeQuery = true)
-    public List<OrderEntity> payment(@PathVariable String username, Principal principal) {
-//        List<OrderEntity> list = orderRepository.findAll();
-        if (principal == null) {
+    public List<OrderEntity> payment( ) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth == null) {
             throw new CustomException("you are not logged in");
         }
-          username = principal.getName();
+        String username = auth.getName();
+        System.out.println("username 1 : "+username);
         return orderRepository.getPackagebyId(username);
     }
 

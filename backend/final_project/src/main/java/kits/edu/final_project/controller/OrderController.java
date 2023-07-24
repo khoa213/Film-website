@@ -33,11 +33,12 @@ public class OrderController {
     }
 
 
-    @GetMapping("/payment/{username}")
-    public ResponseEntity<?> getPackageById(@PathVariable String username, Principal principal) {
+    @GetMapping("/payment")
+    public ResponseEntity<?> getPackageById() {
+//        System.out.println("user: " + principal);
         BaseResponse response=new BaseResponse();
         response.setStatusCode(200);
-        response.setData(orderService.payment(username,principal));
+        response.setData(orderService.payment());
         return  new ResponseEntity<>(response, HttpStatus.OK);
     }
 

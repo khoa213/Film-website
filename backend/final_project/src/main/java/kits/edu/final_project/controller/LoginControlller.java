@@ -35,6 +35,7 @@ public class LoginControlller {
             @RequestParam String username,
             @RequestParam String password
     ){
+        System.out.println("username:" +username +" password:" +password);
         UsernamePasswordAuthenticationToken token=
                 new UsernamePasswordAuthenticationToken(username,password);
         authenticationManager.authenticate(token);

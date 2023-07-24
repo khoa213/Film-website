@@ -14,5 +14,5 @@ public interface OrderRepository extends JpaRepository<OrderEntity,Integer> {
 
 
     @Query(value = "select * from users u join orders o on u.user_id = o.user_id where username = :username",nativeQuery = true)
-    List<OrderEntity> getPackagebyId(@PathVariable String username);
+    List<OrderEntity> getPackagebyId( String username);
 }
