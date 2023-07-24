@@ -5,7 +5,7 @@ import { Button } from 'components/Button';
 
 const StyledHeader = styled.div`
     background-color: #190401;
-    width: 1449px;
+    width: 95vw;
     .header {
         display: flex;
         justify-content: space-between;

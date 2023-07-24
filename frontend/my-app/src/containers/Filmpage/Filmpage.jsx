@@ -157,7 +157,12 @@ display: flex;
     
 }
 `
+
 const Filmpage = () => {
+    const chuyenTrang = () => {
+        // Đổi URL thành trang mà bạn muốn chuyển đến
+        window.open ("http://localhost:3000/infopage");
+      }
     return (
         <StyleFilmpage>
             <Header>
@@ -238,10 +243,16 @@ const Filmpage = () => {
                     <div className='trailertxt'>
                         WATCH MOIVE NOW
                     </div>
-                    <div className="trailervideo">
-                        <iframe className='border' src="https://www.youtube.com/embed/aOC8E8z_ifw">
+                    
+                    <div  className="trailervideo">
+                    
+                        <iframe  className='border' src="https://www.youtube.com/embed/aOC8E8z_ifw">
                         </iframe>
                     </div>
+                    <button onclick="chuyenTrang()">
+                    123
+
+                    </button>
                     <div className='poster'>
                         <div>
                             <div>

@@ -1,6 +1,15 @@
+import React from 'react';
+import { Slide } from 'react-slideshow-image';
+import 'react-slideshow-image/dist/styles.css';
 import styled from 'styled-components';
 import backgroudFilm from 'assets/backgroud-film.svg';
-import blackWidow from 'assets/black-widow.svg';
+import blackWidow from 'assets/blackwidow.svg';
+import blackWidowlogo from 'assets/black-widow.svg';
+import "react-alice-carousel/lib/alice-carousel.css";
+import AliceCarousel from 'react-alice-carousel';
+
+
+
 import marvelLogo from 'assets/marvel-logo.svg';
 import rating from 'assets/4stars1.svg';
 import vertical from 'assets/vertical.svg';
@@ -11,20 +20,65 @@ import play from 'assets/play.svg';
 import plus from 'assets/plus.svg';
 
 const StyledBanner = styled.div`
+
     background-color: #190401;
+    width: 100vw;
+    background-size: cover;
+    
+    .each-slide-effect > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-size: cover;
+  margin-top: 5px;
+  background-repeat: no-repeat;
+  height: 90vh;
+  
+  
+}
+
+.each-slide-effect span {
+    
+  font-size: 20px;
+  background: #efefef;
+  text-align: center;
+  background-size: cover;
+  align-items: center;
+  
+  
+}
+button.nav.default-nav {
+    margin-right: 30px;
+    margin-left: 30px;
+}
+
     .banner {
         position: relative;
+        right: 300px;
+        
+        .movie-bg{
+            width: 1440px;
+        }
     }
 
     .banner-left {
-        position: absolute;
+        //position: absolute;
         display: flex;
         flex-direction: column;
         top: 107px;
         left: 54px;
         gap: 25px;
-        div.movie-logo{
+        .movie-logo {
             text-align: center;
+            img {
+                width: 280px;
+            }
+        }
+        .movie-name img {
+            width: 490px;
+        }
+        .movie-rate img {
+            width: 210px;
         }
         div {
             ul {
@@ -62,34 +116,110 @@ const StyledBanner = styled.div`
 export const Banner = () => {
     return (
         <StyledBanner>
-            <div className='banner'>
-                <img src={backgroudFilm} alt="avatar film" />
-                <div className='banner-left'>
-                    <div className='movie-logo' ><img src={marvelLogo} alt="photo" /></div>
-                    <div><img src={blackWidow} alt="photo" /></div>
-                    <div><img src={rating} alt="photo" /></div>
-                    <div>
-                        <ul>
-                            <li>Drama</li>
-                            <li><img src={vertical} alt="" /></li>
-                            <li>Drama</li>
-                            <li><img src={vertical} alt="" /></li>
-                            <li>Drama</li>
-                        </ul>
+            <Slide autoplay={false}>
+
+                <div className="each-slide-effect">
+                    <div className="center"
+                        style={{ backgroundImage: `url(${blackWidow})` }}
+                    >
+                        <div>
+                            <div className='banner'>
+                                {/* <img className='movie-bg' src={backgroudFilm} alt="avatar film" /> */}
+                                <div className='banner-left'>
+                                    <div className='movie-logo' ><img src={marvelLogo} alt="photo" /></div>
+                                    <div className='movie-name'><img src={blackWidowlogo} alt="photo" /></div> 
+                                    <div className='movie-rate'><img src={rating} alt="photo" /></div>
+                                    <div>
+                                        <ul>
+                                            <li>Drama</li>
+                                            <li><img src={vertical} alt="" /></li>
+                                            <li>Drama</li>
+                                            <li><img src={vertical} alt="" /></li>
+                                            <li>Drama</li>
+                                        </ul>
+                                    </div>
+                                    <div className='action'>
+                                        <img src={play} alt="" />
+                                        <img src={plus} alt="" />
+                                    </div>
+                                    <p className='description'>Natasha Romanoff, aka Black Widow, confronts the darker parts of her ledger when a dangerous conspiracy with ties to her past arises. Pursued by a force that will stop at nothing to bring her down, Natasha must deal with her history as a spy, and the broken relationships left in her wake long before she became an Avenger.
+                                    </p>
+                                </div>
+
+                            </div>
+                        </div>
                     </div>
-                    <div className='action'>
-                        {/* <Play/> */}
-                        {/* <Plus/> */}
-                        <img src={play} alt="" />
-                        <img src={plus} alt="" />
+                </div>
+                <div className="each-slide-effect">
+                    <div
+                        style={{
+                            backgroundImage: `url(${blackWidow})`       }}
+                    >
+                        <div>
+                            <div className='banner'>
+                                {/* <img className='movie-bg' src={backgroudFilm} alt="avatar film" /> */}
+                                <div className='banner-left'>
+                                    <div className='movie-logo' ><img src={marvelLogo} alt="photo" /></div>
+                                    <div className='movie-name'><img src={blackWidowlogo} alt="photo" /></div> 
+                                    <div className='movie-rate'><img src={rating} alt="photo" /></div>
+                                    <div>
+                                        <ul>
+                                            <li>Drama</li>
+                                            <li><img src={vertical} alt="" /></li>
+                                            <li>Drama</li>
+                                            <li><img src={vertical} alt="" /></li>
+                                            <li>Drama</li>
+                                        </ul>
+                                    </div>
+                                    <div className='action'>
+                                        {/* <Play/> */}
+                                        {/* <Plus/> */}
+                                        <img src={play} alt="" />
+                                        <img src={plus} alt="" />
+                                    </div>
+                                    <p className='description'>Natasha Romanoff, aka Black Widow, confronts the darker parts of her ledger when a dangerous conspiracy with ties to her past arises. Pursued by a force that will stop at nothing to bring her down, Natasha must deal with her history as a spy, and the broken relationships left in her wake long before she became an Avenger.
+                                    </p>
+                                </div>
+
+                            </div>
+                        </div>
                     </div>
-                    <p className='description'>Natasha Romanoff, aka Black Widow, confronts the darker parts of her ledger when a dangerous conspiracy with ties to her past arises. Pursued by a force that will stop at nothing to bring her down, Natasha must deal with her history as a spy, and the broken relationships left in her wake long before she became an Avenger.
-                    </p>
                 </div>
-                <div className='banner-right'>
-                    <img src={arrowRight} alt="" />
-                </div>
-            </div>
+                {/* <div className="each-slide-effect">
+                    <div
+                        style={{
+                            backgroundImage: `url(${blackWidow})` }}
+                    >
+                        <div>
+                            <div className='banner'>
+                                
+                                <div className='banner-left'>
+                                    <div className='movie-logo' ><img src={marvelLogo} alt="photo" /></div>
+                                    <div className='movie-name'><img src={blackWidowlogo} alt="photo" /></div> 
+                                    <div className='movie-rate'><img src={rating} alt="photo" /></div>
+                                    <div>
+                                        <ul>
+                                            <li>Drama</li>
+                                            <li><img src={vertical} alt="" /></li>
+                                            <li>Drama</li>
+                                            <li><img src={vertical} alt="" /></li>
+                                            <li>Drama</li>
+                                        </ul>
+                                    </div>
+                                    <div className='action'>
+                                        
+                                        <img src={play} alt="" />
+                                        <img src={plus} alt="" />
+                                    </div>
+                                    <p className='description'>Natasha Romanoff, aka Black Widow, confronts the darker parts of her ledger when a dangerous conspiracy with ties to her past arises. Pursued by a force that will stop at nothing to bring her down, Natasha must deal with her history as a spy, and the broken relationships left in her wake long before she became an Avenger.
+                                    </p>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div> */}
+            </Slide>
         </StyledBanner>
     )
 }
