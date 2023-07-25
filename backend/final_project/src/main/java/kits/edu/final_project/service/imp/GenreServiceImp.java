@@ -1,14 +1,7 @@
 package kits.edu.final_project.service.imp;
 
 import kits.edu.final_project.entity.GenreEntity;
-import kits.edu.final_project.entity.ReviewEntity;
-import kits.edu.final_project.entity.UserEntity;
 import kits.edu.final_project.exception.CustomException;
-import kits.edu.final_project.payload.request.SignupRequest;
-import kits.edu.final_project.payload.response.GenreResponse;
-import kits.edu.final_project.payload.response.ReviewResponse;
-import kits.edu.final_project.repository.GenreRepository;
-import kits.edu.final_project.service.GenreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
