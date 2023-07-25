@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import Slider from "react-slick";
 // import "slick-carousel/slick/slick.css";
@@ -7,7 +7,8 @@ import { ArrowLeftOutlined, ArrowRightOutlined } from "@ant-design/icons";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import TopRateItem from "components/TopRateItem";
-
+import { useDispatch, useSelector } from "react-redux";
+import { listMovie } from "Redux/Actions/MovieActions";
 const TopRateWrapper = styled.div`
   .top-rate-header {
     display: flex;
@@ -76,7 +77,48 @@ const TopRate = () => {
   const handleNextClick = () => {
     carouselRef.current.slickNext();
   };
+  const dispatch = useDispatch();
+  const movieList = useSelector((state) => state.movieList);
+  const { loading, error, movies } = movieList;
+  const [data, setData] = useState([]);
 
+  useEffect(() => {
+    dispatch(listMovie())
+      .then((response) => {
+        setData(response.data);
+        console.log(response);
+      })
+      .catch((error) => {
+        // Handle error if necessary
+      });
+  }, [dispatch]);
+  useEffect(() => {
+    if (movies && movies.data) {
+      const formattedData = movies.data.map((movie) => {
+        return {
+          id: movie.id,
+          movie: movie.title,
+          desc: movie.desc,
+          releaseDate: movie.releaseDate,
+          duration: movie.duration,
+          genreName: movie.genreName,
+          price: movie.price,
+          // rating: review.rating,
+          // status: review.status,
+          // user: review.user.username,
+        };
+      });
+      setData(formattedData);
+
+      console.log(formattedData);
+    }
+
+    // if (reviews && reviews.data) {
+
+    //   setData(formattedData);
+    //   console.log(formattedData);
+    // }
+  }, [movies]);
   return (
     <TopRateWrapper>
       <div className="top-rate-header">
@@ -98,13 +140,21 @@ const TopRate = () => {
       </div>
       <div className="carousel-items">
         <Slider {...settings} ref={carouselRef}>
+          {data.map((movie) => (
+            <TopRateItem
+              key={movie.id}
+              title={movie.movie}
+              genre={movie.price}
+            />
+          ))}
+          {/* {console.log(data)} */}
+          {/* <TopRateItem title={"Harry Potter"} genre={"Khoa học"} />
           <TopRateItem title={"Harry Potter"} genre={"Khoa học"} />
           <TopRateItem title={"Harry Potter"} genre={"Khoa học"} />
           <TopRateItem title={"Harry Potter"} genre={"Khoa học"} />
           <TopRateItem title={"Harry Potter"} genre={"Khoa học"} />
           <TopRateItem title={"Harry Potter"} genre={"Khoa học"} />
-          <TopRateItem title={"Harry Potter"} genre={"Khoa học"} />
-          <TopRateItem title={"Harry Potter"} genre={"Khoa học"} />
+          <TopRateItem title={"Harry Potter"} genre={"Khoa học"} /> */}
         </Slider>
       </div>
     </TopRateWrapper>

@@ -1,9 +1,8 @@
-import { Banner } from "components/Banner";
 import { Genres } from "components/Genres/Genres";
 import { GridMovie } from "components/Grid";
 import { Header } from "components/Header";
+import { BestSeller } from "components/Seller/Seller";
 import { ShowCase } from "components/ShowCase";
-import { Slider } from "components/Slider/Slider";
 import SliderComponent from "components/SliderComponent";
 import styled from "styled-components";
 
@@ -457,19 +456,75 @@ const StyledHomePage = styled.div`
       }
     }
   }
-  .carousel {
-    width: 375px;
-  }
-`;
+ 
+  .BrainhubCarousel__trackContainer{
+    width: 100px;
+    
+}
+    .slide{
+        display: flex;
+        flex-direction: column;
+        width: 100vw;
+        align-items: center;
+        
+    }
+    
+    .BrainhubCarousel__trackContainer{
+        padding-top: 30px;
+        width: 65vw;
+        padding-left: 30px;
+        gap:10px;
+        
+    }
+    .BrainhubCarouselItem{
+        width: 300px;
+        
+       
+    }
+    .BrainhubCarousel__arrowRight{
+        border-radius: 50%;
+        margin-left: 10px;
+        background-color:red;
+    }
+    .BrainhubCarousel__arrowLeft{
+        border-radius: 50%;
+        margin-right: 10px;
+        background-color:red;
+    }
+    .BrainhubCarouselItem--active{
+        scale: 1.2;
+    }
+    .carousel-wrapper{
+    font-family: sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100px;
+    width: 100px;
+    }
+`
+
+
+
+const Item = styled.div` display: flex;
+justify-content: center;
+align-items: center;
+height: 250px;
+width: 100%;
+background-color: #00008B;
+color: #fff;
+margin: 0 15px;
+font-size: 4em;
+`
 const HomePage = () => {
   return (
     <StyledHomePage>
-      <Banner></Banner>
+      <BestSeller></BestSeller>
       <ShowCase></ShowCase>
       {/* <Header/> */}
       {/* <Slider></Slider> */}
-      <SliderComponent />
       <Genres></Genres>
+      <SliderComponent />
       <GridMovie></GridMovie>
     </StyledHomePage>
   );

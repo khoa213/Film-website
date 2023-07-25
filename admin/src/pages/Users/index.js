@@ -1,5 +1,5 @@
-import  Users  from "./Users";
-import { AddUser } from "./AddUser";
+import Users from "./Users";
+
 import { UpdateUser } from "./UpdateUser";
-export {AddUser,UpdateUser} 
+export { UpdateUser };
 export default Users;

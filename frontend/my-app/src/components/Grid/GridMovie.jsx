@@ -1,7 +1,7 @@
 import { Card } from "components/Card";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 
 const StyledGrid = styled.div`
@@ -44,6 +44,7 @@ const StyledGrid = styled.div`
 `
 export const GridMovie = () => {
     const SRC_DEFAULT = "https://drive.google.com/uc?export=download&id=";
+    const nav = useNavigate();
     // const dispatch = useDispatch();
     let rawData = useSelector(state => state.movie.filterData);
     let data = [];
@@ -55,9 +56,24 @@ export const GridMovie = () => {
     // useEffect(() => {
     //     dispatch.movie.;
     // }, [])
+    const viewFilm = (id) => {
+        localStorage.setItem("filmId", id);
+        let price = 10;
+        let userPaymented = true;
 
-    const addToList = (title, className, src, genres) => {
-        return <Card className={className} title={title} srcImg={src} width={"210px"} height={"301px"} genres={genres} isGrid={true} font_size={"24px"} font_weight={"400"} line_height={"22px"} radius={"20px"}></Card>
+        if (userPaymented) {
+            nav("/detail?" + localStorage.getItem("filmId"));
+            return;
+        }
+        if (!userPaymented && price == 0) {
+            nav("/detail?" + localStorage.getItem("filmId"));
+            return;
+        }
+        nav("/pricing");
+        
+    }
+    const addToList = (title, className, src, genres, id) => {
+        return <Card onClick={() => viewFilm(id)} className={className} title={title} srcImg={src} width={"210px"} height={"301px"} genres={genres} isGrid={true} font_size={"24px"} font_weight={"400"} line_height={"22px"} radius={"20px"}></Card>
     }
     const customLink = (driveLink) => {
         const fileId = driveLink.match(/[-\w]{25,}/);
@@ -75,11 +91,11 @@ export const GridMovie = () => {
         let genres = movie.genreName.toString();
         if (index < 5) {
             className += "1-movie" + (index + 1);
-            listCard1.push(addToList(movie.title, className, src, genres));
+            listCard1.push(addToList(movie.title, className, src, genres, movie.id));
         } else {
             className += "2-movie" + (index - 4);
             addToList(className, movie, src);
-            listCard2.push(addToList(movie.title, className, src, genres));
+            listCard2.push(addToList(movie.title, className, src, genres, movie.id));
         }
     }
     return (
