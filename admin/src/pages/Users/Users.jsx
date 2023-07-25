@@ -1,289 +1,485 @@
-import React, { useEffect, useState } from 'react'
-import { Button, Table } from 'antd';
-import styled from 'styled-components';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { useUserContext } from '../../../src/context/UserContext.js';
-import useFetchData from 'data/useFetchData.js';
-import Excel from 'components/Excel/Excel';
-const primaryButtonStyle = { backgroundColor: '#1890ff' };
-const dangerButtonStyle = { backgroundColor: '#ff4d4f' };
-const customButtonStyle = { backgroundColor: '#fadb14', color: '#000000' };
+import React, { useCallback, useEffect, useState } from "react";
+import { Button, Modal, Popconfirm, Row, Table, message } from "antd";
+import styled from "styled-components";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import Excel from "components/Excel/Excel";
+import TableData from "components/Table/Table.jsx";
+import Loading from "components/LoadingError/Loading.jsx";
+import Search from "antd/es/transfer/search.js";
 
-// const initData = [];
-// for (let i = 1; i <= 12; i++) {
-//   initData.push({
-//     id: i,
-//     fullname: `bao${i}`,
-//     age: 32,
-//     dob: `2001-05-02`,
-//     role:1,
-//     email:`bao${i}@gmail.com`
-//   });
-// }
-  const UsersTable=styled.div`
-    .custom-row {
-      height: 70px; /* Set the desired height for the rows */
-    }
-    .btn-users {
-      width: 70px;
-      height:40px;
-      margin-right:10px;
-      
-    }
-    .btn-export{
-      width: 120px;
-            height:40px;
-            margin-right:10px;
-            border:none;
-            background-color:green;
-            color:white;
-    }
-    .top-table-users {
-      width: 100%;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-    }
-    .box-img{
-      display:flex;
-      align-items:center;
-      .img-product{
-        width: 40px;
-        height: 40px;
-        border-radius:50%;
-        border:1px solid #ccc;
-      }
-    }
-  `
- const Users = () => {
- 
-const columns = [
-  {
-    title: 'ID',
-    width: 100,
-    dataIndex: 'id',
-    key: 'id',
-    fixed: 'left',
-  },
-  {
-    title: 'Name',
-    width: 150,
-    dataIndex: 'name',
-    key: 'name',
-    fixed: 'left',
-  },
-  {
-    title: 'Age',
-    width: 50,
-    dataIndex: 'age',
-    key: 'age',
-    fixed: 'left',
-  },
-  
-  {
-    title: 'Date of Birth',
-    dataIndex: 'dob',
-    key: 'dob',
-    width: 150,
-  },
+import { ReactComponent as EditIcon } from "../../assets/images/edit-icon.svg";
+import { ReactComponent as DeleteIcon } from "../../assets/images/delete-icon.svg";
+import { ReactComponent as VisibleIcon } from "../../assets/images/visible-status.svg";
+import { useDispatch, useSelector } from "react-redux";
+import { deleteUser, listUser, updateUser } from "Redux/Actions/UserActions";
+import Input from "components/Input";
+import DropDown from "components/Dropdown/Dropdown";
 
-  {
-    title: 'Avatar',
-    dataIndex: 'address',
-    key: '5',
-    width: 100,
-    render:()=>(
-      <div className='box-img'>
-              <img className='img-product' src="https://www.kindpng.com/picc/m/22-223863_no-avatar-png-circle-transparent-png.png" alt="" />
-            </div>
-    )
-  },
-  {
-    title: 'Email',
-    dataIndex: 'email',
-    key: '6',
-    width: 150,
-  },
-  {
-    title: 'Role',
-    dataIndex: 'role',
-    key: '1',
-    width: 100,
-    render: (role) => {
-      if (role === "1") {
-        return 'Admin';
-      } else if (role === "2") {
-        return 'Quan ly';
-      } else {
-        return "Nhân viên"; // Handle other cases if needed
-      }
-    },
-  },
-  
-  {
-    title: 'Status',
-    dataIndex: 'address',
-    key: '4',
-    width: 150,
-    render: (status) => {
-      if (status === "1") {
-        return 'Online';
-      } else if (status === "2") {
-        return 'Offline';
-      } else {
-        return "Offline"; // Handle other cases if needed
-      }
-    },
-  },
-  {
-    title: 'Action',
-    key: 'operation',
-    fixed: 'right',
-    width: 200,
-    render: (_, user) => (
-      
-      <div>
-      <Button  className=' btn-delete btn-users' type="primary" danger
-      id={user.id}
-      
-       onClick={() => {handleDeleteUser(user.id)
-      // console.log(user.key)
-    }}
-      >Xóa</Button>
-      <Button className='btn-users'
-      onClick={() => handleUpdateUser(user.id)}
-       style={customButtonStyle}>Sửa</Button>
-
-      </div>
-      
-    
-    ),
-  },
-];
-const initData=useFetchData();
-  const { users } = useUserContext();
-  const navigate = useNavigate();
-  const [data, setData] = useState(initData);
-  // const [updatedUsers, setUpdatedUsers] = useState(users);
-  // console.log(data)
-  useEffect(() => {
-   
-  
-    let updatedData
-    if(users.length >1){
-
-      updatedData = users;
-    }
-    else{
-      updatedData = initData.concat(users);
-    }
-    //tao key cho data
-    const keynext = updatedData.length;
-    if (users.length ===1) {
-      updatedData[updatedData.length - 1].id = keynext;
-    }
-    //setData
-    setData(updatedData);
-  }, [users,initData]);
-  const handleDeleteUser = ( id) => {
-    const updatedData = data.filter((user) => user.id !== id);
-    setData(updatedData);
-    console.log('Deleted ID:', id);
-  };
-  const handleUpdateUser=(id) => {
-   
-    // console.log(data);
-    
-    navigate(`/users/update/${id}`, { state: { data: [...data] } });
-   
+const Wrapper = styled.div`
+  .custom-table .ant-table-wrapper {
+    background-color: var(--body-content-light-background);
   }
-  const handleAddUser = () => {
-  
-    // Perform logic to add a new user to the data source
-    
 
-    // if(users.length > 0) {
+  .custom-table .ant-table-thead > tr > th {
+    background-color: var(--body-content-light-background);
+    color: white;
+  }
 
-    //   setData((data) => [...data, users]);
- 
-    // }
-    // else{
-    //   setData(data);
-         
-    // }
-  
-    //     console.log(updatedUsers);
-    navigate('/users/add', { state: { data: [...data] } });
+  .custom-table .ant-table-tbody > tr > td {
+    background-color: var(--body-content-light-background);
+    color: white;
+    border-color: darkgray;
+  }
 
-    // console.log(location)
+  .custom-table .ant-table-tbody > tr:hover {
+    background-color: darkslategray;
+  }
+
+  .custom-table .ant-table-tbody > tr:hover td {
+    color: red;
+    background-color: darkslategray;
+  }
+  .recent-film {
+    display: flex;
+    justify-content: space-between !important;
+    width: 100%;
+    align-items: center;
+    color: white !important;
+    .search-input {
+      margin-left: auto;
+    }
+  }
+  .btn-users {
+    width: 70px;
+    height: 40px;
+    margin-right: 10px;
+  }
+  .custom-pagination.ant-pagination {
+    .ant-pagination-item {
+      background-color: #fff;
+    }
+    .ant-pagination-item-link {
+      color: #fff;
+      background-color: #1890ff;
+      border-color: #1890ff;
+    }
+
+    .ant-pagination-item-active {
+      background-color: #1890ff;
+      border-color: #1890ff;
+    }
+
+    .ant-pagination-item-active a {
+      color: #fff;
+    }
+
+    .ant-pagination-disabled {
+      opacity: 0.5;
+    }
+    .ant-pagination-total-text {
+      color: #fff;
+    }
+  }
+
+  /* table MUI */
+  .dataTable {
+  }
+  /* Container */
+  .modal-container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Label */
+  .modal-container label {
+    margin-bottom: 8px;
+  }
+
+  /* Input */
+
+  .input-field {
+    display: flex;
+    flex-direction: column;
+  }
+`;
+const onClick = ({ key }) => {
+  message.info(`Click on item ${key}`);
+};
+const Users = () => {
+  const columns = [
+    { field: "id", headerName: "ID", width: 60 },
+    { field: "username", headerName: "USERNAME", width: 120, editable: true },
+    { field: "email", headerName: "EMAIL", width: 200, editable: true },
+    {
+      field: "phone",
+      headerName: "PHONE",
+      type: "number",
+      width: 130,
+      editable: true,
+    },
+
+    {
+      field: "gender",
+      headerName: "GENDER",
+      width: 90,
+      editable: true,
+      renderCell: (params) => (
+        <div className="action">{params.value ? "Nam" : "Nữ"}</div>
+      ),
+    },
+    {
+      field: "birthday",
+      headerName: "BIRTHDAY",
+      width: 150,
+      editable: true,
+      renderCell: (params) => (
+        <div className="action">{formatDate(params.value)}</div>
+      ),
+    },
+    {
+      field: "status",
+      headerName: "STATUS",
+      // type: "number",
+      width: 80,
+      editable: true,
+      renderCell: (params) => (
+        <div className="action">{params.value === 1 ? "Show" : "Hide"}</div>
+      ),
+    },
+    {
+      field: "action",
+      headerName: "Action",
+      width: 200,
+      renderCell: (params) => (
+        <div className="action">
+          {/* <Popconfirm
+            title="Update status the task"
+            description="Are you sure to update status for this user?"
+            okText="Yes"
+            cancelText="No"
+            onConfirm={() => {
+              // updateRow(params.row.id);
+              setConfirmUpdate(false);
+            }}
+            onCancel={() => setConfirmUpdate(false)}
+          > */}
+          <Modal
+            title="Edit User"
+            visible={isModalVisible}
+            // onOk={handleModalOk}
+            onCancel={handleModalCancel}
+            maskStyle={{ background: "rgba(0, 0, 0, 0.2)" }}
+            okButtonProps={{ style: { display: "none" } }}
+          >
+            {selectedUser && (
+              <div className="modal-container">
+                <div className="input-field">
+                  <label>Username:</label>
+                  <br />
+                  <Input
+                    boderColor={"#000"}
+                    height={36}
+                    borderRadius={10}
+                    width={400}
+                    type="text"
+                    value={selectedUser.username}
+                    onChange={(e) =>
+                      setSelectedUser({
+                        ...selectedUser,
+                        username: e.target.value,
+                      })
+                    }
+                  />
+                </div>
+                <div className="input-field">
+                  <label>Email:</label>
+                  <br />
+                  <Input
+                    boderColor={"#000"}
+                    height={36}
+                    borderRadius={10}
+                    width={400}
+                    type="text"
+                    value={selectedUser.email}
+                    onChange={(e) =>
+                      setSelectedUser({
+                        ...selectedUser,
+                        email: e.target.value,
+                      })
+                    }
+                  />
+                </div>
+                <div className="input-field">
+                  <label>Phone:</label>
+                  <br />
+                  <Input
+                    boderColor={"#000"}
+                    height={36}
+                    borderRadius={10}
+                    width={400}
+                    type="text"
+                    // value={}
+                    onChange={(e) =>
+                      setSelectedUser({
+                        ...selectedUser,
+                        // email: e.target.value,
+                      })
+                    }
+                  />
+                </div>
+                <div className="input-field">
+                  <br />
+                  <DropDown
+                    onClick={onClick}
+                    items={[
+                      {
+                        label: "Nam",
+                        key: "1",
+                      },
+                      {
+                        label: "Nữ",
+                        key: "0",
+                      },
+                    ]}
+                    label={"Gender"}
+                    // defaultValue={getGenderLabel(
+                    //   selectedUser && selectedUser.gender
+                    // )}
+                    defaultValue={selectedUser.gender ? "Nam" : "Nữ"}
+                    onChange={(value) =>
+                      setSelectedUser({
+                        ...selectedUser,
+                        gender: value === "Nam" ? true : false,
+                      })
+                    }
+                  />
+                </div>
+                <div className="input-field">
+                  <label>Birthday:</label>
+                  <br />
+                  <Input
+                    boderColor={"#000"}
+                    height={36}
+                    borderRadius={10}
+                    width={400}
+                    type="text"
+                    value={selectedUser.birthday}
+                    onChange={(e) =>
+                      setSelectedUser({
+                        ...selectedUser,
+                        birthday: e.target.value,
+                      })
+                    }
+                  />
+                </div>
+                <div className="input-field">
+                  <br />
+                  <DropDown
+                    onClick={onClick}
+                    items={[
+                      {
+                        label: "Show",
+                        key: "1",
+                      },
+                      {
+                        label: "Hide",
+                        key: "0",
+                      },
+                    ]}
+                    label={"Status:"}
+                    // defaultValue={getStatusLabel(
+                    //   selectedUser && selectedUser.status
+                    // )}
+                    defaultValue={selectedUser.status === 1 ? "Show" : "Hide"}
+                    onChange={(value) =>
+                      setSelectedUser({
+                        ...selectedUser,
+                        status: value === "Show" ? 1 : 0,
+                      })
+                    }
+                  />
+                </div>
+                <Popconfirm
+                  title="Are you sure to update this user?"
+                  onConfirm={() => {
+                    // updateRow(params.row.id);
+
+                    handlePopconfirmOk();
+                  }}
+                  okText="Yes"
+                  cancelText="No"
+                >
+                  <Button style={{ marginTop: "20px" }} type="primary">
+                    Update
+                  </Button>
+                </Popconfirm>
+                {/* Các trường dữ liệu khác */}
+              </div>
+            )}
+          </Modal>
+
+          <button
+            className="btn-edit"
+            onClick={handleEditUser.bind(null, params.row.id)}
+          >
+            <EditIcon />
+          </button>
+          {/* </Popconfirm> */}
+          {/* <Popconfirm
+            title="Update status the task"
+            description="Are you sure to update status for this user?"
+            okText="Yes"
+            cancelText="No"
+            onConfirm={() => {
+              // updateRow(params.row.id);
+              setConfirmVisible(false);
+            }}
+            onCancel={() => setConfirmVisible(false)}
+          >
+            <button className="btn-visible">
+              <VisibleIcon />
+            </button>
+          </Popconfirm> */}
+          <Popconfirm
+            title="Delete the task"
+            description="Are you sure to delete this user?"
+            okText="Yes"
+            cancelText="No"
+            onConfirm={() => {
+              deleteRow(params.row.id);
+              setConfirmDelete(false);
+            }}
+            onCancel={() => setConfirmDelete(false)}
+          >
+            <button className="btn-delete">
+              <DeleteIcon />
+            </button>
+          </Popconfirm>
+        </div>
+      ),
+    },
+  ];
+
+  const onSearch = (value) => console.log(value);
+  const [confirmDelete, setConfirmDelete] = useState(false);
+  const [confirmVisible, setConfirmVisible] = useState(false);
+  const [confirmUpdate, setConfirmUpdate] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null);
+
+  const dispatch = useDispatch();
+  const userList = useSelector((state) => state.userList);
+  const { loading, error, users } = userList;
+  // const getGenderLabel = (gender) => {
+  //   return gender ? "Nam" : "Nữ";
+  // };
+  // const getStatusLabel = (status) => {
+  //   return status === 1 ? "Show" : "Hide";
+  // };
+  const [data, setData] = useState([]);
+  const formatDate = (isoDateString) => {
+    const dateObj = new Date(isoDateString);
+    const year = dateObj.getFullYear();
+    const month = String(dateObj.getMonth() + 1).padStart(2, "0");
+    const day = String(dateObj.getDate()).padStart(2, "0");
+
+    return `${year}-${month}-${day}`;
+  };
+  // const handleModalOk = () => {
+  //   // Logic xử lý khi nhấp vào nút OK trong modal
+  //   // setIsModalVisible(false);
+  //   setConfirmUpdate(true);
+  // };
+  const handlePopconfirmOk = () => {
+    if (selectedUser) {
+      const updatedUser = {
+        ...selectedUser,
+        username: selectedUser.username,
+        email: selectedUser.email,
+        // phone: selectedUser.phone,
+        gender: selectedUser.gender,
+
+        birthday: formatDate(selectedUser.birthday),
+        status: selectedUser.status,
+      };
+      console.log(updatedUser);
+      // console.log(updatedUser);
+      updateRow(updatedUser);
+      setIsModalVisible(false);
+      setConfirmUpdate(false);
+    }
+  };
+  // const handlePopconfirmCancel = () => {
+  //   // Xử lý logic khi nhấp vào Cancel trong pop-up
+  //   setConfirmUpdate(false);
+  // };
+  const handleModalCancel = () => {
+    // Logic xử lý khi nhấp vào nút Cancel hoặc nút đóng modal
+    setIsModalVisible(false);
+  };
+  const handleEditUser = useCallback(
+    (id) => {
+      const user = data.find((user) => user.id === id);
+      setSelectedUser({ ...user });
+      setIsModalVisible(true);
+    },
+    [data]
+  );
+
+  const updateRow = (updatedUser) => {
+    dispatch(updateUser(updatedUser))
+      .then(() => dispatch(listUser()))
+      .then((response) => {
+        setData(response.data);
+      })
+      .catch((error) => {
+        // Handle error if necessary
+      });
   };
 
+  const deleteRow = (id) => {
+    dispatch(deleteUser(id))
+      .then(() => dispatch(listUser()))
+      .then((response) => {
+        setData(response.data);
+      })
+      .catch((error) => {
+        // Handle error if necessary
+      });
+  };
+  useEffect(() => {
+    dispatch(listUser())
+      .then((response) => {
+        setData(response.data);
+      })
+      .catch((error) => {
+        // Handle error if necessary
+      });
+  }, [dispatch]);
+  useEffect(() => {
+    if (users && users.data) {
+      setData(users.data);
+
+      console.log(users.data);
+    }
+  }, [users]);
 
   return (
-    <UsersTable>
-      <div className="top-table-users">
-
-        <h1>Users List</h1>
-        <div className="btn-add">
-        <Excel
-          fileName="export-user"
-          data={[
-            {
-              columns: [
-                {
-                  title: "User Id",
-                  dataIndex: "id",
-                  width: 5,
-                },
-                {
-                  title: "Name",
-                  dataIndex: "name",
-                  width: 20,
-                },
-                {
-                  title: "Email",
-                  dataIndex: "email",
-                  width: 50,
-                },
-              ],
-              data: data,
-              tabName: "info",
-            },
-            {
-              columns: [
-                {
-                  title: "Role",
-                  dataIndex: "role",
-                  width: 30,
-                },
-                {
-                  title: "Phone",
-                  dataIndex: "phone",
-                  width: 30,
-                },
-              ],
-              data: data,
-              tabName: "contact",
-            },
-          ]}
-        >
-          <Button className='btn-export'>Export users</Button>
-        </Excel>
-         <Button onClick={()=>handleAddUser()} className='btn-users' type="primary" style={primaryButtonStyle}>Thêm</Button>
+    <Wrapper>
+      <Row>
+        <div className="recent-film">
+          <h1>Users List</h1>
         </div>
-      </div>
-              <Table
-          columns={columns}
-          dataSource={data}
-          columnWidth={40}
-          rowClassName={() => 'custom-row'}
-          scroll={{
-          x: 1500,
-          y:500,
-        }}
-      />
-    </UsersTable>
-  )
-}
+        <div style={{ display: "none" }} className="">
+          {/* {error && toast.error(error)} */}
+          {/* {error && <Toast />} */}
+          {loading && <Loading />}
+        </div>
 
-export default Users
+        <TableData className="dataTable" rows={data} columns={columns} />
+      </Row>
+    </Wrapper>
+  );
+};
+
+export default Users;

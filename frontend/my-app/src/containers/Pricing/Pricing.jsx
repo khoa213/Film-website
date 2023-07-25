@@ -1,4 +1,3 @@
-import { Banner } from "components/Banner";
 import BannerPricing from "components/BannerPricing";
 import PackMovie from "components/PackMovie/PackMovie";
 

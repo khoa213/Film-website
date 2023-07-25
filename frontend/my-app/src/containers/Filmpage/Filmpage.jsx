@@ -4,6 +4,8 @@ import logo from "assets/logo.svg"
 import account from "assets/account.svg"
 import notification from "assets/notification.svg"
 import bpbackground1 from "assets/bpbackground1.png"
+import avatarFilm from "assets/film-avatar.svg"
+import play from "assets/play.svg"
 import line2 from "assets/line2.svg"
 import poster1 from "assets/poster1.svg"
 import poster2 from "assets/poster2.svg"
@@ -61,16 +63,12 @@ gap:100px;
 
 }
 .trailervideo{
-
     display: flex;
     justify-content: center;
     align-items: center;
     padding-top: 35px;
     padding-bottom: 45px;
-
-
     border-radius: 10px;
-
 }
 .border{
     border-radius: 10px;
@@ -156,7 +154,26 @@ display: flex;
     //padding: 25px;
     
 }
+.watch-film {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    .avatar {
+        width: 456px;
+        height: 251px;
+        object-fit: cover;
+        object-position: center;
+        border-radius: 10px;
+        cursor: pointer;
+    }
+    .play {
+        top: 70px;
+        right: 250px;
+        position: absolute;
+    }
+}
 `
+
 const Filmpage = () => {
     return (
         <StyleFilmpage>
@@ -238,9 +255,12 @@ const Filmpage = () => {
                     <div className='trailertxt'>
                         WATCH MOIVE NOW
                     </div>
-                    <div className="trailervideo">
-                        <iframe className='border' src="https://www.youtube.com/embed/aOC8E8z_ifw">
-                        </iframe>
+                    
+                    <div  className="watch-film">
+                        <a href="/hello">
+                            <img className='avatar' src={avatarFilm} alt="" />
+                            <img className='play' src={play} alt="" />
+                        </a>
                     </div>
                     <div className='poster'>
                         <div>

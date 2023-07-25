@@ -31,7 +31,7 @@ const Input = ({
   name,
   placeholder,
   onChange,
-
+  value,
   ...rest
 }) => {
   return (
@@ -48,6 +48,7 @@ const Input = ({
       name={name}
       onChange={onChange}
       type={type}
+      value={value}
       {...rest}
     >
       {children}

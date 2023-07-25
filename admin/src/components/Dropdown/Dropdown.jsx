@@ -1,35 +1,34 @@
 import { DownOutlined } from "@ant-design/icons";
-import { Dropdown, message, Space } from "antd";
-const onClick = ({ key }) => {
-  message.info(`Click on item ${key}`);
+import { Dropdown, message, Select, Space } from "antd";
+import { Option } from "antd/es/mentions";
+import { useState } from "react";
+
+const DropDown = ({ items, label, defaultValue, onChange }) => {
+  const [selected, setSelected] = useState(defaultValue);
+
+  const handleSelect = (value) => {
+    setSelected(value);
+    onChange(value);
+  };
+
+  return (
+    <div>
+      <label>{label}</label>
+      <br />
+      <Select
+        defaultValue={defaultValue}
+        style={{ width: 120 }}
+        onChange={handleSelect}
+      >
+        {items.map((item) => (
+          <Select.Option value={item.label} key={item.key}>
+            {item.label}
+          </Select.Option>
+        ))}
+      </Select>
+      {/* <p>Selected Gender: {selected}</p> */}
+    </div>
+  );
 };
-const items = [
-  {
-    label: "Today",
-    key: "1",
-  },
-  {
-    label: "Last week",
-    key: "2",
-  },
-  {
-    label: "Last month",
-    key: "3",
-  },
-];
-const DropDown = () => (
-  <Dropdown
-    menu={{
-      items,
-      onClick,
-    }}
-  >
-    {/* <a onClick={(e) => e.preventDefault()}> */}
-    <Space>
-      Choose Time
-      <DownOutlined />
-    </Space>
-    {/* </a> */}
-  </Dropdown>
-);
+
 export default DropDown;

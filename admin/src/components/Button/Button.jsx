@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 const StyledButton = styled.button`
+  cursor: pointer;
   margin-top: 1px;
   padding: 0 !important;
   width: ${(props) => props.width + "px"};
@@ -39,6 +40,7 @@ export const Button = ({
   id,
   className,
   borderImage,
+  onClick,
   ...rest
 }) => {
   return (
@@ -55,6 +57,7 @@ export const Button = ({
       id={id}
       className={className}
       borderImage={borderImage}
+      onClick={onClick}
       {...rest}
     >
       {children}

@@ -9,18 +9,27 @@ import InfoPage from "containers/InfoPage";
 import Filmpage from "containers/Filmpage";
 import Pricing from "containers/Pricing";
 import Payment from "containers/Payment";
+import UserProfile from 'containers/UserProfile';
+import { MoviesPage } from "containers/Movie";
+import AboutUs from "containers/AboutUs";
+
+
 
 function App() {
   return (
     <Routes>
       <Route element={<PrimaryLayout />}>
         <Route path="/" element={<HomePage />} />
-        <Route path="/detail" element={<DetailPage />} />
+        <Route path="/movies" element={<MoviesPage />} />
         <Route path="/pricing" element={<Pricing />} />
+        <Route path="/movies" element={<MoviesPage />} />
         <Route path="/payment" element={<Payment />} />
+        <Route path="/userprofile" element={<UserProfile/>} />
+        <Route path="/aboutus" element={<AboutUs />} />
+        <Route path="/pricing" element={<Pricing />} />
       </Route>
-      <Route path="/infopage" element={<InfoPage />} />
-      <Route path="/filmpage" element={<Filmpage />} />
+      <Route path="/watch" element={<InfoPage />} />
+      <Route path="/detail" element={<Filmpage />} />
 
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
