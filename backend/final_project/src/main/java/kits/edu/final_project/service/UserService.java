@@ -1,6 +1,7 @@
 package kits.edu.final_project.service;
 
 
+import kits.edu.final_project.entity.ReviewEntity;
 import kits.edu.final_project.entity.UserEntity;
 import kits.edu.final_project.exception.CustomException;
 import kits.edu.final_project.payload.request.SignupRequest;
@@ -15,15 +16,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
-
+@Service
 public interface UserService  {
-    boolean addUser(SignupRequest request);
+        boolean addUser(SignupRequest request);
     List<UserResponse> getAllUsers();
-    UserEntity addNewUser(@RequestBody UserEntity userEntity);
+
     UserEntity replaceUserById(@RequestBody UserEntity userEntity, @PathVariable int id);
-    //    @Modifying
+    boolean replaceStatusUserById(@RequestBody UserEntity userEntity, @PathVariable int id);
+//    @Modifying
 //    @Query(value = "delete from users u where u.user_id= :id")
     List<UserEntity> deleteUserById(@PathVariable int id);
-
+//    UserEntity getByUsername(String username)
 }

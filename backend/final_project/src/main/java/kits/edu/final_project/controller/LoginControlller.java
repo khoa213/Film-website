@@ -1,8 +1,11 @@
 package kits.edu.final_project.controller;
 
+import kits.edu.final_project.entity.UserEntity;
 import kits.edu.final_project.exception.CustomException;
 import kits.edu.final_project.payload.request.SignupRequest;
 import kits.edu.final_project.payload.response.BaseResponse;
+import kits.edu.final_project.payload.response.UserResponse;
+import kits.edu.final_project.service.UserService;
 import kits.edu.final_project.service.imp.UserServiceImp;
 import kits.edu.final_project.utils.JwtHelper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +17,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.Entity;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -29,12 +33,15 @@ public class LoginControlller {
     * message:""
     * data:*/
     @Autowired
-    private UserServiceImp userServiceImp;
+    private UserService userService;
     @RequestMapping(value = "/signin",method= RequestMethod.POST)
     public ResponseEntity<?>signin(
             @RequestParam String username,
             @RequestParam String password
+
     ){
+
+           System.out.println(username + password);
         UsernamePasswordAuthenticationToken token=
                 new UsernamePasswordAuthenticationToken(username,password);
         authenticationManager.authenticate(token);
@@ -45,6 +52,11 @@ public class LoginControlller {
         response.setData(jwt);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
+
+
+
+
+
     }
 
     @RequestMapping(value = "/signup",method= RequestMethod.POST)
@@ -58,7 +70,7 @@ public class LoginControlller {
             throw new CustomException(data.getDefaultMessage());
 //            System.out.println("kiem tra "+data.getField()+ " - "+data.getDefaultMessage());
         }
-        boolean isSuccess = userServiceImp.addUser(request);
+        boolean isSuccess = userService.addUser(request);
 
         BaseResponse response =new BaseResponse();
         response.setStatusCode(200);

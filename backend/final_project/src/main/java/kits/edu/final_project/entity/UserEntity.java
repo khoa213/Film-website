@@ -1,15 +1,16 @@
 package kits.edu.final_project.entity;
 
 
-import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.Set;
+import java.util.*;
 
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "id")
 @Entity(name = "users")
-public class UserEntity {
+public class UserEntity implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,13 +35,17 @@ public class UserEntity {
     private String image;
     @Column(name = "birthday")
     private Date birthday ;
-    @JsonIgnore
-    @OneToMany(mappedBy = "user")
-    private Set<ReviewEntity> reviews;
-    @JsonIgnore
+    @Column(name = "status")
+    private int status ;
     @JsonManagedReference(value = "user")
     @OneToMany(mappedBy = "user")
+    private Set<ReviewEntity> reviews;
+    @OneToMany(mappedBy = "user")
     private Set<OrderEntity> orders;
+    @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @JoinTable(name="user_role",joinColumns = @JoinColumn(name="user_id",referencedColumnName = "user_id"),
+            inverseJoinColumns = @JoinColumn(name="role_id",referencedColumnName = "role_id"))
+    private List<RoleEntity> roles=new ArrayList<>();
 
     public int getId() {
         return id;
@@ -51,11 +56,38 @@ public class UserEntity {
     }
 
     public String getUsername() {
-        return username;
+        return email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        Collection<SimpleGrantedAuthority> authorities=new ArrayList<>();
+        roles.stream().forEach(i->authorities.add(new SimpleGrantedAuthority(i.getName())));
+        return List.of(new SimpleGrantedAuthority(authorities.toString()));
     }
 
     public String getPassword() {
@@ -118,7 +150,6 @@ public class UserEntity {
         return reviews;
     }
 
-
     public void setReviews(Set<ReviewEntity> reviews) {
         this.reviews = reviews;
     }
@@ -129,5 +160,25 @@ public class UserEntity {
 
     public void setOrders(Set<OrderEntity> orders) {
         this.orders = orders;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public boolean isGender() {
+        return gender;
+    }
+
+    public List<RoleEntity> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<RoleEntity> roles) {
+        this.roles = roles;
     }
 }

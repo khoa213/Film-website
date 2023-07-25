@@ -1,42 +1,66 @@
 package kits.edu.final_project.service.imp;
 
+import kits.edu.final_project.entity.RoleEntity;
 import kits.edu.final_project.entity.UserEntity;
 import kits.edu.final_project.exception.CustomException;
+import kits.edu.final_project.payload.request.ReviewRequest;
 import kits.edu.final_project.payload.request.SignupRequest;
 import kits.edu.final_project.payload.response.UserResponse;
+import kits.edu.final_project.repository.RoleRespository;
 import kits.edu.final_project.repository.UserRepository;
 import kits.edu.final_project.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserServiceImp implements UserService {
-
     @Autowired
     private UserRepository userRepository;
     @Autowired
+    private RoleRespository roleRespository;
+    @Autowired
     private PasswordEncoder passwordEncoder;
+
     @Override
     public boolean addUser(SignupRequest request) {
         boolean isSuccess =false;
+
         try {
-            UserEntity user = new UserEntity();
-            user.setUsername(request.getUsername());
-            user.setPassword(passwordEncoder.encode(request.getPassword()));
-            user.setEmail(request.getEmail());
-            userRepository.save(user);
-            isSuccess=true;
+            if (userRepository.existsByUsername(request.getUsername())) {
+                throw new CustomException("Username already exists");
+            }
+
+            if (userRepository.existsByEmail(request.getEmail())) {
+                throw new CustomException("Email already exists");
+            }
+            {
+                UserEntity user = new UserEntity();
+                user.setUsername(request.getUsername());
+                user.setPassword(passwordEncoder.encode(request.getPassword()));
+                user.setEmail(request.getEmail());
+
+
+                RoleEntity role=roleRespository.findByName("USER").get();
+//                System.out.println(role);
+                user.setRoles(Collections.singletonList(role));
+                userRepository.save(user);
+                isSuccess = true;
+            }
         }catch (Exception e)
         {
-            throw new CustomException("Loi them User"+e.getMessage());
+            throw new CustomException(e.getMessage());
         }
         return isSuccess;
     }
@@ -53,7 +77,9 @@ public class UserServiceImp implements UserService {
                 userResponse.setEmail(u.getEmail());
                 userResponse.setId(u.getId());
                 userResponse.setUsername(u.getUsername());
-
+                userResponse.setGender(u.getGender());
+                userResponse.setBirthday(u.getBirthday());
+                userResponse.setStatus(u.getStatus());
                 responseList.add(userResponse);
             }
         }catch (Exception e)
@@ -63,12 +89,6 @@ public class UserServiceImp implements UserService {
         return responseList;
     }
 
-    @Override
-    public UserEntity addNewUser( UserEntity userEntity) {
-
-        return userRepository.save(userEntity);
-
-    }
 
     @Override
     public UserEntity replaceUserById(UserEntity userEntity, int id) {
@@ -80,6 +100,7 @@ public class UserServiceImp implements UserService {
                     u.setImage(userEntity.getImage());
                     u.setEmail(userEntity.getEmail());
                     u.setGender(userEntity.getGender());
+                    u.setStatus(userEntity.getStatus());
                     return userRepository.save(u);
                 })
                 .orElseGet(()->{
@@ -89,19 +110,34 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
+    public boolean replaceStatusUserById(UserEntity userEntity, int id) {
+        try {
+            Optional<UserEntity> optionalUser = userRepository.findById(id);
+            if (optionalUser.isPresent()) {
+                UserEntity user = optionalUser.get();
+
+                // Thực hiện cập nhật các giá trị mới cho review
+                user.setStatus(userEntity.getStatus());
+
+
+                // Lưu lại review đã cập nhật vào cơ sở dữ liệu
+                userRepository.save(user);
+
+                return true; // Trả về true để chỉ ra rằng việc cập nhật thành công
+            }
+            return false; // Trả về false nếu không tìm thấy review với ID đã cho
+
+        } catch (Exception e) {
+            throw new CustomException("Lỗi khi cập nhật status user: " + e.getMessage());
+        }
+    }
+
+    @Override
     public List<UserEntity> deleteUserById(int id) {
-//          List<UserEntity> users = userRepository.findAll();
-//          List<UserEntity> u = new ArrayList<>();
-//          for (UserEntity user:users) {
-//                if (user.getId()!=id) {
-//                    u.add(user);
-//                }
-//          }
-//          users=u;
-//          return users;
-////        return userRepository.findById(id).stream().reduce();
         userRepository.deleteById(id);
         return userRepository.findAll();
     }
+
+
 
 }

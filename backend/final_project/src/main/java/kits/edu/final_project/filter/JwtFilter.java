@@ -20,7 +20,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 //tat ca request deu chay vao
-//@Component
+@Component
 public class JwtFilter extends OncePerRequestFilter {
 
     /*
@@ -43,7 +43,7 @@ public class JwtFilter extends OncePerRequestFilter {
                 if(claims != null){
                     //tao chung thuc cho Security
                     SecurityContext context = SecurityContextHolder.getContext();
-                    UsernamePasswordAuthenticationToken user =new UsernamePasswordAuthenticationToken("","",new ArrayList<>());
+                    UsernamePasswordAuthenticationToken user =new UsernamePasswordAuthenticationToken(claims.getSubject(),"",new ArrayList<>());
                     context.setAuthentication(user);
                 }
             }

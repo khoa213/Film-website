@@ -1,8 +1,6 @@
 package kits.edu.final_project.payload.response;
 
-import kits.edu.final_project.entity.GenreMovie;
-import kits.edu.final_project.entity.MovieActor;
-import kits.edu.final_project.entity.MovieEntity;
+import kits.edu.final_project.entity.*;
 
 import java.util.*;
 
@@ -21,15 +19,18 @@ public class MovieResponse {
     private Set<String> genreName;
     private List<String> actorName;
     private Set<Integer> genreId;
+//    private Set<ReviewEntity> reviews;
+//    private Set<GenreMovie> genreMovies;
+//    private Set<MovieActor> movieActors;
+//    private Set<OrderMovie> orderMovies;
+
     public MovieResponse() {
     }
-
     public MovieResponse(int id, String title, String desc) {
         this.id = id;
         this.title = title;
         this.desc = desc;
     }
-
     public MovieResponse(int id, String title, String desc, Date releaseDate, int duration, int price, String movieLink, String movieImage, String language, String bgColor, String itemColor) {
         this.id = id;
         this.title = title;
@@ -43,7 +44,6 @@ public class MovieResponse {
         this.bgColor = bgColor;
         this.itemColor = itemColor;
     }
-
     public int getId() {
         return id;
     }
@@ -162,6 +162,9 @@ public class MovieResponse {
         movieResponse.setTitle(movieEntities.getTitle());
         movieResponse.setDuration(movieEntities.getDuration());
         movieResponse.setMovieLink(movieEntities.getMovieLink());
+        movieResponse.setDesc(movieEntities.getDesc());
+        movieResponse.setReleaseDate(movieEntities.getReleaseDate());
+
         movieResponse.setMovieImage(movieEntities.getMovieImage());
         Set<String> genreSet = new HashSet<>();
         for (GenreMovie gMovie: movieEntities.getGenreMovies()) {
@@ -205,6 +208,9 @@ public class MovieResponse {
         movieEntity.setDuration(movieResponse.getDuration());
         movieEntity.setMovieLink(movieResponse.getMovieLink());
         movieEntity.setMovieImage(movieResponse.getMovieImage());
+        movieEntity.setReleaseDate(movieResponse.getReleaseDate());
+        movieEntity.setDesc(movieResponse.getDesc());
+        movieEntity.setPrice(movieResponse.getPrice());
         return movieEntity;
     }
 }
