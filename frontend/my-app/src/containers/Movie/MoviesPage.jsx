@@ -1,4 +1,3 @@
-import { Banner } from "components/Banner";
 import { styled } from "styled-components";
 import searchIcon from "assets/searchIcon.svg";
 import { Genres } from "components/Genres";
@@ -6,6 +5,8 @@ import { Card } from "components/Card";
 import { Button } from "components/Button";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
+import { BestSeller } from "components/Seller/Seller";
+import { useNavigate } from "react-router-dom";
 
 const StyleMovies = styled.div`
    @media screen and (max-width: 1439px) {
@@ -293,7 +294,7 @@ const StyleMovies = styled.div`
         img {
             padding: 5px;
             position: absolute;
-            right: 660px;
+            right: 705px;
             top: 2px;
         }
     }
@@ -327,6 +328,7 @@ const StyleMovies = styled.div`
 
 export const MoviesPage = () => {
     const SRC_DEFAULT = "https://drive.google.com/uc?export=download&id=";
+    const nav = useNavigate();
     const dispatch = useDispatch();
     let rawData = useSelector(state => state.movie.movies);
     let rawDataFilter = useSelector(state => state.movie.filterData);
@@ -334,6 +336,22 @@ export const MoviesPage = () => {
     useEffect(() => {
         dispatch.movie.getAll();
     }, [])
+    const viewFilm = (id) => {
+        localStorage.setItem("filmId", id);
+        let price = 10;
+        let userPaymented = true;
+
+        if (userPaymented) {
+            nav("/filmpage?" + localStorage.getItem("filmId"));
+            return;
+        }
+        if (!userPaymented && price == 0) {
+            nav("/filmpage?" + localStorage.getItem("filmId"));
+            return;
+        }
+        nav("/pricing");
+        
+    }
     const searchMovies = () => {
         let nameStr = document.getElementById("name").value;
         let actorStr = document.getElementById("actor").value;
@@ -366,8 +384,8 @@ export const MoviesPage = () => {
             data = rawDataFilter.slice(0, limit);
         }
     }
-    const addToList = (title, src, genres) => {
-        return <Card className={"flex-basis-card"} title={title} srcImg={src} width={"210px"} height={"301px"} genres={genres} isGrid={true} font_size={"24px"} font_weight={"400"} line_height={"22px"} radius={"20px"}></Card>
+    const addToList = (title, src, genres, id) => {
+        return <Card onClick={() => viewFilm(id)} className={"flex-basis-card"} title={title} srcImg={src} width={"210px"} height={"301px"} genres={genres} isGrid={true} font_size={"24px"} font_weight={"400"} line_height={"22px"} radius={"20px"}></Card>
     }
     const customLink = (driveLink) => {
         const fileId = driveLink.match(/[-\w]{25,}/);
@@ -380,11 +398,11 @@ export const MoviesPage = () => {
         const driveLink = movie.movieImage;
         let src = customLink(driveLink);
         let genres = movie.genreName.toString();
-        listCard.push(addToList(movie.title, src, genres));
+        listCard.push(addToList(movie.title, src, genres, movie.id));
     }
     return (
         <StyleMovies>
-            <Banner></Banner>
+            <BestSeller></BestSeller>
             <Genres></Genres>
             <div className="search-input">
                 <input id="name" type="text" placeholder="Enter Name. ex: Spider"/>
