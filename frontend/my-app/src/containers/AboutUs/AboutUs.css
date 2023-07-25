@@ -1,9 +1,6 @@
 * {
     box-sizing: border-box;
 }
-body {
-    max-width: 1440px;
-}
 div .main{
     max-width: 1440px;
     background-color: black;

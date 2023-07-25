@@ -56,8 +56,7 @@ export const GridMovie = () => {
     // useEffect(() => {
     //     dispatch.movie.;
     // }, [])
-    const showLog = (id) => {
-        alert("hello Id: " + id);
+    const viewFilm = (id) => {
         localStorage.setItem("filmId", id);
         let price = 10;
         let userPaymented = true;
@@ -67,14 +66,14 @@ export const GridMovie = () => {
             return;
         }
         if (!userPaymented && price == 0) {
-            nav("/filmpage");
+            nav("/filmpage?" + localStorage.getItem("filmId"));
             return;
         }
-        nav("/404");
+        nav("/pricing");
         
     }
     const addToList = (title, className, src, genres, id) => {
-        return <Card onClick={() => showLog(id)} className={className} title={title} srcImg={src} width={"210px"} height={"301px"} genres={genres} isGrid={true} font_size={"24px"} font_weight={"400"} line_height={"22px"} radius={"20px"}></Card>
+        return <Card onClick={() => viewFilm(id)} className={className} title={title} srcImg={src} width={"210px"} height={"301px"} genres={genres} isGrid={true} font_size={"24px"} font_weight={"400"} line_height={"22px"} radius={"20px"}></Card>
     }
     const customLink = (driveLink) => {
         const fileId = driveLink.match(/[-\w]{25,}/);

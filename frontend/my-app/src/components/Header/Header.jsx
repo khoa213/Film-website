@@ -51,11 +51,11 @@ export const Header = () => {
                 </div>
                 <div className='menu-nav'>
                     <ul>
-                        <li><Button title={"ABOUT"} text_color={"white"} width={"98px"} height={"19px"} radius={"40px"} border_custom={"2px solid transparent"} font_size_text={"12px"}></Button></li>
+                        <li> <Link to={'/'}><Button title={"HOME"} text_color={"white"} width={"98px"} height={"19px"} radius={"40px"} border_custom={"2px solid transparent"} font_size_text={"12px"}> </Button> </Link></li>
                         <li> <Link to={'/movies'}><Button title={"MOVIES"} text_color={"white"} width={"98px"} height={"19px"} radius={"40px"} border_custom={"2px solid transparent"} font_size_text={"12px"}> </Button> </Link></li>
                         <li className='logo'> <Link to={'/'}><img src={logoIcon} alt="" /></Link></li>
-                        <li><Button title={"SERIES"} text_color={"white"} width={"98px"} height={"19px"} radius={"40px"} border_custom={"2px solid transparent"} font_size_text={"12px"}></Button></li>
-                        <li><Button title={"UPCOMING"} text_color={"white"} width={"98px"} height={"19px"} radius={"40px"} border_custom={"2px solid transparent"} font_size_text={"12px"}></Button></li>
+                        <li> <Link to={'/aboutus'}><Button title={"ABOUT"} text_color={"white"} width={"98px"} height={"19px"} radius={"40px"} border_custom={"2px solid transparent"} font_size_text={"12px"}> </Button> </Link></li>
+                        <li> <Link to={'/'}><Button title={"UPCOMING"} text_color={"white"} width={"98px"} height={"19px"} radius={"40px"} border_custom={"2px solid transparent"} font_size_text={"12px"}> </Button> </Link></li>
                     </ul>
                 </div>
                 <div className='login'>

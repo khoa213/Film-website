@@ -11,6 +11,7 @@ import Pricing from "containers/Pricing";
 import Payment from "containers/Payment";
 import UserProfile from 'containers/UserProfile';
 import { MoviesPage } from "containers/Movie";
+import AboutUs from "containers/AboutUs";
 
 
 
@@ -25,6 +26,8 @@ function App() {
         <Route path="/movies" element={<MoviesPage />} />
         <Route path="/payment" element={<Payment />} />
         <Route path="/userprofile" element={<UserProfile/>} />
+        <Route path="/aboutus" element={<AboutUs />} />
+        <Route path="/pricing" element={<Pricing />} />
       </Route>
       <Route path="/infopage" element={<InfoPage />} />
       <Route path="/filmpage" element={<Filmpage />} />
