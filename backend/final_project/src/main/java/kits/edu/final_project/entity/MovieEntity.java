@@ -2,6 +2,7 @@ package kits.edu.final_project.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -44,6 +45,7 @@ public class MovieEntity {
     @Column(name = "movie_image")
     private String movieImage;
 
+    @JsonManagedReference(value = "movie")
     @OneToMany(mappedBy = "movie")
     private Set<ReviewEntity> reviews;
 

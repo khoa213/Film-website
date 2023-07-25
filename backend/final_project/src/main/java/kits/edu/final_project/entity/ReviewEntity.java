@@ -1,5 +1,7 @@
 package kits.edu.final_project.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.Set;
@@ -21,10 +23,11 @@ public class ReviewEntity {
     @Column(name = "status")
     private int status;
 
-
+    @JsonBackReference(value = "user")
     @ManyToOne
     @JoinColumn(name = "user_id")
     private UserEntity user;
+    @JsonBackReference(value = "movie")
     @ManyToOne
     @JoinColumn(name = "movie_id")
     private MovieEntity movie;
