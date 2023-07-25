@@ -1,20 +1,22 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Button, Modal, Popconfirm, Row, Table, message } from "antd";
 import styled from "styled-components";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
 import Excel from "components/Excel/Excel";
 import TableData from "components/Table/Table.jsx";
 import Loading from "components/LoadingError/Loading.jsx";
-import Search from "antd/es/transfer/search.js";
-
 import { ReactComponent as EditIcon } from "../../assets/images/edit-icon.svg";
 import { ReactComponent as DeleteIcon } from "../../assets/images/delete-icon.svg";
 import { ReactComponent as VisibleIcon } from "../../assets/images/visible-status.svg";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteUser, listUser, updateUser } from "Redux/Actions/UserActions";
+
 import Input from "components/Input";
 import DropDown from "components/Dropdown/Dropdown";
-
+import {
+  deleteGenre,
+  listGenre,
+  updateGenre,
+} from "Redux/Actions/GenreActions";
+import TextArea from "antd/es/input/TextArea";
 const Wrapper = styled.div`
   .custom-table .ant-table-wrapper {
     background-color: var(--body-content-light-background);
@@ -49,7 +51,7 @@ const Wrapper = styled.div`
       margin-left: auto;
     }
   }
-  .btn-users {
+  .btn-genres {
     width: 70px;
     height: 40px;
     margin-right: 10px;
@@ -105,36 +107,23 @@ const Wrapper = styled.div`
 const onClick = ({ key }) => {
   message.info(`Click on item ${key}`);
 };
-const Users = () => {
+const Genres = () => {
   const columns = [
     { field: "id", headerName: "ID", width: 60 },
-    { field: "username", headerName: "USERNAME", width: 120, editable: true },
-    { field: "email", headerName: "EMAIL", width: 200, editable: true },
+    { field: "name", headerName: "NAME", width: 160, editable: true },
+
     {
-      field: "phone",
-      headerName: "PHONE",
-      type: "number",
-      width: 130,
+      field: "desc",
+      headerName: "DESCRIPTION",
+      width: 400,
       editable: true,
     },
 
     {
-      field: "gender",
-      headerName: "GENDER",
-      width: 90,
+      field: "countMovies",
+      headerName: "MOVIE",
+      width: 100,
       editable: true,
-      renderCell: (params) => (
-        <div className="action">{params.value ? "Nam" : "Nữ"}</div>
-      ),
-    },
-    {
-      field: "birthday",
-      headerName: "BIRTHDAY",
-      width: 150,
-      editable: true,
-      renderCell: (params) => (
-        <div className="action">{formatDate(params.value)}</div>
-      ),
     },
     {
       field: "status",
@@ -153,28 +142,28 @@ const Users = () => {
       renderCell: (params) => (
         <div className="action">
           {/* <Popconfirm
-            title="Update status the task"
-            description="Are you sure to update status for this user?"
-            okText="Yes"
-            cancelText="No"
-            onConfirm={() => {
-              // updateRow(params.row.id);
-              setConfirmUpdate(false);
-            }}
-            onCancel={() => setConfirmUpdate(false)}
-          > */}
+              title="Update status the task"
+              description="Are you sure to update status for this user?"
+              okText="Yes"
+              cancelText="No"
+              onConfirm={() => {
+                // updateRow(params.row.id);
+                setConfirmUpdate(false);
+              }}
+              onCancel={() => setConfirmUpdate(false)}
+            > */}
           <Modal
-            title="Edit User"
+            title="Edit Genre"
             visible={isModalVisible}
             // onOk={handleModalOk}
             onCancel={handleModalCancel}
             maskStyle={{ background: "rgba(0, 0, 0, 0.2)" }}
             okButtonProps={{ style: { display: "none" } }}
           >
-            {selectedUser && (
+            {selectedGenre && (
               <div className="modal-container">
                 <div className="input-field">
-                  <label>Username:</label>
+                  <label>Name:</label>
                   <br />
                   <Input
                     boderColor={"#000"}
@@ -182,17 +171,41 @@ const Users = () => {
                     borderRadius={10}
                     width={400}
                     type="text"
-                    value={selectedUser.username}
+                    value={selectedGenre.name}
                     onChange={(e) =>
-                      setSelectedUser({
-                        ...selectedUser,
-                        username: e.target.value,
+                      setselectedGenre({
+                        ...selectedGenre,
+                        name: e.target.value,
                       })
                     }
                   />
                 </div>
                 <div className="input-field">
-                  <label>Email:</label>
+                  <label>Description:</label>
+                  <br />
+
+                  <TextArea
+                    name="description"
+                    maxLength={10000}
+                    style={{
+                      height: 200,
+                      width: 410,
+                      marginBottom: 24,
+                      border: "1px solid black",
+                      color: "#000",
+                    }}
+                    type="text"
+                    value={selectedGenre.desc}
+                    onChange={(e) =>
+                      setselectedGenre({
+                        ...selectedGenre,
+                        desc: e.target.value,
+                      })
+                    }
+                  />
+                </div>
+                <div className="input-field">
+                  <label>Movie:</label>
                   <br />
                   <Input
                     boderColor={"#000"}
@@ -200,78 +213,16 @@ const Users = () => {
                     borderRadius={10}
                     width={400}
                     type="text"
-                    value={selectedUser.email}
+                    value={selectedGenre.countMovies}
                     onChange={(e) =>
-                      setSelectedUser({
-                        ...selectedUser,
-                        email: e.target.value,
+                      setselectedGenre({
+                        ...selectedGenre,
+                        countMovies: e.target.value,
                       })
                     }
                   />
                 </div>
-                <div className="input-field">
-                  <label>Phone:</label>
-                  <br />
-                  <Input
-                    boderColor={"#000"}
-                    height={36}
-                    borderRadius={10}
-                    width={400}
-                    type="text"
-                    // value={}
-                    onChange={(e) =>
-                      setSelectedUser({
-                        ...selectedUser,
-                        // email: e.target.value,
-                      })
-                    }
-                  />
-                </div>
-                <div className="input-field">
-                  <br />
-                  <DropDown
-                    onClick={onClick}
-                    items={[
-                      {
-                        label: "Nam",
-                        key: "1",
-                      },
-                      {
-                        label: "Nữ",
-                        key: "0",
-                      },
-                    ]}
-                    label={"Gender"}
-                    // defaultValue={getGenderLabel(
-                    //   selectedUser && selectedUser.gender
-                    // )}
-                    defaultValue={selectedUser.gender ? "Nam" : "Nữ"}
-                    onChange={(value) =>
-                      setSelectedUser({
-                        ...selectedUser,
-                        gender: value === "Nam" ? true : false,
-                      })
-                    }
-                  />
-                </div>
-                <div className="input-field">
-                  <label>Birthday:</label>
-                  <br />
-                  <Input
-                    boderColor={"#000"}
-                    height={36}
-                    borderRadius={10}
-                    width={400}
-                    type="text"
-                    value={selectedUser.birthday}
-                    onChange={(e) =>
-                      setSelectedUser({
-                        ...selectedUser,
-                        birthday: e.target.value,
-                      })
-                    }
-                  />
-                </div>
+
                 <div className="input-field">
                   <br />
                   <DropDown
@@ -288,21 +239,21 @@ const Users = () => {
                     ]}
                     label={"Status:"}
                     // defaultValue={getStatusLabel(
-                    //   selectedUser && selectedUser.status
+                    //   selectedGenre && selectedGenre.status
                     // )}
-                    defaultValue={selectedUser.status === 1 ? "Show" : "Hide"}
+                    defaultValue={selectedGenre.status === 1 ? "Show" : "Hide"}
                     onChange={(value) =>
-                      setSelectedUser({
-                        ...selectedUser,
+                      setselectedGenre({
+                        ...selectedGenre,
                         status: value === "Show" ? 1 : 0,
                       })
                     }
                   />
                 </div>
                 <Popconfirm
-                  title="Are you sure to update this user?"
+                  title="Are you sure to update this genre?"
                   onConfirm={() => {
-                    // updateRow(params.row.id);
+                    updateRow(params.row.id);
 
                     handlePopconfirmOk();
                   }}
@@ -320,29 +271,14 @@ const Users = () => {
 
           <button
             className="btn-edit"
-            onClick={handleEditUser.bind(null, params.row.id)}
+            onClick={handleEditGenre.bind(null, params.row.id)}
           >
             <EditIcon />
           </button>
-          {/* </Popconfirm> */}
-          {/* <Popconfirm
-            title="Update status the task"
-            description="Are you sure to update status for this user?"
-            okText="Yes"
-            cancelText="No"
-            onConfirm={() => {
-              // updateRow(params.row.id);
-              setConfirmVisible(false);
-            }}
-            onCancel={() => setConfirmVisible(false)}
-          >
-            <button className="btn-visible">
-              <VisibleIcon />
-            </button>
-          </Popconfirm> */}
+
           <Popconfirm
             title="Delete the task"
-            description="Are you sure to delete this user?"
+            description="Are you sure to delete this genre?"
             okText="Yes"
             cancelText="No"
             onConfirm={() => {
@@ -359,52 +295,33 @@ const Users = () => {
       ),
     },
   ];
-
   const onSearch = (value) => console.log(value);
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [confirmVisible, setConfirmVisible] = useState(false);
   const [confirmUpdate, setConfirmUpdate] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [selectedUser, setSelectedUser] = useState(null);
+  const [selectedGenre, setselectedGenre] = useState(null);
 
   const dispatch = useDispatch();
-  const userList = useSelector((state) => state.userList);
-  const { loading, error, users } = userList;
-  // const getGenderLabel = (gender) => {
-  //   return gender ? "Nam" : "Nữ";
-  // };
-  // const getStatusLabel = (status) => {
-  //   return status === 1 ? "Show" : "Hide";
-  // };
+  const genreList = useSelector((state) => state.genreList);
+  const { loading, error, genres } = genreList;
+
   const [data, setData] = useState([]);
-  const formatDate = (isoDateString) => {
-    const dateObj = new Date(isoDateString);
-    const year = dateObj.getFullYear();
-    const month = String(dateObj.getMonth() + 1).padStart(2, "0");
-    const day = String(dateObj.getDate()).padStart(2, "0");
 
-    return `${year}-${month}-${day}`;
-  };
-  // const handleModalOk = () => {
-  //   // Logic xử lý khi nhấp vào nút OK trong modal
-  //   // setIsModalVisible(false);
-  //   setConfirmUpdate(true);
-  // };
   const handlePopconfirmOk = () => {
-    if (selectedUser) {
-      const updatedUser = {
-        ...selectedUser,
-        username: selectedUser.username,
-        email: selectedUser.email,
-        // phone: selectedUser.phone,
-        gender: selectedUser.gender,
+    if (selectedGenre) {
+      const updatedgenre = {
+        ...selectedGenre,
+        name: selectedGenre.name,
+        desc: selectedGenre.desc,
+        // phone: selectedGenre.phone,
+        countMovies: selectedGenre.countMovies,
 
-        birthday: formatDate(selectedUser.birthday),
-        status: selectedUser.status,
+        status: selectedGenre.status,
       };
-      console.log(updatedUser);
-      // console.log(updatedUser);
-      updateRow(updatedUser);
+      console.log(updatedgenre);
+      // console.log(updatedgenre);
+      updateRow(updatedgenre);
       setIsModalVisible(false);
       setConfirmUpdate(false);
     }
@@ -417,18 +334,19 @@ const Users = () => {
     // Logic xử lý khi nhấp vào nút Cancel hoặc nút đóng modal
     setIsModalVisible(false);
   };
-  const handleEditUser = useCallback(
+  const handleEditGenre = useCallback(
     (id) => {
-      const user = data.find((user) => user.id === id);
-      setSelectedUser({ ...user });
+      const genre = data.find((genre) => genre.id === id);
+      setselectedGenre({ ...genre });
       setIsModalVisible(true);
     },
     [data]
   );
 
-  const updateRow = (updatedUser) => {
-    dispatch(updateUser(updatedUser))
-      .then(() => dispatch(listUser()))
+  const updateRow = (updatedgenre) => {
+    // console.log(updatedgenre.id);
+    dispatch(updateGenre(updatedgenre))
+      .then(() => dispatch(listGenre()))
       .then((response) => {
         setData(response.data);
       })
@@ -438,8 +356,9 @@ const Users = () => {
   };
 
   const deleteRow = (id) => {
-    dispatch(deleteUser(id))
-      .then(() => dispatch(listUser()))
+    console.log(id);
+    dispatch(deleteGenre(id))
+      .then(() => dispatch(listGenre()))
       .then((response) => {
         setData(response.data);
       })
@@ -447,28 +366,30 @@ const Users = () => {
         // Handle error if necessary
       });
   };
+
   useEffect(() => {
-    dispatch(listUser())
+    dispatch(listGenre())
       .then((response) => {
         setData(response.data);
+        console.log(response);
       })
       .catch((error) => {
         // Handle error if necessary
       });
   }, [dispatch]);
   useEffect(() => {
-    if (users && users.data) {
-      setData(users.data);
+    if (genres && genres.data) {
+      setData(genres.data);
 
-      console.log(users.data);
+      console.log(genres.data);
     }
-  }, [users]);
+  }, [genres]);
 
   return (
     <Wrapper>
       <Row>
         <div className="recent-film">
-          <h1>Users List</h1>
+          <h1>Genre List</h1>
         </div>
         <div style={{ display: "none" }} className="">
           {/* {error && toast.error(error)} */}
@@ -481,5 +402,4 @@ const Users = () => {
     </Wrapper>
   );
 };
-
-export default Users;
+export default Genres;
