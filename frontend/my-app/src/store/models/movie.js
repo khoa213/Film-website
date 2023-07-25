@@ -1,7 +1,8 @@
 export const movie = {
     state: {
         movies: [],
-        filterData: []
+        filterData: [],
+        
     },
     reducers: {
         setDataMovies (state, movies) {
@@ -15,15 +16,6 @@ export const movie = {
                 ...state,
                 filterData
             }
-        },
-        getDataFilter(limit) {
-            if (limit >= this.filterData.length ) {
-                return rawDataFilter.slice(0, this.filterData.length);
-            } else {
-                // data = rawDataFilter.slice(0, row);
-                setData(...rawDataFilter.slice(0, row));
-            }
-            return 
         }
     },
     effects: (dispatch) => ({

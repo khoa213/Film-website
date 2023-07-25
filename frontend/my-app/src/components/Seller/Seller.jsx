@@ -28,7 +28,7 @@ const StyleBestSeller = styled.div`
     }
     .carousel {
         /* position: relative; */
-        width: 1545px;
+        width: 1440px;
         height: 711px;
         overflow: hidden;
     }
@@ -43,14 +43,14 @@ const StyleBestSeller = styled.div`
         /* gap: 24px; */
     } 
     img {
-        width: 1545px;
+        width: 1440px;
     }
 
     /* Next & previous buttons */
     .prev, .next {
     cursor: pointer;
     position: absolute;
-    top: 37%;
+    top: 70%;
     width: auto;
     /* padding: 16px; */
     margin-top: -22px;
@@ -101,7 +101,6 @@ const StyleBestSeller = styled.div`
         width: 200px;
     }
     .txt{
-        
         display: flex;
         justify-content: space-between;
         gap:10px;
@@ -128,9 +127,6 @@ const StyleBestSeller = styled.div`
 
         }
     }
-    
-    
-    
 `
 export const BestSeller = ({ width }) => {
     const TOTAL_SLIDES = 5;
@@ -170,7 +166,7 @@ export const BestSeller = ({ width }) => {
                 break;
         }
         // let traslate = (current - 3) * percent;
-        let traslate = current * 1500;
+        let traslate = current * 1440;
         ref.current.style.transform = `translateX(-${traslate}px)`;
     }, [current]);
     return (
@@ -196,40 +192,22 @@ export const BestSeller = ({ width }) => {
                                 <p>
                                     Drama
                                 </p>
-
-
                             </div>
                             <div className="btn">
                                 <img src={play}></img>
                                 <img src={plus}></img>
-
-
                             </div>
                             <div className="more">
                                 <p>
                                     Natasha Romanoff, aka Black Widow, confronts the darker parts of her ledger when a dangerous conspiracy with ties to her past arises. Pursued by a force that will stop at nothing to bring her down, Natasha must deal with her history as a spy, and the broken relationships left in her wake long before she became an Avenger.
-
                                 </p>
-
                             </div>
-
-
-
-
                         </div>
-
-
                         <img className='movie-bg' src={backgroudFilm} alt="avatar film" />
-
-
-
-
-
                     </div>
                     <div id="1">
                         <img className='movie-bg' src={backgroudFilm} alt="avatar film" />
                     </div>
-
                     <div id="2">
                         <img className='movie-bg' src={backgroudFilm} alt="avatar film" />
                     </div>

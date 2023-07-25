@@ -25,9 +25,8 @@ export const ShowCase = () => {
     useEffect(() => {
         dispatch.movie.getAll();
     }, [])
-    const viewFilm = (id) => {
+    const viewFilm = (id, price) => {
         localStorage.setItem("filmId", id);
-        let price = 10;
         let userPaymented = true;
 
         if (userPaymented) {
@@ -55,7 +54,7 @@ export const ShowCase = () => {
         let src = "https://drive.google.com/uc?export=download&id=" + fileId[0];
         if (!driveLink) { src = "https://drive.google.com/uc?export=download&id="}
         listCard.push(
-            <Card onClick={() => viewFilm(movie.id)} key={index} className={"showcard" + (index + 1)} title={movie.title} srcImg={src} title_center={"center"} font_size={"12px"} font_weight={"400"} radius={"10px"}></Card>
+            <Card onClick={() => viewFilm(movie.id, movie.price)} key={index} className={"showcard" + (index + 1)} title={movie.title} srcImg={src} title_center={"center"} font_size={"12px"} font_weight={"400"} radius={"10px"}></Card>
         );
     }
     

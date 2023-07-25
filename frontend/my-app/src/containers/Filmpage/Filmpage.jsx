@@ -13,6 +13,9 @@ import poster3 from "assets/poster3.svg"
 import poster4 from "assets/poster4.svg"
 import poster5 from "assets/poster5.svg"
 import poster6 from "assets/poster6.svg"
+import { useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { useEffect, useState } from 'react'
 
 
 const StyleFilmpage = styled.div`
@@ -175,7 +178,19 @@ display: flex;
 `
 
 const Filmpage = () => {
-    return (
+    const moiveId = localStorage.getItem("movieId");
+    const nav = useNavigate();
+    const dispatch = useDispatch();
+    let rawData = useSelector(state => state.movie.movies);
+    useEffect(() => {
+        dispatch.movie.getAll();
+    }, [])
+    const m = rawData?.filter(movieObj => movieObj.id == moiveId);
+    const watchMovie = (id, title) => {
+        nav("/watch?" + title + "&id=" + id);
+    }
+    if(rawData) {
+        return (
         <StyleFilmpage>
             <Header>
                 <div className='icon'>
@@ -233,22 +248,22 @@ const Filmpage = () => {
                         RELEASE DATE
                     </div>
                     <div className='text'>
-                        November 11, 2022
+                        {m[0]?.releaseDate}
+                        {/* November 11, 2022 */}
 
                     </div>
                     <div className='text1'>
                         RUNNING TIME
                     </div>
                     <div className='text'>
-                        161 MINUTES
-
+                        {m[0]?.duration} MINUTES 
                     </div>
                     <div className='text1'>
                         CAST
                     </div>
                     <div className='text'>
+                        {m[0]?.actorName.toString()}
                         Angela Bassett, Letitia Wright, Winston Duke, Danai Gurira, Florence Kasumba, Lupita Nyong’o, Martin Freeman, Tenoch Huerta, Dominique Thorne, Michaela Coel, Mabel Cadena and Alex Livanalli.
-
                     </div>
                 </div>
                 <div className='movie'>
@@ -257,7 +272,7 @@ const Filmpage = () => {
                     </div>
                     
                     <div  className="watch-film">
-                        <a href="/hello">
+                        <a onClick={() => watchMovie(m[0]?.id, m[0]?.title)}>
                             <img className='avatar' src={avatarFilm} alt="" />
                             <img className='play' src={play} alt="" />
                         </a>
@@ -307,7 +322,7 @@ const Filmpage = () => {
 
         </StyleFilmpage>
 
-    )
+    )}
 }
 
 export default Filmpage;

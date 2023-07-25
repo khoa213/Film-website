@@ -42,6 +42,9 @@ import '@brainhubeu/react-carousel/lib/style.css';
 // import Slider from "react-slick";
 
 import styled from 'styled-components';
+import { useDispatch, useSelector } from "react-redux"
+import { useNavigate } from "react-router-dom"
+import { useEffect } from "react"
 //import { Slider } from "components/Slider"
 
 
@@ -186,10 +189,13 @@ font-family: 'Blinker';
 
 `
 const Banner = styled.div`
+@media screen and (min-width: 1441px){
+    height : 100vh;
+}
 background-image: url(${mandobackbround});
 background-size: cover;
 width: 100vw;
-height: 100vh;
+height: 180vh;
 `
 const ListComments = styled.div`
 display: flex;
@@ -328,10 +334,36 @@ const Trailer = styled.div`
             margin-right: 10px;
             background-color: red;
         }
+        .video-container {
+            video {
+                height: 340px;
+                width: 600px;
+                border-radius: 15px;
+            }
+        }
 `
 
 
 const InfoPage = () => {
+    const SRC_DEFAULT = "https://drive.google.com/uc?export=download&id=";
+    const moiveId = localStorage.getItem("movieId");
+    const nav = useNavigate();
+    const dispatch = useDispatch();
+    let rawData = useSelector(state => state.movie.movies);
+    useEffect(() => {
+        dispatch.movie.getAll();
+    }, [])
+    if (!moiveId) {
+        nav("/");
+    }
+    const m = rawData?.filter(movieObj => movieObj.id == moiveId);
+    const customLink = (driveLink) => {
+        const fileId = driveLink.match(/[-\w]{25,}/);
+        let src = SRC_DEFAULT + fileId[0];
+        if (!driveLink) { src = SRC_DEFAULT}
+        return src;
+    }
+    m[0] ? console.log(customLink(m[0]?.movieLink)) : "hhj";
     return (
         <StyleInfoPage>
             <Banner>
@@ -373,14 +405,24 @@ const InfoPage = () => {
 
                                 </div>
                                 <div className="category">
-                                    SCIENCE FICTION, ADVENTURE, ACTION
+                                    {m[0]?.genreName.toString()}
+                                    , SCIENCE FICTION, ADVENTURE, ACTION
 
                                 </div>
                             </div>
                         </div>
                         <div >
-                            <iframe className="trailervideo" src="https://www.youtube.com/embed/aOC8E8z_ifw">
-                            </iframe>
+                        <div className="video-container">
+                            <video controls>
+                                <source
+                                src={m[0] ? customLink(m[0]?.movieLink) : ""}
+                                type="video/mp4"
+                                />
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                            {/* <iframe className="trailervideo" src="https://www.youtube.com/embed/aOC8E8z_ifw">
+                            </iframe> */}
 
                         </div>
 

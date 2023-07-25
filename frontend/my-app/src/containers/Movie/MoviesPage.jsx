@@ -336,17 +336,16 @@ export const MoviesPage = () => {
     useEffect(() => {
         dispatch.movie.getAll();
     }, [])
-    const viewFilm = (id) => {
+    const viewFilm = (id, price) => {
         localStorage.setItem("filmId", id);
-        let price = 10;
         let userPaymented = true;
 
         if (userPaymented) {
-            nav("/filmpage?" + localStorage.getItem("filmId"));
+            nav("/detail?" + localStorage.getItem("filmId"));
             return;
         }
         if (!userPaymented && price == 0) {
-            nav("/filmpage?" + localStorage.getItem("filmId"));
+            nav("/detail?" + localStorage.getItem("filmId"));
             return;
         }
         nav("/pricing");
@@ -355,7 +354,6 @@ export const MoviesPage = () => {
     const searchMovies = () => {
         let nameStr = document.getElementById("name").value;
         let actorStr = document.getElementById("actor").value;
-        console.log("nameStr: " + nameStr + " actorStr: " + actorStr + " Length: " + rawData.length);
         let newData = [];
         if (actorStr != "") {
             rawData.map(data => {
@@ -384,8 +382,8 @@ export const MoviesPage = () => {
             data = rawDataFilter.slice(0, limit);
         }
     }
-    const addToList = (title, src, genres, id) => {
-        return <Card onClick={() => viewFilm(id)} className={"flex-basis-card"} title={title} srcImg={src} width={"210px"} height={"301px"} genres={genres} isGrid={true} font_size={"24px"} font_weight={"400"} line_height={"22px"} radius={"20px"}></Card>
+    const addToList = (title, src, genres, id, price) => {
+        return <Card onClick={() => viewFilm(id, price)} className={"flex-basis-card"} title={title} srcImg={src} width={"210px"} height={"301px"} genres={genres} isGrid={true} font_size={"24px"} font_weight={"400"} line_height={"22px"} radius={"20px"}></Card>
     }
     const customLink = (driveLink) => {
         const fileId = driveLink.match(/[-\w]{25,}/);
@@ -398,7 +396,7 @@ export const MoviesPage = () => {
         const driveLink = movie.movieImage;
         let src = customLink(driveLink);
         let genres = movie.genreName.toString();
-        listCard.push(addToList(movie.title, src, genres, movie.id));
+        listCard.push(addToList(movie.title, src, genres, movie.id, movie.price));
     }
     return (
         <StyleMovies>
