@@ -13,7 +13,7 @@ import epidode3 from "assets/episode3.svg";
 import epidode4 from "assets/episode4.svg";
 
 const Wrapper = styled.div`
-  margin: 0 -20px;
+  margin: 20px -20px;
 
   padding: 0;
   box-sizing: border-box;
@@ -75,7 +75,7 @@ const Wrapper = styled.div`
 
   .swiper_container {
     max-width: 100vw;
-    height: 26rem;
+    height: 23rem;
     /* padding: 2rem 0; */
     /* background-color: red; */
     overflow-x: hidden !important;
@@ -173,7 +173,9 @@ const Wrapper = styled.div`
   .slider-controler .slider-arrow::after {
     content: "";
   }
-
+  .swiper-button-next, .swiper-button-prev {
+    display: none;
+  }
   .swiper-pagination {
     position: relative;
     width: 15rem !important;

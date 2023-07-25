@@ -28,7 +28,7 @@ const AboutUs=() => {
         <div className="main">
         <div className="content">Masterminds Team</div>
         <div className="content2">Your streamit is built by one of the best and well experienced web developers and an awarded Envato Elite Author</div>
-        <div className="card">
+        <div className="card1">
         <div className="inside-card">
             <img className="card-image" src={image1} alt="image 1" />
             <div className="card-content">ceo</div>

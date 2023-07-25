@@ -7,20 +7,13 @@ import styled from "styled-components";
 import marvelLogo from 'assets/marvel-logo.svg';
 import blackWidowlogo from 'assets/black-widow.svg';
 import rating from 'assets/4stars1.svg';
-import vertical from 'assets/vertical.svg';
 import line from 'assets/linei.svg';
-
 import play from 'assets/play.svg';
 import plus from 'assets/plus.svg';
 
-
-
-
-
-
-
 const StyleBestSeller = styled.div`
-    width: ${props => props.width};
+    display: flex;
+    justify-content: space-around;
     h2 {
         text-align: center;
         font-size: 50px;
@@ -28,8 +21,8 @@ const StyleBestSeller = styled.div`
     }
     .carousel {
         /* position: relative; */
-        width: 1545px;
-        height: 711px;
+        width: 1024px;
+        height: 560px;
         overflow: hidden;
     }
 
@@ -43,17 +36,15 @@ const StyleBestSeller = styled.div`
         /* gap: 24px; */
     } 
     img {
-        width: 1545px;
+        width: 1024px;
     }
 
     /* Next & previous buttons */
     .prev, .next {
     cursor: pointer;
     position: absolute;
-    top: 37%;
+    top: 280px;
     width: auto;
-    /* padding: 16px; */
-    margin-top: -22px;
     color: black;
     font-weight: bold;
     font-size: 45px;
@@ -62,14 +53,13 @@ const StyleBestSeller = styled.div`
     user-select: none;
     }
     .prev {
-        margin-left:30px;
+        left: 100px;
         transform: rotate(180deg);
     }
     /* Position the "next button" to the right */
     .next {
-        right: 0;
+        right: 100px;
         border-radius: 3px 0 0 3px;
-        margin-right: 20px;
     }
 
     /* On hover, add a black background color with a little bit see-through */
@@ -101,12 +91,12 @@ const StyleBestSeller = styled.div`
         width: 200px;
     }
     .txt{
-        
         display: flex;
         justify-content: space-between;
         gap:10px;
         p{
             font-size: 30px;
+            margin: 0;
         }
         img{
           scale: 1.8;
@@ -128,9 +118,6 @@ const StyleBestSeller = styled.div`
 
         }
     }
-    
-    
-    
 `
 export const BestSeller = ({ width }) => {
     const TOTAL_SLIDES = 5;
@@ -170,7 +157,7 @@ export const BestSeller = ({ width }) => {
                 break;
         }
         // let traslate = (current - 3) * percent;
-        let traslate = current * 1500;
+        let traslate = current * 1024;
         ref.current.style.transform = `translateX(-${traslate}px)`;
     }, [current]);
     return (
@@ -196,40 +183,22 @@ export const BestSeller = ({ width }) => {
                                 <p>
                                     Drama
                                 </p>
-
-
                             </div>
                             <div className="btn">
                                 <img src={play}></img>
                                 <img src={plus}></img>
-
-
                             </div>
                             <div className="more">
                                 <p>
                                     Natasha Romanoff, aka Black Widow, confronts the darker parts of her ledger when a dangerous conspiracy with ties to her past arises. Pursued by a force that will stop at nothing to bring her down, Natasha must deal with her history as a spy, and the broken relationships left in her wake long before she became an Avenger.
-
                                 </p>
-
                             </div>
-
-
-
-
                         </div>
-
-
                         <img className='movie-bg' src={backgroudFilm} alt="avatar film" />
-
-
-
-
-
                     </div>
                     <div id="1">
                         <img className='movie-bg' src={backgroudFilm} alt="avatar film" />
                     </div>
-
                     <div id="2">
                         <img className='movie-bg' src={backgroudFilm} alt="avatar film" />
                     </div>

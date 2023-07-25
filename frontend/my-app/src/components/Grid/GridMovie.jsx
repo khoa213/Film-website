@@ -45,7 +45,6 @@ const StyledGrid = styled.div`
 export const GridMovie = () => {
     const SRC_DEFAULT = "https://drive.google.com/uc?export=download&id=";
     const nav = useNavigate();
-    // const dispatch = useDispatch();
     let rawData = useSelector(state => state.movie.filterData);
     let data = [];
     if (rawData.length >= 10) {
@@ -53,27 +52,12 @@ export const GridMovie = () => {
     } else {
         data = rawData;
     }
-    // useEffect(() => {
-    //     dispatch.movie.;
-    // }, [])
-    const viewFilm = (id) => {
-        localStorage.setItem("filmId", id);
-        let price = 10;
-        let userPaymented = true;
-
-        if (userPaymented) {
-            nav("/detail?" + localStorage.getItem("filmId"));
-            return;
-        }
-        if (!userPaymented && price == 0) {
-            nav("/detail?" + localStorage.getItem("filmId"));
-            return;
-        }
-        nav("/pricing");
-        
+    const viewFilm = (id, title) => {
+        localStorage.setItem("movieId", id);
+        nav("/detail?" + title);
     }
     const addToList = (title, className, src, genres, id) => {
-        return <Card onClick={() => viewFilm(id)} className={className} title={title} srcImg={src} width={"210px"} height={"301px"} genres={genres} isGrid={true} font_size={"24px"} font_weight={"400"} line_height={"22px"} radius={"20px"}></Card>
+        return <Card onClick={() => viewFilm(id, title)} className={className} title={title} srcImg={src} width={"210px"} height={"301px"} genres={genres} isGrid={true} font_size={"24px"} font_weight={"400"} line_height={"22px"} radius={"20px"}></Card>
     }
     const customLink = (driveLink) => {
         const fileId = driveLink.match(/[-\w]{25,}/);

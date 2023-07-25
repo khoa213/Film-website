@@ -25,14 +25,6 @@ import avatar from "assets/avatarcmt.svg";
 import redline from "assets/redline.png"
 
 
-
-
-
-
-
-
-
-
 import '@brainhubeu/react-carousel/lib/style.css';
 //import "./styles.css";
 
@@ -42,6 +34,10 @@ import '@brainhubeu/react-carousel/lib/style.css';
 // import Slider from "react-slick";
 
 import styled from 'styled-components';
+import { useDispatch, useSelector } from "react-redux"
+import { useNavigate } from "react-router-dom"
+import { useEffect } from "react"
+import { Footer } from "components/Footer"
 //import { Slider } from "components/Slider"
 
 
@@ -61,7 +57,6 @@ const StyleInfoPage = styled.div`
         height: 40px;
         width: 300px;
     }
-
 }
 
 
@@ -79,8 +74,7 @@ const Header = styled.div`
     }
 `
 const Comments = styled.div`
-background-color: black;
-padding: 50px;
+padding-left: 50px;
 color: white;
 font-family: 'Blinker';
 
@@ -186,40 +180,38 @@ font-family: 'Blinker';
 
 `
 const Banner = styled.div`
+@media screen and (min-width: 1441px){
+    height : 100vh;
+}
 background-image: url(${mandobackbround});
 background-size: cover;
 width: 100vw;
-height: 100vh;
+height: 180vh;
 `
 const ListComments = styled.div`
-display: flex;
-flex-direction: column;
-gap:20px;
-        font-family: 'Blinker';
-        color: white;
-
-padding: 50px;
-background-color: black;
-display: flex;
-.like{
     display: flex;
-    align-items: center;
-    gap:5px;
-    text-decoration:underline;
-}
-.avatarimg{
-    width: 50px;
-    padding-right: 10px;
-}
-.namecmt{
-    font-size: 25px;
-}
-.contenttxt{
-    font-size: 20px;
-}
-.list{
-    display: flex;
-}
+    flex-direction: column;
+    gap: 10px;
+    margin: 20px 0;
+    .list{
+        display: flex;
+        gap: 60px;
+        .avatarimg {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+        }
+        .contenttxt{
+            font-size: 20px;
+        }
+        .like {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 16px;
+            opacity: 0.7;
+        }
+    }
 `
 
 const Trailer = styled.div`
@@ -251,7 +243,7 @@ const Trailer = styled.div`
         display: flex;
         padding-bottom: 15px;
         padding-top: 10px;
-        justify-content:center ;
+        justify-content: flex-start ;
         font-family: 'Blinker';
         font-size: 15px;
         gap: 50px;
@@ -271,17 +263,10 @@ const Trailer = styled.div`
 
 
         }
-        .year{
-
-        }
         .dot{
             display: flex;
             flex-direction: column;
             justify-content: center;
-        }
-        .category
-        {
-
         }
         .trailervideo{
             width: 380px;
@@ -290,18 +275,12 @@ const Trailer = styled.div`
             /* Đặt giá trị border-radius theo ý muốn */
             /* overflow: hidden; */
             /* scale: 1; */
-
-            
-                
-
             }
-            
-        
         }
         .line{
             display: flex;
             width: 100%;
-            justify-content: center;
+            justify-content: flex-start;
         }
         .test {
             border: 5px solid red;
@@ -328,10 +307,36 @@ const Trailer = styled.div`
             margin-right: 10px;
             background-color: red;
         }
+        .video-container {
+            video {
+                height: 400px;
+                width: 700px;
+                border-radius: 15px;
+            }
+        }
 `
 
 
 const InfoPage = () => {
+    const SRC_DEFAULT = "https://drive.google.com/uc?export=download&id=";
+    const moiveId = localStorage.getItem("movieId");
+    const nav = useNavigate();
+    const dispatch = useDispatch();
+    let rawData = useSelector(state => state.movie.movies);
+    useEffect(() => {
+        dispatch.movie.getAll();
+    }, [])
+    if (!moiveId) {
+        nav("/");
+    }
+    const m = rawData?.filter(movieObj => movieObj.id == moiveId);
+    const customLink = (driveLink) => {
+        const fileId = driveLink.match(/[-\w]{25,}/);
+        let src = SRC_DEFAULT + fileId[0];
+        if (!driveLink) { src = SRC_DEFAULT }
+        return src;
+    }
+    m[0] ? console.log(customLink(m[0]?.movieLink)) : "hhj";
     return (
         <StyleInfoPage>
             <Banner>
@@ -354,61 +359,36 @@ const InfoPage = () => {
                 </Header>
 
                 <Trailer>
-
                     <div class="logo">
-
                         <img src={disneylogo}></img>
                     </div>
                     <div class="name">
                         <img src={MandoLogo}></img>
                     </div>
                     <div class="trailer">
-                        <div className="categorytxt">
-                            <div className="yearcategory">
-                                <div className="year">
-                                    2019
-                                </div>
-                                <div className="dot">
-                                    <img width="2px" height="2px" src={dot}></img>
-
-                                </div>
-                                <div className="category">
-                                    SCIENCE FICTION, ADVENTURE, ACTION
-
-                                </div>
-                            </div>
-                        </div>
                         <div >
-                            <iframe className="trailervideo" src="https://www.youtube.com/embed/aOC8E8z_ifw">
-                            </iframe>
-
+                            <div className="video-container">
+                                <video controls>
+                                    <source
+                                        src={m[0] ? customLink(m[0]?.movieLink) : ""}
+                                        type="video/mp4"
+                                    />
+                                    Your browser does not support the video tag.
+                                </video>
+                            </div>
+                            {/* <iframe className="trailervideo" src="https://www.youtube.com/embed/aOC8E8z_ifw">
+                            </iframe> */}
                         </div>
-
                     </div>
                     <div class="line">
                         <img src={Line4}></img>
                     </div>
-
-
-                    {/* <Slider dots={true}>{renderSlides()}</Slider> */}
-                    <div className="season">
-                        SEASON 1
-                    </div>
-
-
-
-
-
-                </Trailer>
-            </Banner>
-
-            <Comments>
+                    <Comments>
                 <div className="comments">
                     <div className="name1">
                         <div>
                             MANDALORIAN
                         </div>
-
                     </div>
                     <div className="score">
                         <div>
@@ -435,18 +415,13 @@ const InfoPage = () => {
                         <img width="2px" height="2px" src={dot}></img>
                         <div>
                             Nov 2017
-
                         </div>
                         <img width="2px" height="2px" src={dot}></img>
 
                         <div className="view">
                             <img className="viewimg" width="30px" src={view}></img>
                             2112 views
-
                         </div>
-
-
-
                     </div>
                     <div className="ico">
                         <div>
@@ -458,259 +433,96 @@ const InfoPage = () => {
                         <div>
                             <img width="30px" src={plusico}></img>
                         </div>
-
                     </div>
-                    <div className="tag">
+                </div>
+            </Comments>
+                </Trailer>
+            </Banner>
 
-
-                        <div>
-                            TAG
+            
+            <Comments>
+                <div>
+                    <ListComments>
+                        <h3>COMMENTS (8)</h3>
+                        <div className="list">
+                            <div className="avatarimg">
+                                <img src={avatar} />
+                                <span>JOIN</span>
+                            </div>
+                            <div className="contentFilm">
+                                <div>
+                                    <div className="contenttxt">
+                                        Amazing amazing amazing !
+                                    </div>
+                                    <div className="like">
+                                        <div>
+                                            Like
+                                        </div>
+                                        <img width="2px" height="2px" src={dot}></img>
+                                        <div>
+                                            Reply
+                                        </div>
+                                        <img width="2px" height="2px" src={dot}></img>
+                                        <div>
+                                            20 weeks
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div>
-
-                            Adventure,
-                            Comedy,
-                            Thriller
-
+                        <div className="list">
+                            <div className="avatarimg">
+                                <img src={avatar} />
+                                <span>JOIN</span>
+                            </div>
+                            <div className="contentFilm">
+                                <div>
+                                    <div className="contenttxt">
+                                        Amazing amazing amazing !
+                                    </div>
+                                    <div className="like">
+                                        <div>
+                                            Like
+                                        </div>
+                                        <img width="2px" height="2px" src={dot}></img>
+                                        <div>
+                                            Reply
+                                        </div>
+                                        <img width="2px" height="2px" src={dot}></img>
+                                        <div>
+                                            20 weeks
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                    </ListComments>
                     <div className="comment">
                         <div>
                             Your email address will not be published. Required fields are marked *
-
                         </div>
                         <div className="ratingtxt">
                             Your rating
                             <img src={rating}></img>
-
-
                         </div>
                         <div className="review2">
                             <div>
                                 Your review *
                             </div>
                             <input type="text" className="review" />
-
                         </div>
-                        {/* <div className="nameemail">
-
-                            <div className="name2">
-                                <div>
-                                    Name*
-                                </div>
-                                <input type="text" className="review1" />
-
-
-                            </div>
-                            <div className="email">
-                                <div>
-                                    Email*
-                                </div>
-                                <input type="text" className="review1" />
-
-
-                            </div>
-
-
-
-                        </div> */}
-                        {/* <div className="save">
-                            <input type="checkbox" ></input>
-                            Save my name, email, and website in this browser for the next time I comment.
-
-                        </div> */}
                         <button className="btnsubmit">
                             SUBMIT
                         </button>
-
-
-
                     </div>
                 </div>
             </Comments>
-            <ListComments>
-                <div className="list">
-                    <div className="avatarimg">
-
-                        <img src={avatar} />
-                    </div>
-                    <div className="content">
-                        <div>
-                            <div className="namecmt">
-                                John
-                            </div>
-                            <div className="contenttxt">
-                                Amazing amazing amazing !
-                            </div>
-                            <div className="like">
-                                <div>
-                                    Like
-                                </div>
-                                <img width="2px" height="2px" src={dot}></img>
-                                <div>
-                                    Reply
-                                </div>
-                                <img width="2px" height="2px" src={dot}></img>
-                                <div>
-                                    20 weeks
-                                </div>
-
-
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-
-                <div className="list">
-                    <div className="avatarimg">
-
-                        <img src={avatar} />
-                    </div>
-                    <div className="content">
-                        <div>
-                            <div className="namecmt">
-                                John
-                            </div>
-                            <div className="contenttxt">
-                                Amazing amazing amazing !
-                            </div>
-                            <div className="like">
-                                <div>
-                                    Like
-                                </div>
-                                <img width="2px" height="2px" src={dot}></img>
-                                <div>
-                                    Reply
-                                </div>
-                                <img width="2px" height="2px" src={dot}></img>
-                                <div>
-                                    20 weeks
-                                </div>
-
-
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-
-                <div className="list">
-                    <div className="avatarimg">
-
-                        <img src={avatar} />
-                    </div>
-                    <div className="content">
-                        <div>
-                            <div className="namecmt">
-                                John
-                            </div>
-                            <div className="contenttxt">
-                                Amazing amazing amazing !
-                            </div>
-                            <div className="like">
-                                <div>
-                                    Like
-                                </div>
-                                <img width="2px" height="2px" src={dot}></img>
-                                <div>
-                                    Reply
-                                </div>
-                                <img width="2px" height="2px" src={dot}></img>
-                                <div>
-                                    20 weeks
-                                </div>
-
-
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-
-                <div className="list">
-                    <div className="avatarimg">
-
-                        <img src={avatar} />
-                    </div>
-                    <div className="content">
-                        <div>
-                            <div className="namecmt">
-                                John
-                            </div>
-                            <div className="contenttxt">
-                                Amazing amazing amazing !
-                            </div>
-                            <div className="like">
-                                <div>
-                                    Like
-                                </div>
-                                <img width="2px" height="2px" src={dot}></img>
-                                <div>
-                                    Reply
-                                </div>
-                                <img width="2px" height="2px" src={dot}></img>
-                                <div>
-                                    20 weeks
-                                </div>
-
-
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-
-                <div className="list">
-                    <div className="avatarimg">
-
-                        <img src={avatar} />
-                    </div>
-                    <div className="content">
-                        <div>
-                            <div className="namecmt">
-                                John
-                            </div>
-                            <div className="contenttxt">
-                                Amazing amazing amazing !
-                            </div>
-                            <div className="like">
-                                <div>
-                                    Like
-                                </div>
-                                <img width="2px" height="2px" src={dot}></img>
-                                <div>
-                                    Reply
-                                </div>
-                                <img width="2px" height="2px" src={dot}></img>
-                                <div>
-                                    20 weeks
-                                </div>
-
-
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-
-
-
-
-
-
-            </ListComments>
-            <div className="showmore">
+            {/* <div className="showmore">
                 <img src={redline}></img>
                 Show more preview
                 <img src={redline}></img>
-            </div>
-
-
-
-
-
-
+            </div> */}
+            <Footer></Footer>
 
         </StyleInfoPage>
 
