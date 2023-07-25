@@ -17,4 +17,3 @@ public interface GenreService {
     GenreEntity replaceGenreById(@RequestBody GenreEntity genreEntity, @PathVariable int id);
     List<GenreEntity> deleteGenreById(@PathVariable int id);
 }
-
