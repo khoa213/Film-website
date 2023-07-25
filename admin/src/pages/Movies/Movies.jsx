@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Input from "components/Input";
 import DropDown from "components/Dropdown/Dropdown";
 import { deleteMovie, listMovie } from "Redux/Actions/MovieActions";
+
 const Wrapper = styled.div`
   .custom-table .ant-table-wrapper {
     background-color: var(--body-content-light-background);
@@ -159,7 +160,7 @@ const Movies = () => {
             {selectedMovie && (
               <div className="modal-container">
                 <div className="input-field">
-                  <label>Username:</label>
+                  <label>Name:</label>
                   <br />
                   <Input
                     boderColor={"#000"}
@@ -167,17 +168,17 @@ const Movies = () => {
                     borderRadius={10}
                     width={400}
                     type="text"
-                    value={selectedMovie.username}
+                    value={selectedMovie.movie}
                     onChange={(e) =>
                       setselectedMovie({
                         ...selectedMovie,
-                        username: e.target.value,
+                        movie: e.target.value,
                       })
                     }
                   />
                 </div>
                 <div className="input-field">
-                  <label>Email:</label>
+                  <label>Genre</label>
                   <br />
                   <Input
                     boderColor={"#000"}
@@ -185,17 +186,36 @@ const Movies = () => {
                     borderRadius={10}
                     width={400}
                     type="text"
-                    value={selectedMovie.email}
+                    value={selectedMovie.genreName}
                     onChange={(e) =>
                       setselectedMovie({
                         ...selectedMovie,
-                        email: e.target.value,
+                        genreName: e.target.value,
                       })
                     }
                   />
                 </div>
                 <div className="input-field">
-                  <label>Phone:</label>
+                  <label>Duration:</label>
+                  <br />
+                  <Input
+                    boderColor={"#000"}
+                    height={36}
+                    borderRadius={10}
+                    width={400}
+                    type="number"
+                    value={selectedMovie.duration}
+                    onChange={(e) =>
+                      setselectedMovie({
+                        ...selectedMovie,
+                        duration: e.target.value,
+                      })
+                    }
+                  />
+                </div>
+
+                <div className="input-field">
+                  <label>Realease Date:</label>
                   <br />
                   <Input
                     boderColor={"#000"}
@@ -203,56 +223,11 @@ const Movies = () => {
                     borderRadius={10}
                     width={400}
                     type="text"
-                    // value={}
+                    value={selectedMovie.releaseDate}
                     onChange={(e) =>
                       setselectedMovie({
                         ...selectedMovie,
-                        // email: e.target.value,
-                      })
-                    }
-                  />
-                </div>
-                <div className="input-field">
-                  <br />
-                  <DropDown
-                    onClick={onClick}
-                    items={[
-                      {
-                        label: "Nam",
-                        key: "1",
-                      },
-                      {
-                        label: "Nữ",
-                        key: "0",
-                      },
-                    ]}
-                    label={"Gender"}
-                    // defaultValue={getGenderLabel(
-                    //   selectedMovie && selectedMovie.gender
-                    // )}
-                    defaultValue={selectedMovie.gender ? "Nam" : "Nữ"}
-                    onChange={(value) =>
-                      setselectedMovie({
-                        ...selectedMovie,
-                        gender: value === "Nam" ? true : false,
-                      })
-                    }
-                  />
-                </div>
-                <div className="input-field">
-                  <label>Birthday:</label>
-                  <br />
-                  <Input
-                    boderColor={"#000"}
-                    height={36}
-                    borderRadius={10}
-                    width={400}
-                    type="text"
-                    value={selectedMovie.birthday}
-                    onChange={(e) =>
-                      setselectedMovie({
-                        ...selectedMovie,
-                        birthday: e.target.value,
+                        releaseDate: e.target.value,
                       })
                     }
                   />

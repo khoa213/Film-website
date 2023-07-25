@@ -127,7 +127,15 @@ const Users = () => {
         <div className="action">{params.value ? "Nam" : "Nữ"}</div>
       ),
     },
-    { field: "birthday", headerName: "BIRTHDAY", width: 150, editable: true },
+    {
+      field: "birthday",
+      headerName: "BIRTHDAY",
+      width: 150,
+      editable: true,
+      renderCell: (params) => (
+        <div className="action">{formatDate(params.value)}</div>
+      ),
+    },
     {
       field: "status",
       headerName: "STATUS",
@@ -369,7 +377,14 @@ const Users = () => {
   //   return status === 1 ? "Show" : "Hide";
   // };
   const [data, setData] = useState([]);
+  const formatDate = (isoDateString) => {
+    const dateObj = new Date(isoDateString);
+    const year = dateObj.getFullYear();
+    const month = String(dateObj.getMonth() + 1).padStart(2, "0");
+    const day = String(dateObj.getDate()).padStart(2, "0");
 
+    return `${year}-${month}-${day}`;
+  };
   // const handleModalOk = () => {
   //   // Logic xử lý khi nhấp vào nút OK trong modal
   //   // setIsModalVisible(false);
@@ -384,7 +399,7 @@ const Users = () => {
         // phone: selectedUser.phone,
         gender: selectedUser.gender,
 
-        birthday: selectedUser.birthday,
+        birthday: formatDate(selectedUser.birthday),
         status: selectedUser.status,
       };
       console.log(updatedUser);

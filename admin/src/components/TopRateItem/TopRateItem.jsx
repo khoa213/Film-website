@@ -5,6 +5,9 @@ const TopRateItemWrapper = styled.div`
   background-color: var(--body-light-background);
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5); /* Thêm box-shadow cho nền đen */
   margin-right: 20px;
+  h3 {
+    margin-top: 20px;
+  }
   .image {
     width: 100%;
     img {
@@ -15,8 +18,15 @@ const TopRateItemWrapper = styled.div`
       background-color: var(--body-dark-background);
     }
   }
+  .title,
+  .genre {
+    padding: 0 20px;
+  }
+  .touch {
+    padding: 0 20px 20px 20px;
+  }
 `;
-const TopRateItem = ({ title, genre }) => {
+const TopRateItem = ({ actor, title, genre }) => {
   return (
     <TopRateItemWrapper>
       <div className="image">
@@ -24,8 +34,8 @@ const TopRateItem = ({ title, genre }) => {
       </div>
       <div className="list-feature">
         <h3 className="title">{title}</h3>
-        <p>{genre}</p>
-        <div className="touch">alo</div>
+        <p className="genre">{genre}</p>
+        <div className="touch">{"actor"}</div>
       </div>
     </TopRateItemWrapper>
   );

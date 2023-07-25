@@ -259,29 +259,29 @@ const Dashboard = () => {
             <Col className="gutter-row" span={6}>
               <CardTransfer
                 speed={80}
-                transfer={55}
+                transfer={15}
                 unit={"K"}
-                title={"Viewer"}
+                title={"Payment"}
                 colorCircle={"#14E788"}
                 iconCard={<EyeOutlined />}
               />
             </Col>
             <Col className="gutter-row" span={6}>
               <CardTransfer
-                speed={-80}
-                transfer={55}
+                speed={80}
+                transfer={15}
                 unit={"K"}
-                title={"Viewer"}
+                title={"Subcribed"}
                 colorCircle={"#e78514"}
                 iconCard={<EyeOutlined />}
               />
             </Col>
             <Col className="gutter-row" span={6}>
               <CardTransfer
-                speed={80}
-                transfer={55}
+                speed={-8}
+                transfer={15}
                 unit={"K"}
-                title={"Viewer"}
+                title={"Rating"}
                 colorCircle={"#1b14e7"}
                 iconCard={<EyeOutlined />}
               />
