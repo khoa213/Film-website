@@ -5,6 +5,7 @@ import account from "assets/account.svg"
 import notification from "assets/notification.svg"
 import bpbackground1 from "assets/bpbackground1.png"
 import avatarFilm from "assets/film-avatar.svg"
+import play from "assets/play.svg"
 import line2 from "assets/line2.svg"
 import poster1 from "assets/poster1.svg"
 import poster2 from "assets/poster2.svg"
@@ -156,13 +157,19 @@ display: flex;
 .watch-film {
     display: flex;
     justify-content: center;
-    img {
+    position: relative;
+    .avatar {
         width: 456px;
         height: 251px;
         object-fit: cover;
         object-position: center;
         border-radius: 10px;
         cursor: pointer;
+    }
+    .play {
+        top: 70px;
+        right: 250px;
+        position: absolute;
     }
 }
 `
@@ -250,9 +257,10 @@ const Filmpage = () => {
                     </div>
                     
                     <div  className="watch-film">
-                        <a href="/hello"><img src={avatarFilm} alt="" /></a>
-                        {/* <iframe  className='border' src="https://www.youtube.com/embed/aOC8E8z_ifw">
-                        </iframe> */}
+                        <a href="/hello">
+                            <img className='avatar' src={avatarFilm} alt="" />
+                            <img className='play' src={play} alt="" />
+                        </a>
                     </div>
                     <div className='poster'>
                         <div>

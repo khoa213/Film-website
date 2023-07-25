@@ -62,11 +62,11 @@ export const GridMovie = () => {
         let userPaymented = true;
 
         if (userPaymented) {
-            nav("/filmpage?" + localStorage.getItem("filmId"));
+            nav("/detail?" + localStorage.getItem("filmId"));
             return;
         }
         if (!userPaymented && price == 0) {
-            nav("/filmpage?" + localStorage.getItem("filmId"));
+            nav("/detail?" + localStorage.getItem("filmId"));
             return;
         }
         nav("/pricing");

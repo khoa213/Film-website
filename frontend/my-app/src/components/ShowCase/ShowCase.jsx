@@ -1,6 +1,7 @@
 import { Card } from "components/Card/Card";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 
 const StyledShowCase = styled.div`
@@ -18,11 +19,28 @@ const StyledShowCase = styled.div`
     }
 `
 export const ShowCase = () => {
+    const nav = useNavigate();
     const dispatch = useDispatch();
     let rawData = useSelector(state => state.movie.movies);
     useEffect(() => {
         dispatch.movie.getAll();
     }, [])
+    const viewFilm = (id) => {
+        localStorage.setItem("filmId", id);
+        let price = 10;
+        let userPaymented = true;
+
+        if (userPaymented) {
+            nav("/detail?" + localStorage.getItem("filmId"));
+            return;
+        }
+        if (!userPaymented && price == 0) {
+            nav("/detail?" + localStorage.getItem("filmId"));
+            return;
+        }
+        nav("/pricing");
+        
+    }
     let data = [];
     if (rawData.length >= 12) {
         data = rawData.slice(0, 12);
@@ -37,9 +55,10 @@ export const ShowCase = () => {
         let src = "https://drive.google.com/uc?export=download&id=" + fileId[0];
         if (!driveLink) { src = "https://drive.google.com/uc?export=download&id="}
         listCard.push(
-            <Card key={index} className={"showcard" + (index + 1)} title={movie.title} srcImg={src} title_center={"center"} font_size={"12px"} font_weight={"400"} radius={"10px"}></Card>
+            <Card onClick={() => viewFilm(movie.id)} key={index} className={"showcard" + (index + 1)} title={movie.title} srcImg={src} title_center={"center"} font_size={"12px"} font_weight={"400"} radius={"10px"}></Card>
         );
     }
+    
     return (
         <StyledShowCase>
             <div className="showcase">

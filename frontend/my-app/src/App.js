@@ -20,7 +20,6 @@ function App() {
     <Routes>
       <Route element={<PrimaryLayout />}>
         <Route path="/" element={<HomePage />} />
-        <Route path="/detail" element={<DetailPage />} />
         <Route path="/movies" element={<MoviesPage />} />
         <Route path="/pricing" element={<Pricing />} />
         <Route path="/movies" element={<MoviesPage />} />
@@ -29,8 +28,8 @@ function App() {
         <Route path="/aboutus" element={<AboutUs />} />
         <Route path="/pricing" element={<Pricing />} />
       </Route>
-      <Route path="/infopage" element={<InfoPage />} />
-      <Route path="/filmpage" element={<Filmpage />} />
+      <Route path="/watch" element={<InfoPage />} />
+      <Route path="/detail" element={<Filmpage />} />
 
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
