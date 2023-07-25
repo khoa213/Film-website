@@ -7,6 +7,7 @@ import kits.edu.final_project.payload.request.ReviewRequest;
 import kits.edu.final_project.payload.response.BaseResponse;
 import kits.edu.final_project.payload.response.MovieResponse;
 import kits.edu.final_project.service.MovieService;
+import kits.edu.final_project.service.GenreService;
 import kits.edu.final_project.service.imp.GenreMovieServiceImp;
 
 import org.springframework.beans.factory.annotation.Autowired;

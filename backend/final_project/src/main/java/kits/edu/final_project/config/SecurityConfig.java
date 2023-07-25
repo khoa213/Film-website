@@ -7,6 +7,7 @@ import kits.edu.final_project.service.userDetails.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -90,7 +91,9 @@ private  CustomAuthProvider customAuthProvider;
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
                 .antMatchers("/signin","/signup").permitAll()
-//                .antMatchers("/user", "/user/**").hasAuthority("ADMIN")
+                .antMatchers("/**").hasAuthority("ADMIN")
+                .antMatchers(HttpMethod.PUT, "/user/**").hasAuthority("ADMIN")
+                .antMatchers(HttpMethod.DELETE, "/user/**").hasAuthority("ADMIN")
                 .anyRequest().authenticated();
     }
 
