@@ -77,7 +77,7 @@ export const AddGenre = () => {
   const formData = {
     name: name,
     desc: desc,
-    status: selectedValue === 1 ? true : false,
+    status: selectedValue,
   };
 
   useEffect(() => {
@@ -114,7 +114,7 @@ export const AddGenre = () => {
     <Wrapper>
       <h3>Add Genre</h3>
       <Input
-        ref={nameRef} // Sử dụng ref cho input Name
+        // ref={nameRef} // Sử dụng ref cho input Name
         width={400}
         height={40}
         textColor={"#fff"}
@@ -131,7 +131,7 @@ export const AddGenre = () => {
         style={{ marginBottom: "20px" }}
       ></Input>
       <TextArea
-        ref={descRef} // Sử dụng ref cho input Name
+        // ref={descRef} // Sử dụng ref cho input Name
         className="textarea"
         showCount
         maxLength={10000}
@@ -150,7 +150,7 @@ export const AddGenre = () => {
         <Radio className="radio" value={1}>
           Enable
         </Radio>
-        <Radio className="radio" value={2}>
+        <Radio className="radio" value={0}>
           Disable
         </Radio>
       </Radio.Group>

@@ -192,7 +192,7 @@ const Genres = () => {
                       width: 410,
                       marginBottom: 24,
                       border: "1px solid black",
-                      color: "#fff",
+                      color: "#000",
                     }}
                     type="text"
                     value={selectedGenre.desc}
@@ -344,6 +344,7 @@ const Genres = () => {
   );
 
   const updateRow = (updatedgenre) => {
+    // console.log(updatedgenre.id);
     dispatch(updateGenre(updatedgenre))
       .then(() => dispatch(listGenre()))
       .then((response) => {

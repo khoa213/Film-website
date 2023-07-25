@@ -145,14 +145,15 @@ export const updateGenre = (genre) => async (dispatch, getState) => {
       genre,
       config
     );
+    console.log(genre.id);
     dispatch({ type: GENRE_UPDATE_SUCCESS, payload: data });
     // dispatch({ type: GENRE_LOGIN_SUCCESS, payload: data });
 
     // localStorage.setItem("userInfo", JSON.stringify(data));
   } catch (error) {
     const message =
-      error.response && error.response.data.message
-        ? error.response.data.message
+      error.response && error.response.data.data
+        ? error.response.data.data
         : error.message;
     if (message === "Not authorized, token failed") {
       dispatch(logout());
