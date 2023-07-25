@@ -1,19 +1,17 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Button, Modal, Popconfirm, Row, Table, message } from "antd";
 import styled from "styled-components";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
 import Excel from "components/Excel/Excel";
 import TableData from "components/Table/Table.jsx";
 import Loading from "components/LoadingError/Loading.jsx";
-import Search from "antd/es/transfer/search.js";
-
 import { ReactComponent as EditIcon } from "../../assets/images/edit-icon.svg";
 import { ReactComponent as DeleteIcon } from "../../assets/images/delete-icon.svg";
 import { ReactComponent as VisibleIcon } from "../../assets/images/visible-status.svg";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteUser, listUser, updateUser } from "Redux/Actions/UserActions";
+
 import Input from "components/Input";
 import DropDown from "components/Dropdown/Dropdown";
+import { deleteMovie, listMovie } from "Redux/Actions/MovieActions";
 
 const Wrapper = styled.div`
   .custom-table .ant-table-wrapper {
@@ -49,7 +47,7 @@ const Wrapper = styled.div`
       margin-left: auto;
     }
   }
-  .btn-users {
+  .btn-movies {
     width: 70px;
     height: 40px;
     margin-right: 10px;
@@ -105,37 +103,25 @@ const Wrapper = styled.div`
 const onClick = ({ key }) => {
   message.info(`Click on item ${key}`);
 };
-const Users = () => {
+const Movies = () => {
   const columns = [
     { field: "id", headerName: "ID", width: 60 },
-    { field: "username", headerName: "USERNAME", width: 120, editable: true },
-    { field: "email", headerName: "EMAIL", width: 200, editable: true },
+    { field: "movie", headerName: "MOVIE", width: 120, editable: true },
+    { field: "genreName", headerName: "GENRE", width: 120, editable: true },
     {
-      field: "phone",
-      headerName: "PHONE",
-      type: "number",
-      width: 130,
+      field: "releaseDate",
+      headerName: "RELEASEDATE",
+      width: 200,
+      editable: true,
+    },
+    { field: "duration", headerName: "DURATION", width: 100, editable: true },
+    {
+      field: "desc",
+      headerName: "DESCRIPTION",
+      width: 200,
       editable: true,
     },
 
-    {
-      field: "gender",
-      headerName: "GENDER",
-      width: 90,
-      editable: true,
-      renderCell: (params) => (
-        <div className="action">{params.value ? "Nam" : "Nữ"}</div>
-      ),
-    },
-    {
-      field: "birthday",
-      headerName: "BIRTHDAY",
-      width: 150,
-      editable: true,
-      renderCell: (params) => (
-        <div className="action">{formatDate(params.value)}</div>
-      ),
-    },
     {
       field: "status",
       headerName: "STATUS",
@@ -164,17 +150,17 @@ const Users = () => {
             onCancel={() => setConfirmUpdate(false)}
           > */}
           <Modal
-            title="Edit User"
+            title="Edit Movie"
             visible={isModalVisible}
             // onOk={handleModalOk}
             onCancel={handleModalCancel}
             maskStyle={{ background: "rgba(0, 0, 0, 0.2)" }}
             okButtonProps={{ style: { display: "none" } }}
           >
-            {selectedUser && (
+            {selectedMovie && (
               <div className="modal-container">
                 <div className="input-field">
-                  <label>Username:</label>
+                  <label>Name:</label>
                   <br />
                   <Input
                     boderColor={"#000"}
@@ -182,17 +168,17 @@ const Users = () => {
                     borderRadius={10}
                     width={400}
                     type="text"
-                    value={selectedUser.username}
+                    value={selectedMovie.movie}
                     onChange={(e) =>
-                      setSelectedUser({
-                        ...selectedUser,
-                        username: e.target.value,
+                      setselectedMovie({
+                        ...selectedMovie,
+                        movie: e.target.value,
                       })
                     }
                   />
                 </div>
                 <div className="input-field">
-                  <label>Email:</label>
+                  <label>Genre</label>
                   <br />
                   <Input
                     boderColor={"#000"}
@@ -200,17 +186,36 @@ const Users = () => {
                     borderRadius={10}
                     width={400}
                     type="text"
-                    value={selectedUser.email}
+                    value={selectedMovie.genreName}
                     onChange={(e) =>
-                      setSelectedUser({
-                        ...selectedUser,
-                        email: e.target.value,
+                      setselectedMovie({
+                        ...selectedMovie,
+                        genreName: e.target.value,
                       })
                     }
                   />
                 </div>
                 <div className="input-field">
-                  <label>Phone:</label>
+                  <label>Duration:</label>
+                  <br />
+                  <Input
+                    boderColor={"#000"}
+                    height={36}
+                    borderRadius={10}
+                    width={400}
+                    type="number"
+                    value={selectedMovie.duration}
+                    onChange={(e) =>
+                      setselectedMovie({
+                        ...selectedMovie,
+                        duration: e.target.value,
+                      })
+                    }
+                  />
+                </div>
+
+                <div className="input-field">
+                  <label>Realease Date:</label>
                   <br />
                   <Input
                     boderColor={"#000"}
@@ -218,56 +223,11 @@ const Users = () => {
                     borderRadius={10}
                     width={400}
                     type="text"
-                    // value={}
+                    value={selectedMovie.releaseDate}
                     onChange={(e) =>
-                      setSelectedUser({
-                        ...selectedUser,
-                        // email: e.target.value,
-                      })
-                    }
-                  />
-                </div>
-                <div className="input-field">
-                  <br />
-                  <DropDown
-                    onClick={onClick}
-                    items={[
-                      {
-                        label: "Nam",
-                        key: "1",
-                      },
-                      {
-                        label: "Nữ",
-                        key: "0",
-                      },
-                    ]}
-                    label={"Gender"}
-                    // defaultValue={getGenderLabel(
-                    //   selectedUser && selectedUser.gender
-                    // )}
-                    defaultValue={selectedUser.gender ? "Nam" : "Nữ"}
-                    onChange={(value) =>
-                      setSelectedUser({
-                        ...selectedUser,
-                        gender: value === "Nam" ? true : false,
-                      })
-                    }
-                  />
-                </div>
-                <div className="input-field">
-                  <label>Birthday:</label>
-                  <br />
-                  <Input
-                    boderColor={"#000"}
-                    height={36}
-                    borderRadius={10}
-                    width={400}
-                    type="text"
-                    value={selectedUser.birthday}
-                    onChange={(e) =>
-                      setSelectedUser({
-                        ...selectedUser,
-                        birthday: e.target.value,
+                      setselectedMovie({
+                        ...selectedMovie,
+                        releaseDate: e.target.value,
                       })
                     }
                   />
@@ -288,12 +248,12 @@ const Users = () => {
                     ]}
                     label={"Status:"}
                     // defaultValue={getStatusLabel(
-                    //   selectedUser && selectedUser.status
+                    //   selectedMovie && selectedMovie.status
                     // )}
-                    defaultValue={selectedUser.status === 1 ? "Show" : "Hide"}
+                    defaultValue={selectedMovie.status === 1 ? "Show" : "Hide"}
                     onChange={(value) =>
-                      setSelectedUser({
-                        ...selectedUser,
+                      setselectedMovie({
+                        ...selectedMovie,
                         status: value === "Show" ? 1 : 0,
                       })
                     }
@@ -320,29 +280,14 @@ const Users = () => {
 
           <button
             className="btn-edit"
-            onClick={handleEditUser.bind(null, params.row.id)}
+            onClick={handleEditMovie.bind(null, params.row.id)}
           >
             <EditIcon />
           </button>
-          {/* </Popconfirm> */}
-          {/* <Popconfirm
-            title="Update status the task"
-            description="Are you sure to update status for this user?"
-            okText="Yes"
-            cancelText="No"
-            onConfirm={() => {
-              // updateRow(params.row.id);
-              setConfirmVisible(false);
-            }}
-            onCancel={() => setConfirmVisible(false)}
-          >
-            <button className="btn-visible">
-              <VisibleIcon />
-            </button>
-          </Popconfirm> */}
+
           <Popconfirm
             title="Delete the task"
-            description="Are you sure to delete this user?"
+            description="Are you sure to delete this mo?"
             okText="Yes"
             cancelText="No"
             onConfirm={() => {
@@ -359,52 +304,34 @@ const Users = () => {
       ),
     },
   ];
-
   const onSearch = (value) => console.log(value);
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [confirmVisible, setConfirmVisible] = useState(false);
   const [confirmUpdate, setConfirmUpdate] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [selectedUser, setSelectedUser] = useState(null);
+  const [selectedMovie, setselectedMovie] = useState(null);
 
   const dispatch = useDispatch();
-  const userList = useSelector((state) => state.userList);
-  const { loading, error, users } = userList;
-  // const getGenderLabel = (gender) => {
-  //   return gender ? "Nam" : "Nữ";
-  // };
-  // const getStatusLabel = (status) => {
-  //   return status === 1 ? "Show" : "Hide";
-  // };
+  const movieList = useSelector((state) => state.movieList);
+  const { loading, error, movies } = movieList;
+
   const [data, setData] = useState([]);
-  const formatDate = (isoDateString) => {
-    const dateObj = new Date(isoDateString);
-    const year = dateObj.getFullYear();
-    const month = String(dateObj.getMonth() + 1).padStart(2, "0");
-    const day = String(dateObj.getDate()).padStart(2, "0");
 
-    return `${year}-${month}-${day}`;
-  };
-  // const handleModalOk = () => {
-  //   // Logic xử lý khi nhấp vào nút OK trong modal
-  //   // setIsModalVisible(false);
-  //   setConfirmUpdate(true);
-  // };
   const handlePopconfirmOk = () => {
-    if (selectedUser) {
-      const updatedUser = {
-        ...selectedUser,
-        username: selectedUser.username,
-        email: selectedUser.email,
-        // phone: selectedUser.phone,
-        gender: selectedUser.gender,
+    if (selectedMovie) {
+      const updatedMovie = {
+        ...selectedMovie,
+        // username: selectedMovie.username,
+        // email: selectedMovie.email,
+        // // phone: selectedMovie.phone,
+        // gender: selectedMovie.gender,
 
-        birthday: formatDate(selectedUser.birthday),
-        status: selectedUser.status,
+        // birthday: selectedMovie.birthday,
+        // status: selectedMovie.status,
       };
-      console.log(updatedUser);
-      // console.log(updatedUser);
-      updateRow(updatedUser);
+      console.log(updatedMovie);
+      // console.log(updatedMovie);
+      updateRow(updatedMovie);
       setIsModalVisible(false);
       setConfirmUpdate(false);
     }
@@ -417,18 +344,29 @@ const Users = () => {
     // Logic xử lý khi nhấp vào nút Cancel hoặc nút đóng modal
     setIsModalVisible(false);
   };
-  const handleEditUser = useCallback(
+  const handleEditMovie = useCallback(
     (id) => {
-      const user = data.find((user) => user.id === id);
-      setSelectedUser({ ...user });
+      const movie = data.find((movie) => movie.id === id);
+      setselectedMovie({ ...movie });
       setIsModalVisible(true);
     },
     [data]
   );
 
-  const updateRow = (updatedUser) => {
-    dispatch(updateUser(updatedUser))
-      .then(() => dispatch(listUser()))
+  const updateRow = (updatedMovie) => {
+    // dispatch(updateUser(updatedMovie))
+    //   .then(() => dispatch(listUser()))
+    //   .then((response) => {
+    //     setData(response.data);
+    //   })
+    //   .catch((error) => {
+    //     // Handle error if necessary
+    //   });
+  };
+
+  const deleteRow = (id) => {
+    dispatch(deleteMovie(id))
+      .then(() => dispatch(listMovie()))
       .then((response) => {
         setData(response.data);
       })
@@ -437,38 +375,48 @@ const Users = () => {
       });
   };
 
-  const deleteRow = (id) => {
-    dispatch(deleteUser(id))
-      .then(() => dispatch(listUser()))
-      .then((response) => {
-        setData(response.data);
-      })
-      .catch((error) => {
-        // Handle error if necessary
-      });
-  };
   useEffect(() => {
-    dispatch(listUser())
+    dispatch(listMovie())
       .then((response) => {
         setData(response.data);
+        console.log(response);
       })
       .catch((error) => {
         // Handle error if necessary
       });
   }, [dispatch]);
   useEffect(() => {
-    if (users && users.data) {
-      setData(users.data);
+    if (movies && movies.data) {
+      const formattedData = movies.data.map((movie) => {
+        return {
+          id: movie.id,
+          movie: movie.title,
+          desc: movie.desc,
+          releaseDate: movie.releaseDate,
+          duration: movie.duration,
+          genreName: movie.genreName,
+          // rating: review.rating,
+          // status: review.status,
+          // user: review.user.username,
+        };
+      });
+      setData(formattedData);
 
-      console.log(users.data);
+      console.log(formattedData);
     }
-  }, [users]);
+
+    // if (reviews && reviews.data) {
+
+    //   setData(formattedData);
+    //   console.log(formattedData);
+    // }
+  }, [movies]);
 
   return (
     <Wrapper>
       <Row>
         <div className="recent-film">
-          <h1>Users List</h1>
+          <h1>Movies List</h1>
         </div>
         <div style={{ display: "none" }} className="">
           {/* {error && toast.error(error)} */}
@@ -481,5 +429,4 @@ const Users = () => {
     </Wrapper>
   );
 };
-
-export default Users;
+export default Movies;

@@ -8,6 +8,9 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  p {
+    color: var(--bg-color-input);
+  }
 `;
 const Logo = ({ desc }) => {
   return (

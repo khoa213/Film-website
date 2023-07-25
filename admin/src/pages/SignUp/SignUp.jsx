@@ -1,4 +1,4 @@
-import { login } from "Redux/Actions/UserActions";
+import { login, register } from "Redux/Actions/UserActions";
 import { Button } from "components/Button";
 import Logo from "components/Logo/Logo";
 import React, { useEffect, useState } from "react";
@@ -6,9 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import Input from "components/Input";
-import EmailIcon from "../../assets/images/email-icon.svg";
-import PasswordIcon from "../../assets/images/password-icon.svg";
-import { Divider } from "antd";
+import { Switch } from "antd";
 
 const Wrapper = styled.div`
   background-color: var(--background-signin-color);
@@ -22,93 +20,17 @@ const Wrapper = styled.div`
     color: white;
   }
   .input_group {
-    margin-bottom: 60px;
+    margin-bottom: 30px;
     display: flex;
     flex-direction: column;
   }
   .input {
     position: relative;
-    box-shadow: -14.719192504882812px 17.347618103027344px 84.10966491699219px
-      0px #0038ff26;
+    box-shadow: var(--box-shadow-1);
 
-    box-shadow: 15.770564079284668px -13.667821884155273px 112.49666595458984px 0px
-      #f8003b26;
+    box-shadow: var(--box-shadow-2);
   }
 
-  .input-user::after,
-  .input-password::after {
-    position: absolute;
-    content: "";
-    display: block;
-    width: 50px;
-    height: 50px;
-    background-color: var(--color-primary);
-    right: 0;
-    top: 0;
-    border-radius: 8px;
-
-    /* background-size: cover; */
-  }
-  .input-user::after {
-    background-image: url(${EmailIcon});
-    background-repeat: no-repeat;
-    background-position: center;
-  }
-  .input-password::after {
-    background-image: url(${PasswordIcon});
-    background-repeat: no-repeat;
-    background-position: center;
-  }
-  .input::after svg {
-    width: 20px; /* Đặt kích thước mong muốn cho SVG */
-    height: 20px; /* Đặt kích thước mong muốn cho SVG */
-    fill: var(--color-primary);
-  }
-  .remember-part {
-    display: flex;
-    justify-content: space-between;
-
-    align-items: center;
-  }
-  .forgot-span {
-    margin-top: -80px !important;
-    color: #c4a5bc;
-    font-size: 14px;
-    text-decoration: underline;
-  }
-  .remember-password {
-    display: flex;
-    align-items: center;
-  }
-
-  .remember-password input[type="checkbox"] {
-    display: none;
-  }
-
-  .remember-password label {
-    margin-top: -80px;
-    margin-left: 10px;
-    font-size: 14px;
-    text-decoration: underline;
-    cursor: pointer;
-  }
-
-  .remember-password label:before {
-    content: "";
-    display: inline-block;
-    width: 16px;
-    height: 16px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-    margin-right: 6px;
-    vertical-align: text-bottom;
-    background-color: white;
-  }
-
-  .remember-password input[type="checkbox"]:checked + label:before {
-    background-color: var(--color-primary);
-    box-shadow: 0px 0px 9px 1px #780eff, 0px 4px 4px 0px #00000040;
-  }
   .btn-form {
     display: flex;
     flex-direction: column;
@@ -124,41 +46,141 @@ const Wrapper = styled.div`
   .btn-signup {
     font-weight: 700;
     font-size: 22px;
+    box-shadow: var(--box-shadow-check), 0px 4px 4px 0px #00000040;
     /* box-shadow: 0px 0px 9px 1px #780eff, 0px 4px 4px 0px #00000040; */
     cursor: pointer;
     /* margin-top: 30px; */
   }
-  /*
-  .btn-signin:hover {
-    background-color: #3311b9;
-    cursor: pointer;
-  } */
+  .policy {
+    margin-top: 10px;
+    color: var(--bg-color-input);
+    text-align: center;
+  }
+  .error-text {
+    color: red;
+    font-size: 12px;
+  }
 `;
 const SignUp = () => {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [isDarkMode, setIsDarkMode] = useState(true);
   const [password, setPassword] = useState("");
+  const [validEmail, setValidEmail] = useState(true);
+  const [validPassword, setValidPassword] = useState(true);
+  const [validUsername, setValidUsername] = useState(true);
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [validConfirmPassword, setValidConfirmPassword] = useState(true);
+
   const dispatch = useDispatch();
-  const userLogin = useSelector((state) => state.userLogin);
-  const { error, loading, userInfo } = userLogin;
+  const userRegister = useSelector((state) => state.userRegister);
+  const [signUpClicked, setSignUpClicked] = useState(false);
+
+  const { error, loading, userInfo } = userRegister;
+  const handleSignUpClick = () => {
+    setSignUpClicked(true);
+  };
+  const handleConfirmPasswordChange = (e) => {
+    const confirmPassword = e.target.value;
+    setConfirmPassword(confirmPassword);
+
+    // Check if the password matches the confirmation
+    if (confirmPassword === password) {
+      setValidConfirmPassword(true);
+    } else {
+      setValidConfirmPassword(false);
+    }
+  };
+  function validateEmail(email) {
+    // Biểu thức chính quy để kiểm tra định dạng email
+    var pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    // Kiểm tra định dạng email bằng biểu thức chính quy
+    if (pattern.test(email)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  function validatePassword(password) {
+    var pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+    if (pattern.test(password)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  const setDarkMode = () => {
+    document.querySelector("body").setAttribute("data-mode", "dark");
+  };
+  const setLightMode = () => {
+    document.querySelector("body").setAttribute("data-mode", "light");
+  };
+
+  const handleToggleDarkMode = () => {
+    setIsDarkMode(!isDarkMode);
+    if (!isDarkMode) setDarkMode();
+    else setLightMode();
+  };
   useEffect(() => {
     if (userInfo) {
       navigate("/");
     }
   }, [userInfo, navigate]);
+  //submit
   const submitHandler = (e) => {
     e.preventDefault();
-    console.log(username, password);
+    // console.log(username, password, email);
 
     const formData = {
       username: username,
       password: password,
+      email: email,
     };
-    dispatch(login(formData));
+    console.log(formData);
+    dispatch(register(formData));
   };
+  const handleEmailChange = (e) => {
+    const emailInput = e.target.value;
+    setEmail(emailInput);
+
+    // Kiểm tra định dạng email và cập nhật trạng thái hợp lệ
+    if (validateEmail(email)) {
+      setValidEmail(true);
+    } else {
+      setValidEmail(false);
+    }
+  };
+  const handlePasswordChange = (e) => {
+    const password = e.target.value;
+    setPassword(password);
+
+    // Kiểm tra định dạng email và cập nhật trạng thái hợp lệ
+    if (validatePassword(password)) {
+      setValidPassword(true);
+    } else {
+      setValidPassword(false);
+    }
+  };
+  const handleUsernameChange = (e) => {
+    const usernameInput = e.target.value;
+    setUsername(usernameInput);
+    const isUsernameValid = usernameInput.length >= 6;
+    if (isUsernameValid) {
+      setValidUsername(true);
+    } else {
+      setValidUsername(false);
+    }
+  };
+  const showErrorMessage = signUpClicked && !validEmail;
+  const showErrorMessagePass = signUpClicked && !validPassword;
+  const showErrorMessageUsername = signUpClicked && !validUsername;
+  const showErrorMessageConfirmPass = signUpClicked && !validConfirmPassword;
   return (
     <Wrapper>
-      <Logo desc={"Login into your"} />
+      <Logo desc={"Register"} />
 
       <form onSubmit={submitHandler}>
         <div className="input_group">
@@ -170,10 +192,20 @@ const SignUp = () => {
               type="text"
               id="username"
               name="username"
-              placeholder={"marvelous@email.com"}
+              placeholder={"Username"}
               textColor={"var(--text-color-input)"}
-              onChange={(e) => setUsername(e.target.value)}
+              bgColor={"var(--bg-color-input)"}
+              // onChange={(e) => setUsername(e.target.value)}
+              onChange={handleUsernameChange}
             />
+            {showErrorMessageUsername && (
+              <p
+                className="error-text"
+                style={{ position: "absolute", top: "40px" }}
+              >
+                Username have at least 6 characters
+              </p>
+            )}
           </div>
         </div>
         <div className="input_group">
@@ -183,12 +215,22 @@ const SignUp = () => {
               height={50}
               borderRadius={8}
               type="text"
-              id="username"
-              name="username"
-              placeholder={"marvelous@email.com"}
+              id="email"
+              name="email"
+              placeholder={"Email"}
               textColor={"var(--text-color-input)"}
-              onChange={(e) => setUsername(e.target.value)}
+              bgColor={"var(--bg-color-input)"}
+              // onChange={(e) => setEmail(e.target.value)}
+              onChange={handleEmailChange}
             />
+            {showErrorMessage && (
+              <p
+                className="error-text"
+                style={{ position: "absolute", top: "40px" }}
+              >
+                Invalid email format
+              </p>
+            )}
           </div>
         </div>
         <div className="input_group input_group_pass ">
@@ -202,8 +244,19 @@ const SignUp = () => {
               name="password"
               placeholder={"Enter your password"}
               textColor={"var(--text-color-input)"}
-              onChange={(e) => setPassword(e.target.value)}
+              bgColor={"var(--bg-color-input)"}
+              // onChange={(e) => setPassword(e.target.value)}
+              onChange={handlePasswordChange}
             />
+            {showErrorMessagePass && (
+              <p
+                className="error-text"
+                style={{ position: "absolute", top: "40px" }}
+              >
+                Password must have at least 8 characters, number and uppercase
+                letters
+              </p>
+            )}
           </div>
         </div>
         <div className="input_group input_group_pass ">
@@ -215,10 +268,20 @@ const SignUp = () => {
               type="password"
               id="password"
               name="password"
-              placeholder={"Enter your password"}
               textColor={"var(--text-color-input)"}
-              onChange={(e) => setPassword(e.target.value)}
+              bgColor={"var(--bg-color-input)"}
+              placeholder={"Confirm your password"}
+              onChange={handleConfirmPasswordChange}
+              // onChange={(e) => setPassword(e.target.value)}
             />
+            {showErrorMessageConfirmPass && (
+              <p
+                className="error-text"
+                style={{ position: "absolute", top: "40px" }}
+              >
+                Password does not match confirmation.
+              </p>
+            )}
           </div>
         </div>
         <div className="btn-form">
@@ -238,19 +301,35 @@ const SignUp = () => {
             <Button
               width={420}
               height={60}
-              textColor="#fff"
-              bgColor="var(--background-signin-color)"
+              textColor="var(--color-primary)"
+              bgColor="var(--bg-color-input)"
               fontSize={22}
               borderRadius={50}
               type="submit"
               id="btn-signup"
               className="btn-signup"
+              onClick={handleSignUpClick}
             >
               CREATE ACCOUNT
             </Button>
           </div>
         </div>
       </form>
+      <span className="policy">
+        By clicking “Create Account” you agree to our
+        <br /> <b>terms</b> and <b>privacy policy</b>.
+      </span>
+      <Switch
+        style={{
+          position: "absolute",
+          bottom: "20px",
+          right: "20px",
+        }}
+        onClick={handleToggleDarkMode}
+        checkedChildren={""}
+        unCheckedChildren={""}
+        defaultChecked={true}
+      />
     </Wrapper>
   );
 };

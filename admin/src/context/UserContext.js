@@ -1,5 +1,5 @@
 // UserContext.js
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState } from "react";
 
 const UserContext = createContext();
 
@@ -12,12 +12,12 @@ export const UserProvider = ({ children }) => {
   //   // setListUsers([...listUsers, user]);
   // };
   const addUser = (addedUser) => {
-    setUsers(addedUser)
+    setUsers(addedUser);
   };
   const updateUser = (updatedUser) => {
-    setUsers(updatedUser)
+    setUsers(updatedUser);
   };
-// console.log(users)
+  // console.log(users)
   return (
     <UserContext.Provider value={{ users, addUser, updateUser }}>
       {children}

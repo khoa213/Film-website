@@ -1,7 +1,18 @@
-import { Button, Row, Table } from "antd";
+import { Button, Popconfirm, Row, Table } from "antd";
 import Search from "antd/es/input/Search";
-import React, { useState } from "react";
+import TableData from "components/Table/Table";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import { ReactComponent as EditIcon } from "../../assets/images/edit-icon.svg";
+import { ReactComponent as DeleteIcon } from "../../assets/images/delete-icon.svg";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  deleteProduct,
+  deleteReview,
+  listReview,
+  updateReview,
+} from "Redux/Actions/ReviewActions";
+import Loading from "components/LoadingError/Loading";
 const Wrapper = styled.div`
   .custom-table .ant-table-wrapper {
     background-color: var(--body-content-light-background);
@@ -72,197 +83,144 @@ const Wrapper = styled.div`
       color: #fff;
     }
   }
+
+  /* table MUI */
+  .dataTable {
+  }
 `;
 
-const dataTable = [
-  {
-    key: "1",
-    name: "John Brown 1",
-    rate: 3.1,
-    category: "New York Park",
-  },
-  {
-    key: "2",
-    name: "John Brown 2",
-    rate: 3.2,
-    category: "New York Park",
-  },
-  {
-    key: "3",
-    name: "John Brown 3",
-    rate: 3.2,
-    category: "New York Park",
-  },
-  {
-    key: "4",
-    name: "John Brown 4",
-    rate: 3.2,
-    category: "New York Park",
-  },
-  {
-    key: "5",
-    name: "John Brown 5",
-    rate: 3.2,
-    category: "New York Park",
-  },
-  {
-    key: "6",
-    name: "John Brown 6",
-    rate: 3.2,
-    category: "New York Park",
-  },
-  {
-    key: "7",
-    name: "John Brown 7",
-    rate: 3.2,
-    category: "New York Park",
-  },
-  {
-    key: "8",
-    name: "John Brown 8",
-    rate: 3.2,
-    category: "New York Park",
-  },
-  {
-    key: "9",
-    name: "John Brown 9",
-    rate: 3.2,
-    category: "New York Park",
-  },
-  {
-    key: "10",
-    name: "John Brown 10",
-    rate: 3.2,
-    category: "New York Park",
-  },
-  {
-    key: "11",
-    name: "John Brown 11",
-    rate: 3.2,
-    category: "New York Park",
-  },
-  {
-    key: "12",
-    name: "John Brown 12",
-    rate: 3.2,
-    category: "New York Park",
-  },
-  {
-    key: "13",
-    name: "John Brown 13",
-    rate: 3.2,
-    category: "New York Park",
-  },
-  {
-    key: "14",
-    name: "John Brown 14",
-    rate: 3.2,
-    category: "New York Park",
-  },
-];
+let rows = [];
 const Rating = () => {
   const columns = [
+    { field: "id", headerName: "ID", width: 90 },
+    { field: "movieName", headerName: "MOVIE", width: 150, editable: true },
+    { field: "user", headerName: "AUTHOR", width: 150, editable: true },
     {
-      title: "Movie",
-      width: 200,
-      dataIndex: "name",
-      key: "name",
-      fixed: "left",
-    },
-    {
-      title: "Rating",
-      width: 100,
-      dataIndex: "rate",
-      key: "rate",
-      fixed: "left",
-      sorter: (a, b) => a.rate - b.rate,
-    },
-    {
-      title: "Category",
-      dataIndex: "category",
-      key: "1",
-    },
-    {
-      title: "Download/View",
-      dataIndex: "dov",
-      key: "2",
-    },
-    {
-      title: "Date",
-      dataIndex: "date",
-      key: "3",
+      field: "rating",
+      headerName: "RATING",
+      type: "number",
+      width: 110,
+      editable: true,
     },
 
     {
-      title: "Liked",
-      dataIndex: "liked",
-      key: "4",
+      field: "content",
+      headerName: "CONTENT",
+      description: "This column has a value getter and is not sortable.",
+      sortable: false,
+      width: 160,
+      // valueGetter: (params) =>
+      //   `${params.row.firstName || ""} ${params.row.lastName || ""}`,
     },
-
     {
-      title: "Action",
-      key: "operation",
-      fixed: "right",
-      width: 200,
-      render: (_, rate) => (
-        <div>
-          <Button
-            className=" btn-delete btn-users"
-            type="primary"
-            danger
-            id={rate.key}
-            onClick={() => {
-              handleDeleteUser(rate.key);
-              console.log(rate.key);
+      field: "status",
+      headerName: "STATUS",
+      // type: "number",
+      width: 110,
+      editable: true,
+      renderCell: (params) => (
+        <div className="action">{params.value === 1 ? "Show" : "Hide"}</div>
+      ),
+    },
+    {
+      field: "action",
+      headerName: "Action",
+      width: 120,
+      renderCell: (params) => (
+        <div className="action">
+          <Popconfirm
+            title="Update status the task"
+            description="Are you sure to update status for this rating?"
+            okText="Yes"
+            cancelText="No"
+            onConfirm={() => {
+              updateRow(params.row.id);
+              setConfirmUpdate(false);
             }}
+            onCancel={() => setConfirmUpdate(false)}
           >
-            Xóa
-          </Button>
-          <Button
-            className="btn-users"
-            // onClick={() => handleUpdateUser(user.id)}
-            //   style={}
+            <button className="btn-edit">
+              <EditIcon />
+            </button>
+          </Popconfirm>
+
+          <Popconfirm
+            title="Delete the task"
+            description="Are you sure to delete this rating?"
+            okText="Yes"
+            cancelText="No"
+            onConfirm={() => {
+              deleteRow(params.row.id);
+              setConfirmDelete(false);
+            }}
+            onCancel={() => setConfirmDelete(false)}
           >
-            Sửa
-          </Button>
+            <button className="btn-delete">
+              <DeleteIcon />
+            </button>
+          </Popconfirm>
         </div>
       ),
     },
   ];
 
-  const pageSize = 10;
-  const [tableData, setTableData] = useState(() => {
-    const startIndex = 0;
-    const endIndex = startIndex + pageSize;
-    return dataTable.slice(startIndex, endIndex);
-  });
-  const [currentPage, setCurrentPage] = useState(1);
-
-  const handleDeleteUser = (key) => {
-    const updatedData = tableData.filter((data) => data.key !== key);
-    setTableData(updatedData);
-
-    if (updatedData.length === 0 && currentPage > 1) {
-      setCurrentPage(currentPage - 1);
-      const startIndex = pageSize * (currentPage - 2);
-      const endIndex = startIndex + pageSize;
-      const prevPageData = dataTable.slice(startIndex, endIndex);
-      setTableData(prevPageData);
-    }
-  };
-
   const onSearch = (value) => console.log(value);
-
-  const handleChangePage = (page) => {
-    setCurrentPage(page);
-    const startIndex = pageSize * (page - 1);
-    const endIndex = startIndex + pageSize;
-    const slicedData = dataTable.slice(
-      startIndex,
-      endIndex > dataTable.length ? dataTable.length : endIndex
-    );
-    setTableData(slicedData);
+  const [confirmDelete, setConfirmDelete] = useState(false);
+  const [confirmUpdate, setConfirmUpdate] = useState(false);
+  const dispatch = useDispatch();
+  const reviewList = useSelector((state) => state.reviewList);
+  const { loading, error, reviews } = reviewList;
+  const [data, setData] = useState([]);
+  const updateRow = (id) => {
+    const updateRow = data.find((row) => row.id === id);
+    updateRow.status = updateRow.status === 1 ? 0 : 1;
+    // console.log(updateRow);
+    dispatch(updateReview(updateRow))
+      .then(() => dispatch(listReview()))
+      .then((response) => {
+        setData(response.data);
+      })
+      .catch((error) => {
+        // Handle error if necessary
+      });
+    // console.log(updateRow);
   };
+  const deleteRow = (id) => {
+    dispatch(deleteReview(id))
+      .then(() => dispatch(listReview()))
+      .then((response) => {
+        setData(response.data);
+      })
+      .catch((error) => {
+        // Handle error if necessary
+      });
+  };
+  useEffect(() => {
+    dispatch(listReview())
+      .then((response) => {
+        setData(response.data);
+      })
+      .catch((error) => {
+        // Handle error if necessary
+      });
+  }, [dispatch]);
+  useEffect(() => {
+    if (reviews && reviews.data) {
+      const formattedData = reviews.data.map((review) => {
+        return {
+          content: review.content,
+          id: review.id,
+          movieName: review.movieName,
+          rating: review.rating,
+          status: review.status,
+          user: review.user.username,
+        };
+      });
+
+      setData(formattedData);
+      console.log(formattedData);
+    }
+  }, [reviews]);
 
   return (
     <Wrapper>
@@ -277,7 +235,12 @@ const Rating = () => {
             }}
           />
         </div>
-        <Table
+        <div style={{ display: "none" }} className="">
+          {/* {error && toast.error(error)} */}
+          {/* {error && <Toast />} */}
+          {loading && <Loading />}
+        </div>
+        {/* <Table
           columns={columns}
           dataSource={tableData}
           pagination={{
@@ -294,7 +257,8 @@ const Rating = () => {
             y: 500,
           }}
           className="custom-table"
-        />
+        /> */}
+        <TableData className="dataTable" rows={data} columns={columns} />
       </Row>
     </Wrapper>
   );
