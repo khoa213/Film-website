@@ -1,14 +1,7 @@
 package kits.edu.final_project.service.imp;
 
 import kits.edu.final_project.entity.GenreEntity;
-import kits.edu.final_project.entity.ReviewEntity;
-import kits.edu.final_project.entity.UserEntity;
 import kits.edu.final_project.exception.CustomException;
-import kits.edu.final_project.payload.request.SignupRequest;
-import kits.edu.final_project.payload.response.GenreResponse;
-import kits.edu.final_project.payload.response.ReviewResponse;
-import kits.edu.final_project.repository.GenreRepository;
-import kits.edu.final_project.service.GenreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -71,6 +64,21 @@ public class GenreServiceImp implements GenreService {
     public List<GenreEntity> deleteGenreById(int id) {
         genreRepository.deleteById(id);
         return genreRepository.findAll();
+    }
+
+    @Override
+    public boolean deleteGenreById(int id) {
+        boolean isSuccess =false;
+        try {
+
+            genreRepository.deleteById(id);
+            isSuccess=true;
+        }catch (Exception e)
+        {
+
+            throw new CustomException("Loi xoa genre "+e.getMessage());
+        }
+        return isSuccess;
     }
 
 }
