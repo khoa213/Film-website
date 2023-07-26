@@ -1,4 +1,5 @@
 import React from "react";
+import styled from "styled-components";
 
 const Loading = () => {
   return (
@@ -8,7 +9,9 @@ const Loading = () => {
         role="status"
         style={{ width: "50px", height: "50px" }}
       >
-        <span className="sr-only">Loading...</span>
+        <span className="sr-only" style={{ color: "#fff" }}>
+          Loading...
+        </span>
       </div>
     </div>
   );

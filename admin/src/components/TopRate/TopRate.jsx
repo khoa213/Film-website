@@ -9,6 +9,7 @@ import "slick-carousel/slick/slick-theme.css";
 import TopRateItem from "components/TopRateItem";
 import { useDispatch, useSelector } from "react-redux";
 import { listMovie } from "Redux/Actions/MovieActions";
+import Loading from "components/LoadingError/Loading";
 const TopRateWrapper = styled.div`
   .top-rate-header {
     display: flex;
@@ -139,23 +140,20 @@ const TopRate = () => {
         </div>
       </div>
       <div className="carousel-items">
-        <Slider {...settings} ref={carouselRef}>
-          {data.map((movie) => (
-            <TopRateItem
-              key={movie.id}
-              title={movie.movie}
-              genre={movie.price}
-            />
-          ))}
-          {/* {console.log(data)} */}
-          {/* <TopRateItem title={"Harry Potter"} genre={"Khoa học"} />
-          <TopRateItem title={"Harry Potter"} genre={"Khoa học"} />
-          <TopRateItem title={"Harry Potter"} genre={"Khoa học"} />
-          <TopRateItem title={"Harry Potter"} genre={"Khoa học"} />
-          <TopRateItem title={"Harry Potter"} genre={"Khoa học"} />
-          <TopRateItem title={"Harry Potter"} genre={"Khoa học"} />
-          <TopRateItem title={"Harry Potter"} genre={"Khoa học"} /> */}
-        </Slider>
+        {console.log(loading)}
+        {loading ? (
+          <Loading />
+        ) : (
+          <Slider {...settings} ref={carouselRef}>
+            {data.map((movie) => (
+              <TopRateItem
+                key={movie.id}
+                title={movie.movie}
+                genre={movie.price}
+              />
+            ))}
+          </Slider>
+        )}
       </div>
     </TopRateWrapper>
   );

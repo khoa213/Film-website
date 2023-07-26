@@ -63,9 +63,12 @@ export const login = (formData) => async (dispatch) => {
       error.response && error.response.data.message
         ? error.response.data.message
         : error.message;
-    console.log(error.response.data);
+    // console.log(error.response.data);
     if (message === "Not authorized, token failed") {
       dispatch(logout());
+    }
+    if (message === "Your account is block") {
+      toast.error(message, ToastObjects);
     }
 
     dispatch({
@@ -79,7 +82,7 @@ export const login = (formData) => async (dispatch) => {
 export const logout = () => (dispatch) => {
   localStorage.removeItem("userInfo");
   dispatch({ type: USER_LOGOUT });
-  dispatch({ type: USER_LIST_RESET });
+  // dispatch({ type: USER_LIST_RESET });
 };
 
 //all users
