@@ -12,6 +12,8 @@ import Payment from "containers/Payment";
 import UserProfile from 'containers/UserProfile';
 import { MoviesPage } from "containers/Movie";
 import AboutUs from "containers/AboutUs";
+import Login from "containers/Login";
+import SignUp from "containers/SignUp";
 
 
 
@@ -30,6 +32,8 @@ function App() {
       </Route>
       <Route path="/watch" element={<InfoPage />} />
       <Route path="/detail" element={<Filmpage />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/signup" element={<SignUp />} />
 
       <Route path="*" element={<NotFoundPage />} />
     </Routes>

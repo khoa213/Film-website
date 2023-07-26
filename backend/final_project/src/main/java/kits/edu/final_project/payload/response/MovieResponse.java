@@ -10,7 +10,7 @@ public class MovieResponse {
     private String desc;
     private Date releaseDate;
     private int duration;
-    private int price;
+    private double price;
     private String movieLink;
     private String movieImage;
     private String language;
@@ -84,11 +84,11 @@ public class MovieResponse {
         this.duration = duration;
     }
 
-    public int getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
@@ -164,7 +164,7 @@ public class MovieResponse {
         movieResponse.setMovieLink(movieEntities.getMovieLink());
         movieResponse.setDesc(movieEntities.getDesc());
         movieResponse.setReleaseDate(movieEntities.getReleaseDate());
-
+        movieResponse.setPrice(movieEntities.getPrice());
         movieResponse.setMovieImage(movieEntities.getMovieImage());
         Set<String> genreSet = new HashSet<>();
         for (GenreMovie gMovie: movieEntities.getGenreMovies()) {

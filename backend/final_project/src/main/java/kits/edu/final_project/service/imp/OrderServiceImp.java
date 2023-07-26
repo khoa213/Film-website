@@ -1,6 +1,8 @@
 package kits.edu.final_project.service.imp;
 
 import kits.edu.final_project.entity.OrderEntity;
+import kits.edu.final_project.entity.PackageEntity;
+import kits.edu.final_project.entity.UserEntity;
 import kits.edu.final_project.exception.CustomException;
 import kits.edu.final_project.payload.response.OrderResponse;
 import kits.edu.final_project.repository.OrderRepository;
@@ -69,5 +71,19 @@ public class OrderServiceImp implements OrderService {
         }
 
         return isSuccess;
+    }
+
+    @Override
+    public boolean buyPackage(int idPackage, int idUser) {
+        UserEntity userEntity = new UserEntity();
+        userEntity.setId(idUser);
+        PackageEntity packageEntity = new PackageEntity();
+        packageEntity.setId(idPackage);
+        OrderEntity orderEntity = new OrderEntity();
+        orderEntity.setPack(packageEntity);
+        orderEntity.setUser(userEntity);
+        orderEntity.setOrderType(true);
+        orderRepository.save(orderEntity);
+        return true;
     }
 }

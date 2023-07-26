@@ -90,8 +90,8 @@ private  CustomAuthProvider customAuthProvider;
                 .and()
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
-                .antMatchers("/signin","/signup").permitAll()
-                .antMatchers("/**").hasAuthority("ADMIN")
+                .antMatchers("/signin","/signup","/movies", "/genres").permitAll()
+//                .antMatchers("/**").hasAuthority("ADMIN")
                 .antMatchers(HttpMethod.PUT, "/user/**").hasAuthority("ADMIN")
                 .antMatchers(HttpMethod.DELETE, "/user/**").hasAuthority("ADMIN")
                 .anyRequest().authenticated();

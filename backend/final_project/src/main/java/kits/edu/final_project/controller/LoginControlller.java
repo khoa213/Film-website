@@ -41,7 +41,7 @@ public class LoginControlller {
 
     ){
 
-           System.out.println(username + password);
+           System.out.println("username" + username + password);
         UsernamePasswordAuthenticationToken token=
                 new UsernamePasswordAuthenticationToken(username,password);
         authenticationManager.authenticate(token);

@@ -1,5 +1,5 @@
 import React from "react";
-import { styled } from "styled-components";
+import { styled, useTheme } from "styled-components";
 import CheckIcon from "assets/checkmark.png";
 import CancelIcon from "assets/cancelmark.svg";
 import { Button } from "components/Button";
@@ -53,7 +53,7 @@ const GridHead = styled.div`
   .pack-price {
     display: flex;
     justify-content: center;
-    margin-top: 60px;
+    margin-top: 20px;
     .price-item {
       font-size: 30px;
       font-weight: bold;
@@ -88,14 +88,21 @@ const GridItem = styled.div`
   font-weight: 500;
 `;
 const PackMovie = () => {
-  const history = useNavigate();
+  const navigate = useNavigate();
   const [selectedPackage, setSelectedPackage] = useState(null);
   const handlePurchase = (data) => {
+    const userToken = localStorage.getItem("userToken");
+    if (!userToken) {
+      const isLogin = confirm("Are you go to login?");
+      if (isLogin) {
+        navigate("/login");
+      }
+      return;
+    }
     setSelectedPackage(data.id);
     const dataToString = JSON.stringify(data);
     localStorage.setItem("selectedPackage", dataToString); // Store the selected package ID in localStorage
-    history("/payment");
-    // console.log("Selected Package", data);
+    navigate("/payment");
   };
   const dataPack = [
     {

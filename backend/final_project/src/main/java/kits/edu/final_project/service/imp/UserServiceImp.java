@@ -36,7 +36,9 @@ public class UserServiceImp implements UserService {
     @Override
     public boolean addUser(SignupRequest request) {
         boolean isSuccess =false;
-
+        System.out.println(request.getEmail());
+        System.out.println(request.getUsername());
+        System.out.println(request.getPassword());
         try {
             if (userRepository.existsByUsername(request.getUsername())) {
                 throw new CustomException("Username already exists");
@@ -138,6 +140,10 @@ public class UserServiceImp implements UserService {
         return userRepository.findAll();
     }
 
-
+    @Override
+    public int getUserByname(String email) {
+        UserEntity userEntity = userRepository.findByEmail(email);
+        return userEntity.getId();
+    }
 
 }

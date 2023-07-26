@@ -29,4 +29,5 @@ public interface UserService  {
 //    @Query(value = "delete from users u where u.user_id= :id")
     List<UserEntity> deleteUserById(@PathVariable int id);
 //    UserEntity getByUsername(String username)
+public int getUserByname(String email);
 }

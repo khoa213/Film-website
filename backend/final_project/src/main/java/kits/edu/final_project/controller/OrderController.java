@@ -4,6 +4,7 @@ import kits.edu.final_project.entity.OrderEntity;
 import kits.edu.final_project.payload.response.BaseResponse;
 import kits.edu.final_project.payload.response.OrderResponse;
 import kits.edu.final_project.service.OrderService;
+import kits.edu.final_project.service.UserService;
 import kits.edu.final_project.service.imp.OrderServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -19,6 +21,8 @@ import java.util.List;
 public class OrderController {
     @Autowired
     OrderService orderService;
+    @Autowired
+    UserService userService;
 
     @GetMapping("")
     public ResponseEntity<?> getOrders() {
@@ -52,6 +56,14 @@ public class OrderController {
         BaseResponse response = new BaseResponse();
         response.setStatusCode(200);
         response.setData(orderService.deleteOrderById(id));
+        return new ResponseEntity<>(response,HttpStatus.OK);
+    }
+    @PostMapping("/buyPackage")
+    public ResponseEntity<?> buyPackage (@RequestParam("idPackage") int idPackage, Principal principal) {
+        int idUser = userService.getUserByname(principal.getName());
+        BaseResponse response = new BaseResponse();
+        response.setStatusCode(200);
+        response.setData(orderService.buyPackage(idPackage, idUser));
         return new ResponseEntity<>(response,HttpStatus.OK);
     }
 }
