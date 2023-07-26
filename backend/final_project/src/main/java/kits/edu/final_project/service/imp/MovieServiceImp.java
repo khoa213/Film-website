@@ -90,5 +90,21 @@ public class MovieServiceImp implements MovieService {
            throw new CustomException("No permit delete");
        }
     }
+    @Override
+    public boolean replaceMovieById(MovieEntity movieEntity, int id) {
+        return movieRepository.findById(id).map(u->{
+                    u.setTitle(movieEntity.getTitle());
+                    u.setGenreMovies(movieEntity.getGenreMovies());
+                    u.setReleaseDate(movieEntity.getReleaseDate());
+                    u.setDuration(movieEntity.getDuration());
+                    u.setDesc(movieEntity.getDesc());
+                    movieRepository.save(u);
+                    return true;
+                })
+                .orElseGet(()->{
+                    movieRepository.save(movieEntity);
+                    return true;
+                });
+    }
 
 }
