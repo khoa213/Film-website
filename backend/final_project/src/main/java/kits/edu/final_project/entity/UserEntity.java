@@ -37,7 +37,7 @@ public class UserEntity implements UserDetails {
     private Date birthday ;
     @Column(name = "status")
     private int status ;
-    @JsonManagedReference(value = "user")
+    @JsonManagedReference
     @OneToMany(mappedBy = "user")
     private Set<ReviewEntity> reviews;
     @OneToMany(mappedBy = "user")

@@ -75,4 +75,11 @@ public class MovieController {
         response.setData(movieService.deleteMovieById(id));
         return new ResponseEntity<>(response,HttpStatus.OK);
     }
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateMovieById (@RequestBody MovieEntity movieEntity, @PathVariable("id") int id) {
+        BaseResponse response = new BaseResponse();
+        response.setStatusCode(200);
+        response.setData(movieService.replaceMovieById(movieEntity,id));
+        return new ResponseEntity<>(response,HttpStatus.OK);
+    }
 }

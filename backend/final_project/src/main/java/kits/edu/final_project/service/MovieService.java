@@ -13,6 +13,7 @@ import kits.edu.final_project.service.imp.MovieServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.security.Principal;
 import java.util.ArrayList;
@@ -25,4 +26,5 @@ public interface MovieService  {
 
     void createMovie(MovieEntity movieEntity);
     List<MovieEntity> deleteMovieById(@PathVariable int id);
+    boolean replaceMovieById(@RequestBody MovieEntity movieEntity, @PathVariable int id);
 }
