@@ -26,15 +26,15 @@ export const ShowCase = () => {
         dispatch.movie.getAll();
     }, [])
     const viewFilm = (id, price) => {
-        localStorage.setItem("filmId", id);
+        localStorage.setItem("movieId", id);
         let userPaymented = true;
 
         if (userPaymented) {
-            nav("/detail?" + localStorage.getItem("filmId"));
+            nav("/detail?" + localStorage.getItem("movieId"));
             return;
         }
         if (!userPaymented && price == 0) {
-            nav("/detail?" + localStorage.getItem("filmId"));
+            nav("/detail?" + localStorage.getItem("movieId"));
             return;
         }
         nav("/pricing");

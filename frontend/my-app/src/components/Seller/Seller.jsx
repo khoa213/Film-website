@@ -21,7 +21,7 @@ const StyleBestSeller = styled.div`
     }
     .carousel {
         /* position: relative; */
-        width: 1024px;
+        width: 1440px;
         height: 560px;
         overflow: hidden;
     }
@@ -36,7 +36,7 @@ const StyleBestSeller = styled.div`
         /* gap: 24px; */
     } 
     img {
-        width: 1024px;
+        width: 1440px;
     }
 
     /* Next & previous buttons */
@@ -53,7 +53,7 @@ const StyleBestSeller = styled.div`
     user-select: none;
     }
     .prev {
-        left: 100px;
+        left: 30px;
         transform: rotate(180deg);
     }
     /* Position the "next button" to the right */
@@ -76,7 +76,6 @@ const StyleBestSeller = styled.div`
         font-size: 50px;
         width: 150px;
         height: 150px;
-        right: -180px;
         z-index: 1;
         padding-left: 100px;
         padding-top: 50px;
@@ -157,7 +156,7 @@ export const BestSeller = ({ width }) => {
                 break;
         }
         // let traslate = (current - 3) * percent;
-        let traslate = current * 1024;
+        let traslate = current * 1440;
         ref.current.style.transform = `translateX(-${traslate}px)`;
     }, [current]);
     return (
@@ -197,18 +196,163 @@ export const BestSeller = ({ width }) => {
                         <img className='movie-bg' src={backgroudFilm} alt="avatar film" />
                     </div>
                     <div id="1">
+                    <div className="leftbanner">
+                            <img className="logo1" src={marvelLogo}></img>
+                            <img className="logo2" src={blackWidowlogo}></img>
+                            <img className="logo3" src={rating}></img>
+                            <div className="txt">
+                                <p>
+                                    Drama
+                                </p>
+                                <img src={line}>
+
+                                </img>
+                                <p>
+                                    Drama
+                                </p>
+                                <img src={line}></img>
+                                <p>
+                                    Drama
+                                </p>
+                            </div>
+                            <div className="btn">
+                                <img src={play}></img>
+                                <img src={plus}></img>
+                            </div>
+                            <div className="more">
+                                <p>
+                                    Natasha Romanoff, aka Black Widow, confronts the darker parts of her ledger when a dangerous conspiracy with ties to her past arises. Pursued by a force that will stop at nothing to bring her down, Natasha must deal with her history as a spy, and the broken relationships left in her wake long before she became an Avenger.
+                                </p>
+                            </div>
+                        </div>
                         <img className='movie-bg' src={backgroudFilm} alt="avatar film" />
                     </div>
                     <div id="2">
+                    <div className="leftbanner">
+                            <img className="logo1" src={marvelLogo}></img>
+                            <img className="logo2" src={blackWidowlogo}></img>
+                            <img className="logo3" src={rating}></img>
+                            <div className="txt">
+                                <p>
+                                    Drama
+                                </p>
+                                <img src={line}>
+
+                                </img>
+                                <p>
+                                    Drama
+                                </p>
+                                <img src={line}></img>
+                                <p>
+                                    Drama
+                                </p>
+                            </div>
+                            <div className="btn">
+                                <img src={play}></img>
+                                <img src={plus}></img>
+                            </div>
+                            <div className="more">
+                                <p>
+                                    Natasha Romanoff, aka Black Widow, confronts the darker parts of her ledger when a dangerous conspiracy with ties to her past arises. Pursued by a force that will stop at nothing to bring her down, Natasha must deal with her history as a spy, and the broken relationships left in her wake long before she became an Avenger.
+                                </p>
+                            </div>
+                        </div>
                         <img className='movie-bg' src={backgroudFilm} alt="avatar film" />
                     </div>
                     <div id="3">
+                    <div className="leftbanner">
+                            <img className="logo1" src={marvelLogo}></img>
+                            <img className="logo2" src={blackWidowlogo}></img>
+                            <img className="logo3" src={rating}></img>
+                            <div className="txt">
+                                <p>
+                                    Drama
+                                </p>
+                                <img src={line}>
+
+                                </img>
+                                <p>
+                                    Drama
+                                </p>
+                                <img src={line}></img>
+                                <p>
+                                    Drama
+                                </p>
+                            </div>
+                            <div className="btn">
+                                <img src={play}></img>
+                                <img src={plus}></img>
+                            </div>
+                            <div className="more">
+                                <p>
+                                    Natasha Romanoff, aka Black Widow, confronts the darker parts of her ledger when a dangerous conspiracy with ties to her past arises. Pursued by a force that will stop at nothing to bring her down, Natasha must deal with her history as a spy, and the broken relationships left in her wake long before she became an Avenger.
+                                </p>
+                            </div>
+                        </div>
                         <img className='movie-bg' src={backgroudFilm} alt="avatar film" />
                     </div>
                     <div id="4">
+                    <div className="leftbanner">
+                            <img className="logo1" src={marvelLogo}></img>
+                            <img className="logo2" src={blackWidowlogo}></img>
+                            <img className="logo3" src={rating}></img>
+                            <div className="txt">
+                                <p>
+                                    Drama
+                                </p>
+                                <img src={line}>
+
+                                </img>
+                                <p>
+                                    Drama
+                                </p>
+                                <img src={line}></img>
+                                <p>
+                                    Drama
+                                </p>
+                            </div>
+                            <div className="btn">
+                                <img src={play}></img>
+                                <img src={plus}></img>
+                            </div>
+                            <div className="more">
+                                <p>
+                                    Natasha Romanoff, aka Black Widow, confronts the darker parts of her ledger when a dangerous conspiracy with ties to her past arises. Pursued by a force that will stop at nothing to bring her down, Natasha must deal with her history as a spy, and the broken relationships left in her wake long before she became an Avenger.
+                                </p>
+                            </div>
+                        </div>
                         <img className='movie-bg' src={backgroudFilm} alt="avatar film" />
                     </div>
                     <div id="5">
+                    <div className="leftbanner">
+                            <img className="logo1" src={marvelLogo}></img>
+                            <img className="logo2" src={blackWidowlogo}></img>
+                            <img className="logo3" src={rating}></img>
+                            <div className="txt">
+                                <p>
+                                    Drama
+                                </p>
+                                <img src={line}>
+
+                                </img>
+                                <p>
+                                    Drama
+                                </p>
+                                <img src={line}></img>
+                                <p>
+                                    Drama
+                                </p>
+                            </div>
+                            <div className="btn">
+                                <img src={play}></img>
+                                <img src={plus}></img>
+                            </div>
+                            <div className="more">
+                                <p>
+                                    Natasha Romanoff, aka Black Widow, confronts the darker parts of her ledger when a dangerous conspiracy with ties to her past arises. Pursued by a force that will stop at nothing to bring her down, Natasha must deal with her history as a spy, and the broken relationships left in her wake long before she became an Avenger.
+                                </p>
+                            </div>
+                        </div>
                         <img className='movie-bg' src={backgroudFilm} alt="avatar film" />
                     </div>
                 </div>

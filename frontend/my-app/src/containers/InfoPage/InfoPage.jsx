@@ -87,7 +87,6 @@ font-family: 'Blinker';
 .category1{
     display: flex;
     gap:10px;
-    padding-top: 25px;
     font-size: 20px;
     align-items: center;
 
@@ -212,6 +211,9 @@ const ListComments = styled.div`
             opacity: 0.7;
         }
     }
+    .comment-movie {
+        margin-top: 50px;
+    }
 `
 
 const Trailer = styled.div`
@@ -239,7 +241,7 @@ const Trailer = styled.div`
         justify-content: center;
         scale: 0.95;
     }
-    .trailer{
+    .trailer {
         display: flex;
         padding-bottom: 15px;
         padding-top: 10px;
@@ -247,6 +249,7 @@ const Trailer = styled.div`
         font-family: 'Blinker';
         font-size: 15px;
         gap: 50px;
+        margin-left: 50px;
         .categorytxt{
             display: flex;
             flex-direction: column;
@@ -276,7 +279,7 @@ const Trailer = styled.div`
             /* overflow: hidden; */
             /* scale: 1; */
             }
-        }
+    }
         .line{
             display: flex;
             width: 100%;
@@ -376,72 +379,58 @@ const InfoPage = () => {
                                     Your browser does not support the video tag.
                                 </video>
                             </div>
-                            {/* <iframe className="trailervideo" src="https://www.youtube.com/embed/aOC8E8z_ifw">
-                            </iframe> */}
                         </div>
                     </div>
                     <div class="line">
                         <img src={Line4}></img>
                     </div>
+
                     <Comments>
-                <div className="comments">
-                    <div className="name1">
-                        <div>
-                            MANDALORIAN
-                        </div>
-                    </div>
-                    <div className="score">
-                        <div>
-                            <img src={rating}></img>
-                        </div>
-                        <div>
-                            3.5 (lmdb)
-                        </div>
-                    </div>
-                    <div className="category1">
-                        <div>
-                            DRAMA
-                        </div>
-                        <img width="2px" height="2px" src={dot}></img>
-                        <div>
-                            DRAMA
-                        </div>
+                        <div className="comments">
+                            <div className="name1">
+                                <div>
+                                    MANDALORIAN
+                                </div>
+                            </div>
+                            <div className="score">
+                                <div>
+                                    <img src={rating}></img>
+                                </div>
+                                <div>
+                                    3.5 (lmdb)
+                                </div>
+                            </div>
+                            <div className="category1">
+                                <div>
+                                    DRAMA
+                                </div>
+                                <img width="2px" height="2px" src={dot}></img>
+                                <div>
+                                    DRAMA
+                                </div>
 
-                    </div>
-                    <div className="time">
-                        <div>
-                            2hr : 42mins
-                        </div>
-                        <img width="2px" height="2px" src={dot}></img>
-                        <div>
-                            Nov 2017
-                        </div>
-                        <img width="2px" height="2px" src={dot}></img>
+                            </div>
+                            <div className="time">
+                                <div>
+                                    2hr : 42mins
+                                </div>
+                                <img width="2px" height="2px" src={dot}></img>
+                                <div>
+                                    Nov 2017
+                                </div>
+                                <img width="2px" height="2px" src={dot}></img>
 
-                        <div className="view">
-                            <img className="viewimg" width="30px" src={view}></img>
-                            2112 views
+                                <div className="view">
+                                    <img className="viewimg" width="30px" src={view}></img>
+                                    2112 views
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div className="ico">
-                        <div>
-                            <img width="30px" src={share}></img>
-                        </div>
-                        <div>
-                            <img width="30px" src={heart}></img>
-                        </div>
-                        <div>
-                            <img width="30px" src={plusico}></img>
-                        </div>
-                    </div>
-                </div>
-            </Comments>
+                    </Comments>
                 </Trailer>
             </Banner>
-
-            
             <Comments>
-                <div>
+                <div className="comment-movie">
                     <ListComments>
                         <h3>COMMENTS (8)</h3>
                         <div className="list">

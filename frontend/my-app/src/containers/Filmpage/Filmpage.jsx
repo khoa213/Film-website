@@ -16,6 +16,7 @@ import poster6 from "assets/poster6.svg"
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
+import { Footer } from 'components/Footer'
 
 
 const StyleFilmpage = styled.div`
@@ -176,6 +177,7 @@ display: flex;
 `
 
 const Filmpage = () => {
+    const SRC_DEFAULT = "https://drive.google.com/uc?export=download&id=";
     const moiveId = localStorage.getItem("movieId");
     const nav = useNavigate();
     const dispatch = useDispatch();
@@ -185,7 +187,19 @@ const Filmpage = () => {
     }, [])
     const m = rawData?.filter(movieObj => movieObj.id == moiveId);
     const watchMovie = (id, title) => {
+        const moive = rawData?.filter(m => m.id == id);
+        console.log("moviePrice: " + moive[0]?.price);
+        if (moive[0]?.price > 0) {
+            nav("/pricing");
+            return;
+        }
         nav("/watch?" + title + "&id=" + id);
+    }
+    const customLink = (driveLink) => {
+        const fileId = driveLink.match(/[-\w]{25,}/);
+        let src = SRC_DEFAULT + fileId[0];
+        if (!driveLink) { src = SRC_DEFAULT }
+        return src;
     }
     if(rawData) {
         return (
@@ -223,10 +237,11 @@ const Filmpage = () => {
 
                     <img className='line' src={line2}></img>
                     <div className='text'>
+                        {m[0]?.desc} ++ 
                         Queen Ramonda (Angela Bassett), Shuri (Letitia Wright), M’Baku (Winston Duke), Okoye (Danai Gurira) and the Dora Milaje (including Florence Kasumba), fight to protect their nation from intervening world powers in the wake of King T’Challa’s death. As the Wakandans strive to embrace their next chapter, the heroes must band together with the help of War Dog Nakia (Lupita Nyong’o) and Everett Ross (Martin Freeman) and forge a new path for the kingdom of Wakanda.
 
                     </div>
-                    <div className='text1'>
+                    {/* <div className='text1'>
                         DIRECTOR
 
                     </div>
@@ -241,13 +256,12 @@ const Filmpage = () => {
                     <div className='text'>
                         Ryan Coogler
 
-                    </div>
+                    </div> */}
                     <div className='text1'>
                         RELEASE DATE
                     </div>
                     <div className='text'>
                         {m[0]?.releaseDate}
-                        {/* November 11, 2022 */}
 
                     </div>
                     <div className='text1'>
@@ -260,7 +274,7 @@ const Filmpage = () => {
                         CAST
                     </div>
                     <div className='text'>
-                        {m[0]?.actorName.toString()}
+                        {m[0]?.actorName.toString()} ++
                         Angela Bassett, Letitia Wright, Winston Duke, Danai Gurira, Florence Kasumba, Lupita Nyong’o, Martin Freeman, Tenoch Huerta, Dominique Thorne, Michaela Coel, Mabel Cadena and Alex Livanalli.
                     </div>
                 </div>
@@ -271,22 +285,16 @@ const Filmpage = () => {
                     
                     <div  className="watch-film">
                         <a onClick={() => watchMovie(m[0]?.id, m[0]?.title)}>
-                            <img className='avatar' src={avatarFilm} alt="" />
+                            <img className='avatar' src={m[0] ? customLink(m[0]?.movieImage) : ""} alt="" />
                             <img className='play' src={play} alt="" />
                         </a>
                     </div>
                     <div className='poster'>
                         <div>
                             <div>
-                                {/* <img src={line2}></img> */}
                                 <div className='poster'>
                                     POSTER
                                 </div>
-
-
-                                {/* <div className='line2'>
-                                    <img src={line2}></img>
-                                </div> */}
                             </div>
                             <div className="abc">
                                 <div>
@@ -316,10 +324,8 @@ const Filmpage = () => {
                 </div>
 
             </Body>
-
-
+            <Footer></Footer>
         </StyleFilmpage>
-
     )}
 }
 

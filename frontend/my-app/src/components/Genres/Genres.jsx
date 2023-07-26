@@ -188,10 +188,10 @@ export const Genres = () => {
                             </tr> */}
                         </tbody>
                     </table>
-                    <div className="buttonGenres">
+                    {/* <div className="buttonGenres">
                         <Button title={"COUNTRY"} text_color={"#171616"} width={"171px"} height={"40px"} radius={"40px"} border_custom={"2px solid #D9D9D9"} font_size_text={"16px"} border_bottom_text={"1px solid #252525"} isGenres={true} bg_color={"#D9D9D9"}></Button>
                         <Button title={"YEAR"} text_color={"#171616"} width={"171px"} height={"40px"} radius={"40px"} border_custom={"2px solid #D9D9D9"} font_size_text={"16px"} border_bottom_text={"1px solid #252525"} isGenres={true} bg_color={"#D9D9D9"}></Button>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </StyledGenres>
