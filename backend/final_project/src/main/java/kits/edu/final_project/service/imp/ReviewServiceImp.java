@@ -138,5 +138,8 @@ public class ReviewServiceImp implements ReviewService {
 
     }
 
-
+    @Override
+    public List<ReviewEntity> getReviewByMovieId(int movieId) {
+        return reviewRepository.getReviewByMovieId(movieId);
+    }
 }

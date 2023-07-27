@@ -180,7 +180,7 @@ const UserProfile = () => {
     setEmail(dataUser.email);
 
     setName(dataUser.username);
-    setBirthday(dataUser.birthday);
+    setBirthday(dataUser.birthday.slice(0, 10));
     setGender(dataUser.gender);
   };
   return (
@@ -235,7 +235,7 @@ const UserProfile = () => {
           <div className="change-inform">
             <div>
               <h1>Birthday:</h1>
-              <p> {dataUser.birthday}</p>
+              <p> {dataUser.birthday.slice(0, 10)}</p>
             </div>
           </div>
           <div className="change-inform ">

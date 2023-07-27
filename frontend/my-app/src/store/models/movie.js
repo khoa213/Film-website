@@ -2,7 +2,7 @@ export const movie = {
   state: {
       movies: [],
       filterData: [],
-      
+      reviews: []
   },
   reducers: {
       setDataMovies (state, movies) {
@@ -16,7 +16,13 @@ export const movie = {
               ...state,
               filterData
           }
-      }
+      },
+      setDataReviews (state, reviews) {
+        return {
+            state,
+            reviews
+        }
+    },
   },
   effects: (dispatch) => ({
       async getAll() {
@@ -34,5 +40,11 @@ export const movie = {
           const MOVIES = data.data;
           this.setDataMoviesFilterData(MOVIES);
       },
+      async getReviews(movieId) {
+        const data = await fetch('http://localhost:8080/review/review-movie?movieId=' + movieId)
+            .then(res => res.json())
+            .catch(error => console.log('Authorization failed: ' + error.message));
+            this.setDataReviews(data.data);
+    },
   }),
 };
