@@ -141,6 +141,12 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
+    public Optional<UserEntity> getByUsername(String username) {
+        return userRepository.findByUsername(username);
+
+    }
+
+    @Override
     public int getUserByname(String email) {
         UserEntity userEntity = userRepository.findByEmail(email);
         return userEntity.getId();

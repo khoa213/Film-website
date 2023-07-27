@@ -5,6 +5,7 @@ import kits.edu.final_project.exception.CustomException;
 import kits.edu.final_project.payload.request.SignupRequest;
 import kits.edu.final_project.payload.response.BaseResponse;
 import kits.edu.final_project.payload.response.UserResponse;
+import kits.edu.final_project.repository.UserRepository;
 import kits.edu.final_project.service.UserService;
 import kits.edu.final_project.service.imp.UserServiceImp;
 import kits.edu.final_project.utils.JwtHelper;
@@ -34,6 +35,8 @@ public class LoginControlller {
     * data:*/
     @Autowired
     private UserService userService;
+    @Autowired
+    private UserRepository userRepository;
     @RequestMapping(value = "/signin",method= RequestMethod.POST)
     public ResponseEntity<?>signin(
             @RequestParam String username,
@@ -41,23 +44,40 @@ public class LoginControlller {
 
     ){
 
-           System.out.println("username" + username + password);
-        UsernamePasswordAuthenticationToken token=
-                new UsernamePasswordAuthenticationToken(username,password);
-        authenticationManager.authenticate(token);
-        String jwt= jwtHelper.generateToken(username);
-        //chung thuc thanh cong se chay code sau,that bai se loi chugn thuc
-        BaseResponse response =new BaseResponse();
-        response.setStatusCode(200);
-        response.setData(jwt);
+        UserEntity user=userRepository.findByEmail(username);
+        if(user==null){
+            BaseResponse response =new BaseResponse();
+            response.setStatusCode(200);
+            response.setMessage("Your username not found!");
+            response.setData(false);
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        }
+        if(user.getStatus() == 1){
 
-        return new ResponseEntity<>(response, HttpStatus.OK);
+            System.out.println(username + password);
+            UsernamePasswordAuthenticationToken token=
+                    new UsernamePasswordAuthenticationToken(username,password);
+            authenticationManager.authenticate(token);
+            String jwt= jwtHelper.generateToken(username);
+            //chung thuc thanh cong se chay code sau,that bai se loi chugn thuc
+            BaseResponse response =new BaseResponse();
+            response.setStatusCode(200);
+            response.setData(jwt);
+            return new ResponseEntity<>(response, HttpStatus.OK);
 
-
-
+        }
+        else{
+//            throw new CustomException("your Account is block");
+            BaseResponse response =new BaseResponse();
+            response.setStatusCode(200);
+            response.setMessage("Your account is block");
+            response.setData(false);
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        }
 
 
     }
+
 
     @RequestMapping(value = "/signup",method= RequestMethod.POST)
     public ResponseEntity<?>signup(

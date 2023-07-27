@@ -47,4 +47,13 @@ public class GlobalCustomException {
 //        System.out.println("ok");
         return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
     }
+    @ExceptionHandler(IllegalStateException.class)
+    public ResponseEntity<?> handlerKeyContranstException(Exception e){
+        BaseResponse response=new BaseResponse();
+        response.setStatusCode(500);
+        response.setData(e.getMessage());
+        response.setMessage("You just update datalinked");
+//        System.out.println("ok");
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 }
