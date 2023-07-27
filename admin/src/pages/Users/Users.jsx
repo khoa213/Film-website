@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { deleteUser, listUser, updateUser } from "Redux/Actions/UserActions";
 import Input from "components/Input";
 import DropDown from "components/Dropdown/Dropdown";
+import { toast } from "react-toastify";
 
 const Wrapper = styled.div`
   .custom-table .ant-table-wrapper {
@@ -428,7 +429,10 @@ const Users = () => {
 
   const updateRow = (updatedUser) => {
     dispatch(updateUser(updatedUser))
-      .then(() => dispatch(listUser()))
+      .then(() => {
+        dispatch(listUser());
+        toast.success("User updated successfully");
+      })
       .then((response) => {
         setData(response.data);
       })
@@ -439,7 +443,10 @@ const Users = () => {
 
   const deleteRow = (id) => {
     dispatch(deleteUser(id))
-      .then(() => dispatch(listUser()))
+      .then(() => {
+        console.log(id);
+        dispatch(listUser());
+      })
       .then((response) => {
         setData(response.data);
       })

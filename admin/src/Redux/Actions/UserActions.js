@@ -99,7 +99,7 @@ export const listUser = () => async (dispatch, getState) => {
         Authorization: `Bearer ${userInfo}`,
       },
     };
-    console.log(userInfo);
+    // console.log(userInfo);
     const { data } = await axios.get(`http://localhost:8080/user`, config);
 
     dispatch({ type: USER_LIST_SUCCESS, payload: data });
@@ -161,7 +161,7 @@ export const deleteUser = (id) => async (dispatch, getState) => {
 
     const config = {
       headers: {
-        Authorization: `Bearer ${userInfo.token}`,
+        Authorization: `Bearer ${userInfo}`,
       },
     };
 
@@ -179,7 +179,7 @@ export const deleteUser = (id) => async (dispatch, getState) => {
       return;
     }
     if (message === "Not permit delete because this have data linked in page") {
-      toast.error(message, ToastObjects);
+      toast.error("Not permit delete", ToastObjects);
       dispatch({
         type: USER_DELETE_FAIL,
         payload: message,

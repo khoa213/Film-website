@@ -103,7 +103,7 @@ export const deleteMovie = (id) => async (dispatch, getState) => {
     };
 
     await axios.delete(`http://localhost:8080/movies/${id}`, config);
-    toast.success("Delete User Successfully", ToastObjects);
+    toast.success("Delete Movie Successfully", ToastObjects);
     dispatch({ type: MOVIE_DELETE_SUCCESS });
   } catch (error) {
     const message =

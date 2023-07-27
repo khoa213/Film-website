@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import styled from "styled-components";
@@ -78,7 +78,40 @@ const Wrapper = styled.div`
   }
 `;
 
+const CustomPagination = (props) => {
+  const { paginationProps, totalRowCount, setPageSize, onPageChange } = props;
+  const { pageSize, rowCount } = paginationProps;
+
+  const handlePageSizeChange = (event) => {
+    const newSize = parseInt(event.target.value, 10);
+    setPageSize(newSize);
+    onPageChange(0, newSize);
+  };
+
+  return (
+    <div>
+      <span>Rows per page:</span>
+      <select value={pageSize} onChange={handlePageSizeChange}>
+        <option value={5}>5</option>
+        <option value={10}>10</option>
+        <option value={15}>15</option>
+      </select>
+      <span>{`Total Rows: ${totalRowCount}`}</span>
+    </div>
+  );
+};
 const TableData = ({ rows, columns }) => {
+  const [totalRowCount, setTotalRowCount] = useState(0);
+  const [pageSize, setPageSize] = useState(5); // Initialize the page size
+
+  useEffect(() => {
+    // Set the total row count when the rows change
+    setTotalRowCount(rows.length);
+  }, [rows]);
+  const handlePageChange = (page, newPageSize) => {
+    setPageSize(newPageSize);
+    // Add your logic to handle page change here if needed
+  };
   return (
     <Box sx={{ height: 400, width: "100%" }}>
       <Wrapper>
@@ -87,13 +120,22 @@ const TableData = ({ rows, columns }) => {
           rows={rows}
           columns={columns}
           pagination
-          pageSize={10}
+          pageSize={5}
           checkboxSelection
           disableColumnFilter
           disableDensitySelector
           disableColumnSelector
+          onPageChange={handlePageChange}
           components={{
             Toolbar: GridToolbar,
+            Pagination: (paginationProps) => (
+              <CustomPagination
+                paginationProps={paginationProps}
+                totalRowCount={totalRowCount}
+                setPageSize={setPageSize}
+                onPageChange={handlePageChange} // Pass the onPageChange function
+              />
+            ),
           }}
           componentsProps={{
             toolbar: {

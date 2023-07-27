@@ -128,7 +128,8 @@ function MainLayout({ children }) {
             style={{
               margin: "24px 24px ",
               overflow: "initial",
-              minHeight: "1000px",
+              minHeight: "1200px",
+              // height: "auto",
             }}
           >
             <Outlet />
