@@ -3,21 +3,14 @@ package kits.edu.final_project.service.imp;
 import kits.edu.final_project.entity.RoleEntity;
 import kits.edu.final_project.entity.UserEntity;
 import kits.edu.final_project.exception.CustomException;
-import kits.edu.final_project.payload.request.ReviewRequest;
 import kits.edu.final_project.payload.request.SignupRequest;
 import kits.edu.final_project.payload.response.UserResponse;
 import kits.edu.final_project.repository.RoleRespository;
 import kits.edu.final_project.repository.UserRepository;
 import kits.edu.final_project.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -138,6 +131,11 @@ public class UserServiceImp implements UserService {
         return userRepository.findAll();
     }
 
+    @Override
+    public Optional<UserEntity> getByUsername(String username) {
+        return userRepository.findByUsername(username);
+
+    }
 
 
 }

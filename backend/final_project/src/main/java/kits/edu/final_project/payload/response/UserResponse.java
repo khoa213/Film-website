@@ -10,6 +10,7 @@ public class UserResponse {
     private Date birthday;
     private int status;
 
+
     public int getStatus() {
         return status;
     }

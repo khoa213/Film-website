@@ -43,30 +43,32 @@ public class CustomAuthProvider implements AuthenticationProvider {
         //Lay password nguoi dung truyen vao
         String password =authentication.getCredentials().toString();
         UserDetails userDetails = customUserDetailsService.loadUserByUsername(username);
+//        System.out.println(userDetails.getAuthorities());
         System.out.println(userDetails.getAuthorities());
-//        if (userDetails != null && passwordEncoder.matches(password, userDetails.getPassword())) {
-//            return new UsernamePasswordAuthenticationToken(username, userDetails.getPassword(), userDetails.getAuthorities());
-//        }
+        if (userDetails != null && passwordEncoder.matches(password, userDetails.getPassword())) {
 
-        Collection<? extends GrantedAuthority> authorities = userDetails.getAuthorities();
-
-        // Kiểm tra xem vai trò "ADMIN" có trong danh sách vai trò hay không
-        boolean isAdmin = authorities.stream()
-                .anyMatch(authority -> authority.getAuthority().equals("ADMIN"));
-
-        // Kiểm tra xem vai trò "USER" có trong danh sách vai trò hay không
-        boolean isUser = authorities.stream()
-                .anyMatch(authority -> authority.getAuthority().equals("USER"));
-
-        // Trả về UsernamePasswordAuthenticationToken với danh sách vai trò tương ứng
-        if (isAdmin) {
-
-            return new UsernamePasswordAuthenticationToken(username, userDetails.getPassword(), List.of(new SimpleGrantedAuthority("ADMIN")));
-        } else if (isUser) {
-            return new UsernamePasswordAuthenticationToken(username, userDetails.getPassword(), List.of(new SimpleGrantedAuthority("ROLE_USER")));
+            return new UsernamePasswordAuthenticationToken(username, userDetails.getPassword(), userDetails.getAuthorities());
         }
 
-        return null;
+//        Collection<? extends GrantedAuthority> authorities = userDetails.getAuthorities();
+//
+//        // Kiểm tra xem vai trò "ADMIN" có trong danh sách vai trò hay không
+//        boolean isAdmin = authorities.stream()
+//                .anyMatch(authority -> authority.getAuthority().equals("ADMIN"));
+//
+//        // Kiểm tra xem vai trò "USER" có trong danh sách vai trò hay không
+//        boolean isUser = authorities.stream()
+//                .anyMatch(authority -> authority.getAuthority().equals("USER"));
+//
+//        // Trả về UsernamePasswordAuthenticationToken với danh sách vai trò tương ứng
+//        if (isAdmin) {
+//
+//            return new UsernamePasswordAuthenticationToken(username, userDetails.getPassword(), List.of(new SimpleGrantedAuthority("ADMIN")));
+//        } else if (isUser) {
+//            return new UsernamePasswordAuthenticationToken(username, userDetails.getPassword(), List.of(new SimpleGrantedAuthority("ROLE_USER")));
+//        }
+//
+//        return null;
 
 
 //       UserEntity user= userRepository.findByEmail(username);
@@ -74,7 +76,7 @@ public class CustomAuthProvider implements AuthenticationProvider {
 //      {
 //        return new UsernamePasswordAuthenticationToken(username,user.getPassword(),new ArrayList<>());
 //      }
-//        return null;
+        return null;
     }
 
 //    @Override

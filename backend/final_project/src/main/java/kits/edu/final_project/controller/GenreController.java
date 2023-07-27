@@ -3,6 +3,7 @@ package kits.edu.final_project.controller;
 import kits.edu.final_project.entity.GenreEntity;
 import kits.edu.final_project.entity.MovieEntity;
 import kits.edu.final_project.entity.UserEntity;
+import kits.edu.final_project.exception.CustomException;
 import kits.edu.final_project.payload.response.BaseResponse;
 import kits.edu.final_project.payload.response.GenreResponse;
 import kits.edu.final_project.service.GenreService;
@@ -55,9 +56,16 @@ public class GenreController {
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteGenreById (@PathVariable("id") int id) {
-        BaseResponse response = new BaseResponse();
-        response.setStatusCode(200);
-        response.setData(genreService.deleteGenreById(id));
-        return new ResponseEntity<>(response,HttpStatus.OK);
+        try{
+            BaseResponse response = new BaseResponse();
+            response.setStatusCode(200);
+            response.setData(genreService.deleteGenreById(id));
+            return new ResponseEntity<>(response,HttpStatus.OK);
+        }catch(Exception e){
+            new ResponseEntity<>("",HttpStatus.OK);
+            throw new CustomException("you just deleted data linked");
+
+        }
+
     }
 }

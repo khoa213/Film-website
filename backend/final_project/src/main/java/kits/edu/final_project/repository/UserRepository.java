@@ -20,6 +20,7 @@ Optional<UserEntity> findOptionalByEmail(@Param("email") String email);
     @Query("SELECT u FROM users u WHERE u.email = :email")
     UserEntity findByEmail(@Param("email") String email);
     Optional<UserEntity> findByUsername(String username);
+
     Boolean existsByUsername(String username);
 
 
