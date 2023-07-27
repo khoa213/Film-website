@@ -226,12 +226,10 @@ const Login = () => {
     const nav = (token) => {
         if (token != null) {
             alert("Login Success!");
-            // const tokenStr = JSON.stringify(token);
             localStorage.setItem("userToken", token);
             navigate("/");
         } else {
             alert("Login Fail!");
-            // navigate("/login");
         }
     }
     const showErrorMessage = signInClicked && !validEmail;

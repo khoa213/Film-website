@@ -131,18 +131,27 @@ const SignUp = () => {
 //     }
 //   }, [userInfo, navigate]);
   //submit
-  const submitHandler = (e) => {
-    e.preventDefault();
-    // console.log(username, password, email);
-
+  const signUp = async () => {
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
+    const email = document.getElementById("email").value;
     const formData = {
       username: username,
       password: password,
       email: email,
     };
-    console.log(formData);
-    dispatch(register(formData));
+    const token = await dispatch.user.signUp(formData);
+    nav(token);
   };
+
+  const nav = (token) => {
+    if (token) {
+        alert("SIGNUP Success!");
+        navigate("/login");
+    } else {
+        alert("SIGNUP Fail!");
+    }
+  }
   const handleEmailChange = (e) => {
     const emailInput = e.target.value;
     setEmail(emailInput);
@@ -183,7 +192,7 @@ const SignUp = () => {
     <Wrapper>
       <Logo desc={"Register"} />
 
-      <form onSubmit={submitHandler}>
+      <form>
         <div className="input_group">
           <div className="input input-user">
             <Input
@@ -300,7 +309,6 @@ const SignUp = () => {
             }}
           >
             <Button
-
                 title={"CREATE ACCOUNT"}
               width={"420px"}
               height={"60px"}
@@ -308,10 +316,10 @@ const SignUp = () => {
               bg_color="var(--bg-color-input)"
               fontSize={"22px"}
               radius={"50px"}
-              type="submit"
+              type="button"
               id="btn-signup"
               className="btn-signup"
-              onClick={handleSignUpClick}
+              onClick={() => signUp()}
             >
             </Button>
           </div>

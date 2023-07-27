@@ -28,14 +28,25 @@ const StyledCard = styled.div`
             top: -15px;
             right: 90px;
         }
+        .fee {
+            top: 25px;
+            position: absolute;
+            color: #f4e8e8;
+            background-color: #f44646;
+            width: 40px;
+            height: 20px;
+            font-size: 13px;
+            text-align: center;
+            border-radius: 0 8px 8px 0;
+            left: 5px;
+        }
     }
 `
-export const Card = ({title, genres, srcImg, width, height, isGrid, title_center, font_size, font_weight, line_height, radius, ...res}) => {
+export const Card = ({title, genres, srcImg, width, height, isGrid, title_center, font_size, font_weight, line_height, radius, fee, ...res}) => {
     return (
-        <StyledCard width = {width} height = {height} title_center = {title_center} font_size = {font_size} font_weight = {font_weight} line_height = {line_height} radius = {radius} {...res}>
+        <StyledCard width = {width} height = {height} title_center = {title_center} font_size = {font_size} font_weight = {font_weight} line_height = {line_height} radius = {radius} fee = {fee} {...res}>
             <div className="card">
                 <div className="avatar">
-                    {/* {srcImg ? <img src={filmAvatar} alt="" /> : <img src={filmBladeRunner} alt="" />} */}
                     <img src={srcImg} alt="" />
                 </div>
                 <span className="style-title">{title}</span>
@@ -45,6 +56,7 @@ export const Card = ({title, genres, srcImg, width, height, isGrid, title_center
                     <Button title={"7.5"} text_color={"white"} width={"40px"} height={"19px"} radius={"40px"} border_custom={"2px solid transparent"} font_size_text={"12px"}></Button>
                 </>)
                  : ""}
+                {fee ? <span className="fee">FEE</span> : <span hidden></span>}
                 
             </div>
         </StyledCard>

@@ -3,8 +3,7 @@ import axios from "axios";
 export const user = {
     state: {
         token: null,
-        isSave: false,
-        isUserPackage: false
+        isSave: false
     },
     reducers: {
         setDataToken(state, token) {
@@ -21,18 +20,10 @@ export const user = {
         },
     },
     effects: (dispatch) => ({
-        async login(formData1) {
-            // const formData = new FormData();
-            // formData.append('username', 'quangbao12356@gmail.com');
-            // formData.append('password', '123456789');
+        async login(formData) {
               try {
-                const formData={
-                    username:'quangbao12356@gmail.com',
-                    password:'123456789'
-                }
                 const config = {
                     headers: {
-                      // "Content-Type": "application/json",
                       "Content-Type": "multipart/form-data",
                     },
                   };
@@ -50,23 +41,37 @@ export const user = {
                 return null;
               }
         },
-        async checkUserPackage() {
-
+        async signUp(formData) {
+          try {
+            const config = {
+                headers: {
+                  "Content-Type": "multipart/form-data",
+                },
+              };
+          
+              const { data } = await axios.post(
+                `http://localhost:8080/signup`,
+                formData,
+                config
+              );
+              if (data.statusCode != 200 ) {
+                return null;
+              }
+              return data.data;
+          } catch (error) {
+            return null;
+          }
+    },
+        async checkUserPackage(token) {
             try {
-                const formData={
-                    username:'quangbao12356@gmail.com',
-                    password:'123456789'
-                }
                 const config = {
                     headers: {
-                      // "Content-Type": "application/json",
-                      "Content-Type": "multipart/form-data",
+                      "Authorization" : `Bearer ${token}`
                     },
                   };
-              
                   const { data } = await axios.post(
-                    `http://localhost:8080/signin`,
-                    formData,
+                    `http://localhost:8080/order/check-user-package`,
+                    "",
                     config
                   );
                   if (data.statusCode != 200 ) {
@@ -76,11 +81,6 @@ export const user = {
               } catch (error) {
                 return null;
               }
-              
-            const data = await fetch('http://localhost:8080/user/package')
-                .then(res => res.json())
-                .catch(error => console.log('Authorization failed: ' + error.message));
-            return data.data;
         },
         async buyPackage(obj) {
             try {

@@ -179,6 +179,7 @@ display: flex;
 const Filmpage = () => {
     const SRC_DEFAULT = "https://drive.google.com/uc?export=download&id=";
     const moiveId = localStorage.getItem("movieId");
+    const userToken = localStorage.getItem("userToken");
     const nav = useNavigate();
     const dispatch = useDispatch();
     let rawData = useSelector(state => state.movie.movies);
@@ -186,10 +187,11 @@ const Filmpage = () => {
         dispatch.movie.getAll();
     }, [])
     const m = rawData?.filter(movieObj => movieObj.id == moiveId);
-    const watchMovie = (id, title) => {
+    const watchMovie = async (id, title) => {
+        const isPackage = await dispatch.user.checkUserPackage(userToken);
         const moive = rawData?.filter(m => m.id == id);
-        console.log("moviePrice: " + moive[0]?.price);
-        if (moive[0]?.price > 0) {
+        console.log("moviePrice: " + isPackage);
+        if (!isPackage && moive[0]?.price > 0) {
             nav("/pricing");
             return;
         }

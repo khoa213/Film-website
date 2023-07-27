@@ -41,6 +41,10 @@ const StyledGrid = styled.div`
         display: flex;
         justify-content: space-between;
     }
+    .card:hover {
+        transform: scale(1.1);
+        transition: all 0.5s ease-out ;
+    }
 `
 export const GridMovie = () => {
     const SRC_DEFAULT = "https://drive.google.com/uc?export=download&id=";
@@ -56,8 +60,8 @@ export const GridMovie = () => {
         localStorage.setItem("movieId", id);
         nav("/detail?" + title);
     }
-    const addToList = (title, className, src, genres, id) => {
-        return <Card onClick={() => viewFilm(id, title)} className={className} title={title} srcImg={src} width={"210px"} height={"301px"} genres={genres} isGrid={true} font_size={"24px"} font_weight={"400"} line_height={"22px"} radius={"20px"}></Card>
+    const addToList = (title, className, src, genres, id, price) => {
+        return <Card onClick={() => viewFilm(id, title)} fee={price} className={className} title={title} srcImg={src} width={"210px"} height={"301px"} genres={genres} isGrid={true} font_size={"24px"} font_weight={"400"} line_height={"22px"} radius={"20px"}></Card>
     }
     const customLink = (driveLink) => {
         const fileId = driveLink.match(/[-\w]{25,}/);
@@ -75,11 +79,11 @@ export const GridMovie = () => {
         let genres = movie.genreName.toString();
         if (index < 5) {
             className += "1-movie" + (index + 1);
-            listCard1.push(addToList(movie.title, className, src, genres, movie.id));
+            listCard1.push(addToList(movie.title, className, src, genres, movie.id, movie.price));
         } else {
             className += "2-movie" + (index - 4);
             addToList(className, movie, src);
-            listCard2.push(addToList(movie.title, className, src, genres, movie.id));
+            listCard2.push(addToList(movie.title, className, src, genres, movie.id, movie.price));
         }
     }
     return (
@@ -92,19 +96,9 @@ export const GridMovie = () => {
                 <div className="grid-content">
                     <div className="grid-block1">
                         {listCard1}
-                        {/* <Card className="block1-movie1" title={"Avatar"} srcImg={true} width={"210px"} height={"301px"} genres={"Comedy, Horror, Thriller"} isGrid={true} font_size={"24px"} font_weight={"400"} line_height={"22px"} radius={"20px"}></Card>
-                        <Card className="block1-movie2" title={"filmBladeRunner"} srcImg={false} width={"210px"} height={"301px"} genres={"Comedy, Horror, Thriller"} isGrid={true} font_size={"24px"} font_weight={"400"} line_height={"22px"} radius={"20px"}></Card>
-                        <Card className="block1-movie3" title={"Avatar"} srcImg={true} width={"210px"} height={"301px"} genres={"Comedy, Horror, Thriller"} isGrid={true} font_size={"24px"} font_weight={"400"} line_height={"22px"} radius={"20px"}></Card>
-                        <Card className="block1-movie4" title={"filmBladeRunner"} srcImg={false} width={"210px"} height={"301px"} genres={"Comedy, Horror, Thriller"} isGrid={true} font_size={"24px"} font_weight={"400"} line_height={"22px"} radius={"20px"}></Card>
-                        <Card className="block1-movie5" title={"Avatar"} srcImg={true} width={"210px"} height={"301px"} genres={"Comedy, Horror, Thriller"} isGrid={true} font_size={"24px"} font_weight={"400"} line_height={"22px"} radius={"20px"}></Card> */}
                     </div>
                     <div className="grid-block2">
                         {listCard2}
-                        {/* <Card className="block2-movie1" title={"Avatar"} srcImg={true} width={"210px"} height={"301px"} genres={"Comedy, Horror, Thriller"} isGrid={true} font_size={"24px"} font_weight={"400"} line_height={"22px"} radius={"20px"}></Card>
-                        <Card className="block2-movie2" title={"filmBladeRunner"} srcImg={false} width={"210px"} height={"301px"} genres={"Comedy, Horror, Thriller"} isGrid={true} font_size={"24px"} font_weight={"400"} line_height={"22px"} radius={"20px"}></Card>
-                        <Card className="block2-movie3" title={"Avatar"} srcImg={true} width={"210px"} height={"301px"} genres={"Comedy, Horror, Thriller"} isGrid={true} font_size={"24px"} font_weight={"400"} line_height={"22px"} radius={"20px"}></Card>
-                        <Card className="block2-movie4" title={"filmBladeRunner"} srcImg={false} width={"210px"} height={"301px"} genres={"Comedy, Horror, Thriller"} isGrid={true} font_size={"24px"} font_weight={"400"} line_height={"22px"} radius={"20px"}></Card>
-                        <Card className="block2-movie5" title={"Avatar"} srcImg={true} width={"210px"} height={"301px"} genres={"Comedy, Horror, Thriller"} isGrid={true} font_size={"24px"} font_weight={"400"} line_height={"22px"} radius={"20px"}></Card> */}
                     </div>
                 </div>
             </div>

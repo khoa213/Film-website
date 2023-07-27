@@ -17,6 +17,13 @@ const StyledShowCase = styled.div`
         transform: translateY(-35px);
         transition: all 0.5s ease-out ;
     }
+    .card .fee {
+        top: 20px !important;
+        width: 30px;
+        height: 15px;
+        font-size: 11px;
+        left: 0px;
+    }
 `
 export const ShowCase = () => {
     const nav = useNavigate();
@@ -25,20 +32,9 @@ export const ShowCase = () => {
     useEffect(() => {
         dispatch.movie.getAll();
     }, [])
-    const viewFilm = (id, price) => {
+    const viewFilm = (id, title) => {
         localStorage.setItem("movieId", id);
-        let userPaymented = true;
-
-        if (userPaymented) {
-            nav("/detail?" + localStorage.getItem("movieId"));
-            return;
-        }
-        if (!userPaymented && price == 0) {
-            nav("/detail?" + localStorage.getItem("movieId"));
-            return;
-        }
-        nav("/pricing");
-        
+        nav("/detail?" + title);
     }
     let data = [];
     if (rawData.length >= 12) {
@@ -54,7 +50,7 @@ export const ShowCase = () => {
         let src = "https://drive.google.com/uc?export=download&id=" + fileId[0];
         if (!driveLink) { src = "https://drive.google.com/uc?export=download&id="}
         listCard.push(
-            <Card onClick={() => viewFilm(movie.id, movie.price)} key={index} className={"showcard" + (index + 1)} title={movie.title} srcImg={src} title_center={"center"} font_size={"12px"} font_weight={"400"} radius={"10px"}></Card>
+            <Card onClick={() => viewFilm(movie.id, movie.title)} fee={movie.price} key={index} className={"showcard" + (index + 1)} title={movie.title} srcImg={src} title_center={"center"} font_size={"12px"} font_weight={"400"} radius={"10px"}></Card>
         );
     }
     

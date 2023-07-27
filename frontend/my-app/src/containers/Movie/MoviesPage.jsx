@@ -324,6 +324,10 @@ const StyleMovies = styled.div`
             justify-content: space-evenly;
         }
     }
+    .card:hover {
+        transform: scale(1.1);
+        transition: all 0.5s ease-out ;
+    }
 `
 
 export const MoviesPage = () => {
@@ -336,20 +340,9 @@ export const MoviesPage = () => {
     useEffect(() => {
         dispatch.movie.getAll();
     }, [])
-    const viewFilm = (id, price) => {
+    const viewFilm = (id, title) => {
         localStorage.setItem("movieId", id);
-        let userPaymented = true;
-
-        if (userPaymented) {
-            nav("/detail?" + localStorage.getItem("movieId"));
-            return;
-        }
-        if (!userPaymented && price == 0) {
-            nav("/detail?" + localStorage.getItem("movieId"));
-            return;
-        }
-        nav("/pricing");
-        
+        nav("/detail?" + title);
     }
     const searchMovies = () => {
         let nameStr = document.getElementById("name").value;
@@ -383,7 +376,7 @@ export const MoviesPage = () => {
         }
     }
     const addToList = (title, src, genres, id, price) => {
-        return <Card onClick={() => viewFilm(id, price)} className={"flex-basis-card"} title={title} srcImg={src} width={"210px"} height={"301px"} genres={genres} isGrid={true} font_size={"24px"} font_weight={"400"} line_height={"22px"} radius={"20px"}></Card>
+        return <Card onClick={() => viewFilm(id, title)} fee={price} className={"flex-basis-card"} title={title} srcImg={src} width={"210px"} height={"301px"} genres={genres} isGrid={true} font_size={"24px"} font_weight={"400"} line_height={"22px"} radius={"20px"}></Card>
     }
     const customLink = (driveLink) => {
         const fileId = driveLink.match(/[-\w]{25,}/);
