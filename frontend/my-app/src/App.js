@@ -18,6 +18,7 @@ import SignUp from "containers/SignUp";
 
 
 function App() {
+
   return (
     <Routes>
       <Route element={<PrimaryLayout />}>
@@ -26,7 +27,7 @@ function App() {
         <Route path="/pricing" element={<Pricing />} />
         <Route path="/movies" element={<MoviesPage />} />
         <Route path="/payment" element={<Payment />} />
-        <Route path="/userprofile" element={<UserProfile/>} />
+        <Route path="/userprofile" element={<UserProfile />} />
         <Route path="/aboutus" element={<AboutUs />} />
         <Route path="/pricing" element={<Pricing />} />
       </Route>
@@ -37,6 +38,7 @@ function App() {
 
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
+
   );
 }
 

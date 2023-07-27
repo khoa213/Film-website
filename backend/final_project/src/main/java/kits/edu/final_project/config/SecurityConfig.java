@@ -90,7 +90,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
+<<<<<<< HEAD
                 .antMatchers("/signin","/signup","/**").permitAll()
+=======
+                .antMatchers("/signin","/signup", "/movies/**", "/genres/**", "/review/**").permitAll()
+>>>>>>> 75a21533c10f559522cdfd5092b8bf3258f82060
                 .antMatchers("/dashboard").hasRole("ADMIN")
                 .antMatchers(HttpMethod.PUT, "/**").hasAuthority("ADMIN")
                 .antMatchers(HttpMethod.DELETE, "/**").hasAuthority("ADMIN")

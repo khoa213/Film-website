@@ -8,7 +8,7 @@ import MandoLogo from "assets/MandoLogo.svg"
 import imgtrailer from "assets/imgtrailer.svg"
 import dot from "assets/dot.svg"
 import Line4 from "assets/Line4.svg"
-import React from "react";
+import React, { useState } from "react";
 import Carousel, { slidesToShowPlugin } from '@brainhubeu/react-carousel';
 import { slidesToScrollPlugin } from '@brainhubeu/react-carousel';
 import { Img } from "components/Img"
@@ -58,6 +58,9 @@ const StyleInfoPage = styled.div`
         width: 300px;
     }
 }
+.footer {
+        width: inherit;
+    }
 
 
     
@@ -176,6 +179,9 @@ font-family: 'Blinker';
 .save{
     padding-top: 10px;
 }
+.comment-movie {
+        padding-left: 60px;
+    }
 
 `
 const Banner = styled.div`
@@ -184,8 +190,8 @@ const Banner = styled.div`
 }
 background-image: url(${mandobackbround});
 background-size: cover;
-width: 100vw;
-height: 180vh;
+/* width: 100vw; */
+height: 200vh;
 `
 const ListComments = styled.div`
     display: flex;
@@ -211,9 +217,7 @@ const ListComments = styled.div`
             opacity: 0.7;
         }
     }
-    .comment-movie {
-        margin-top: 50px;
-    }
+   
 `
 
 const Trailer = styled.div`
@@ -326,9 +330,64 @@ const InfoPage = () => {
     const nav = useNavigate();
     const dispatch = useDispatch();
     let rawData = useSelector(state => state.movie.movies);
+    let reviews = useSelector(state => state.movie.reviews);
+    const [listReview, SetlistReview] = useState([]);
+    let formattedDate = null;
+    // useEffect(() => {
+    //     dispatch.movie.getAll();
+        
+    // }, [])
     useEffect(() => {
         dispatch.movie.getAll();
-    }, [])
+        dispatch.movie.getReviews(moiveId)
+          .then((response) => {
+            setData(response.data);
+            console.log(response);
+          })
+          .catch((error) => {
+            // Handle error if necessary
+          });
+      }, [dispatch]);
+      useEffect(() => {
+        if (reviews ) {
+          SetlistReview(reviews);
+    
+        //   console.log(genres.data);
+        }
+      }, [reviews]);
+        if (reviews) {
+            for (var review of reviews) {
+                listReview.push(
+                    <div className="list">
+                        <div className="avatarimg">
+                            <img src={avatar} />
+                            <span>{review.userName}</span>
+                        </div>
+                        <div className="contentFilm">
+                            <div>
+                                <div className="contenttxt">
+                                    {review.content} ++
+                                    Amazing amazing amazing !
+                                </div>
+                                <div className="like">
+                                    <div>
+                                        Like
+                                    </div>
+                                    <img width="2px" height="2px" src={dot}></img>
+                                    <div>
+                                        Reply
+                                    </div>
+                                    <img width="2px" height="2px" src={dot}></img>
+                                    <div>
+                                        20 weeks
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                );
+            }
+        }
     if (!moiveId) {
         nav("/");
     }
@@ -339,183 +398,181 @@ const InfoPage = () => {
         if (!driveLink) { src = SRC_DEFAULT }
         return src;
     }
-    m[0] ? console.log(customLink(m[0]?.movieLink)) : "hhj";
-    return (
-        <StyleInfoPage>
-            <Banner>
-                <Header>
-                    <div>
-                        <img src={menubar}></img>
-                    </div>
-                    <div>
-                        <img src={logo}></img>
-                    </div>
-                    <div className="account">
+    
+    
+    if (m) {
+        return (
+            <StyleInfoPage>
+                <Banner>
+                    <Header>
                         <div>
-                            <img src={account}></img>
+                            <img src={menubar}></img>
                         </div>
                         <div>
-                            <img src={notification}></img>
+                            <img src={logo}></img>
                         </div>
-                    </div>
-
-                </Header>
-
-                <Trailer>
-                    <div class="logo">
-                        <img src={disneylogo}></img>
-                    </div>
-                    <div class="name">
-                        <img src={MandoLogo}></img>
-                    </div>
-                    <div class="trailer">
-                        <div >
-                            <div className="video-container">
-                                <video controls>
-                                    <source
-                                        src={m[0] ? customLink(m[0]?.movieLink) : ""}
-                                        type="video/mp4"
-                                    />
-                                    Your browser does not support the video tag.
-                                </video>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="line">
-                        <img src={Line4}></img>
-                    </div>
-
-                    <Comments>
-                        <div className="comments">
-                            <div className="name1">
-                                <div>
-                                    MANDALORIAN
-                                </div>
-                            </div>
-                            <div className="score">
-                                <div>
-                                    <img src={rating}></img>
-                                </div>
-                                <div>
-                                    3.5 (lmdb)
-                                </div>
-                            </div>
-                            <div className="category1">
-                                <div>
-                                    DRAMA
-                                </div>
-                                <img width="2px" height="2px" src={dot}></img>
-                                <div>
-                                    DRAMA
-                                </div>
-
-                            </div>
-                            <div className="time">
-                                <div>
-                                    2hr : 42mins
-                                </div>
-                                <img width="2px" height="2px" src={dot}></img>
-                                <div>
-                                    Nov 2017
-                                </div>
-                                <img width="2px" height="2px" src={dot}></img>
-
-                                <div className="view">
-                                    <img className="viewimg" width="30px" src={view}></img>
-                                    2112 views
-                                </div>
-                            </div>
-                        </div>
-                    </Comments>
-                </Trailer>
-            </Banner>
-            <Comments>
-                <div className="comment-movie">
-                    <ListComments>
-                        <h3>COMMENTS (8)</h3>
-                        <div className="list">
-                            <div className="avatarimg">
-                                <img src={avatar} />
-                                <span>JOIN</span>
-                            </div>
-                            <div className="contentFilm">
-                                <div>
-                                    <div className="contenttxt">
-                                        Amazing amazing amazing !
-                                    </div>
-                                    <div className="like">
-                                        <div>
-                                            Like
-                                        </div>
-                                        <img width="2px" height="2px" src={dot}></img>
-                                        <div>
-                                            Reply
-                                        </div>
-                                        <img width="2px" height="2px" src={dot}></img>
-                                        <div>
-                                            20 weeks
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="list">
-                            <div className="avatarimg">
-                                <img src={avatar} />
-                                <span>JOIN</span>
-                            </div>
-                            <div className="contentFilm">
-                                <div>
-                                    <div className="contenttxt">
-                                        Amazing amazing amazing !
-                                    </div>
-                                    <div className="like">
-                                        <div>
-                                            Like
-                                        </div>
-                                        <img width="2px" height="2px" src={dot}></img>
-                                        <div>
-                                            Reply
-                                        </div>
-                                        <img width="2px" height="2px" src={dot}></img>
-                                        <div>
-                                            20 weeks
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </ListComments>
-                    <div className="comment">
-                        <div>
-                            Your email address will not be published. Required fields are marked *
-                        </div>
-                        <div className="ratingtxt">
-                            Your rating
-                            <img src={rating}></img>
-                        </div>
-                        <div className="review2">
+                        <div className="account">
                             <div>
-                                Your review *
+                                <img src={account}></img>
                             </div>
-                            <input type="text" className="review" />
+                            <div>
+                                <img src={notification}></img>
+                            </div>
                         </div>
-                        <button className="btnsubmit">
-                            SUBMIT
-                        </button>
+
+                    </Header>
+
+                    <Trailer>
+                        <div class="logo">
+                            <img src={disneylogo}></img>
+                        </div>
+                        <div class="name">
+                            <img src={MandoLogo}></img>
+                        </div>
+                        <div class="trailer">
+                            <div >
+                                <div className="video-container">
+                                    <video controls>
+                                        <source
+                                            src={m[0] ? customLink(m[0]?.movieLink) : ""}
+                                            type="video/mp4"
+                                        />
+                                        Your browser does not support the video tag.
+                                    </video>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="line">
+                            <img src={Line4}></img>
+                        </div>
+
+                        <Comments>
+                            <div className="comments">
+                                <div className="name1">
+                                    <div>
+                                        {m[0]?.title}
+                                    </div>
+                                </div>
+                                <div className="score">
+                                    <div>
+                                        <img src={rating}></img>
+                                    </div>
+                                    <div>
+                                        3.5 (lmdb)
+                                    </div>
+                                </div>
+                                <div className="category1">
+                                    {m[0]?.genreName.toString()}
+
+                                </div>
+                                <div className="time">
+                                    <div>
+                                        {m[0]?.duration} mins
+                                    </div>
+                                    <img width="2px" height="2px" src={dot}></img>
+                                    <div>
+                                        {formattedDate}
+                                    </div>
+
+                                    {/* <img width="2px" height="2px" src={dot}></img>
+                                    <div className="view">
+                                        <img className="viewimg" width="30px" src={view}></img>
+                                        2112 views
+                                    </div> */}
+                                </div>
+                            </div>
+                        </Comments>
+                    </Trailer>
+                </Banner>
+                <Comments>
+                    <div className="comment-movie">
+                        <ListComments>
+                            <h3>COMMENTS (8)</h3>
+                            {listReview}
+                            <div className="list">
+                                <div className="avatarimg">
+                                    <img src={avatar} />
+                                    <span>JOIN</span>
+                                </div>
+                                <div className="contentFilm">
+                                    <div>
+                                        <div className="contenttxt">
+                                            Amazing amazing amazing !
+                                        </div>
+                                        <div className="like">
+                                            <div>
+                                                Like
+                                            </div>
+                                            <img width="2px" height="2px" src={dot}></img>
+                                            <div>
+                                                Reply
+                                            </div>
+                                            <img width="2px" height="2px" src={dot}></img>
+                                            <div>
+                                                20 weeks
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="list">
+                                <div className="avatarimg">
+                                    <img src={avatar} />
+                                    <span>JOIN</span>
+                                </div>
+                                <div className="contentFilm">
+                                    <div>
+                                        <div className="contenttxt">
+                                            Amazing amazing amazing !
+                                        </div>
+                                        <div className="like">
+                                            <div>
+                                                Like
+                                            </div>
+                                            <img width="2px" height="2px" src={dot}></img>
+                                            <div>
+                                                Reply
+                                            </div>
+                                            <img width="2px" height="2px" src={dot}></img>
+                                            <div>
+                                                20 weeks
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </ListComments>
+                        <div className="comment">
+                            <div>
+                                Your email address will not be published. Required fields are marked *
+                            </div>
+                            <div className="ratingtxt">
+                                Your rating
+                                <img src={rating}></img>
+                            </div>
+                            <div className="review2">
+                                <div>
+                                    Your review *
+                                </div>
+                                <input type="text" className="review" />
+                            </div>
+                            <button className="btnsubmit">
+                                SUBMIT
+                            </button>
+                        </div>
                     </div>
-                </div>
-            </Comments>
-            {/* <div className="showmore">
-                <img src={redline}></img>
-                Show more preview
-                <img src={redline}></img>
-            </div> */}
-            <Footer></Footer>
+                </Comments>
+                {/* <div className="showmore">
+                    <img src={redline}></img>
+                    Show more preview
+                    <img src={redline}></img>
+                </div> */}
+                <Footer></Footer>
 
-        </StyleInfoPage>
+            </StyleInfoPage>
 
-    )
+        )
+    }
 }
 
 export default InfoPage;

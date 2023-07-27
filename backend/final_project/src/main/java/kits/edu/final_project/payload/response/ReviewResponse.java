@@ -14,6 +14,7 @@ public class ReviewResponse {
     private int status;
     private UserEntity user;
     private String movieName;
+    private  String userName;
     private MovieResponse movieResponse;
 
 
@@ -70,6 +71,14 @@ public class ReviewResponse {
         return status;
     }
 
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
     public void setStatus(int status) {
         this.status = status;
     }
@@ -81,7 +90,19 @@ public class ReviewResponse {
         reviewResponse.setRating(reviewEntities.getRating());
         reviewResponse.setUser(reviewEntities.getUser());
         reviewResponse.setMovieName(reviewEntities.getMovie().getTitle());
+        return reviewResponse;
+    }
 
-return reviewResponse;
+    public ReviewResponse mapReviewToResponseWithUser(ReviewEntity reviewEntities){
+        ReviewResponse reviewResponse = new ReviewResponse();
+        reviewResponse.setId(reviewEntities.getId());
+        reviewResponse.setContent(reviewEntities.getContent());
+        reviewResponse.setStatus(reviewEntities.getStatus());
+        reviewResponse.setRating(reviewEntities.getRating());
+//        reviewResponse.setUser(reviewEntities.getUser());
+        reviewResponse.setMovieName(reviewEntities.getMovie().getTitle());
+        String userName = reviewEntities.getUser().getUsername();
+        reviewResponse.setUserName(userName);
+        return reviewResponse;
     }
 }
