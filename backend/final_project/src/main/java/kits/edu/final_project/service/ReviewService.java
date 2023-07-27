@@ -29,4 +29,5 @@ public interface ReviewService  {
 //    void addReview(ReviewRequest reviewRequest);
     boolean replaceReviewById(@RequestBody ReviewRequest reviewRequest, @PathVariable int id);
     void addReview(int movieId,ReviewRequest reviewRequest, Principal principal);
+    List<ReviewEntity> getReviewByMovieId(int movieId);
 }
