@@ -7,6 +7,8 @@ import BgPayment from "../../assets/payment2.png";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js";
+import { toast } from "react-toastify";
 const Wrapper = styled.div`
   background-color: #191919;
   margin: 100px 150px;
@@ -66,6 +68,11 @@ const Wrapper = styled.div`
     input[type="radio"]:checked + .custom-radio {
       background-color: red;
     }
+  }
+  .paypal {
+    margin-top: 10px;
+    width: 430px;
+    display: flex;
   }
 `;
 const RightContent = styled.div`
@@ -129,6 +136,7 @@ const RightContent = styled.div`
       color: red;
     }
   }
+
 `;
 const PaymentForm = () => {
     const navigate = useNavigate();
@@ -136,7 +144,7 @@ const PaymentForm = () => {
     const [selectedOption, setSelectedOption] = useState("");
     const [total, setTotal] = useState(0);
 
-    
+
 
     useEffect(() => {
         const selectedPackage = JSON.parse(localStorage.getItem("selectedPackage"));
@@ -158,7 +166,6 @@ const PaymentForm = () => {
 
     const buy = async () => {
         const token = localStorage.getItem("userToken");
-        alert ("TOken: " + token);
         const obj = {};
         obj.idPackage = packageObj.id;
         obj.token = token;
@@ -169,16 +176,49 @@ const PaymentForm = () => {
         } else {
             alert('Buy Fail!');
         }
-        
+
     }
+
+
     const date = new Date();
     const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
     const formattedDate = new Intl.DateTimeFormat('en-GB', options).format(date);
     const endDate = new Date();
     endDate.setDate(date.getDate() + indDate);
     const formattedDateEnd = new Intl.DateTimeFormat('en-GB', options).format(endDate);
-
-   
+    
+    const createOrder = (data, actions) => {
+        
+        return actions.order.create({
+            purchase_units: [
+                {
+                    amount: {
+                        value: packageObj.price,
+                    },
+                },
+            ],
+        });
+    }
+    const onApprove= async (data, actions) => {
+        const token = localStorage.getItem("userToken");
+        const obj = {};
+        obj.idPackage = packageObj.id;
+        obj.token = token;
+        const isBuy = await dispatch.user.buyPackage(obj);
+        // if (isBuy) {
+        //     alert('Buy Success!');
+        //     toast.success("successfully payment");
+        //     navigate("/");
+        // } else {
+        //     alert('Buy Fail!');
+        // }
+        // 
+        return actions.order.capture().then((details) => {
+            const name = details.payer.name.given_name;
+            alert('Buy Success!');
+        });
+    }
+    const [{ isPending, isResolved, error }] = usePayPalScriptReducer();
     return (
         <Wrapper>
             <div className="left">
@@ -303,7 +343,7 @@ const PaymentForm = () => {
                         <span>{total}$</span>
                     </div>
                     <div className="btn-form">
-                        <Button
+                        {/* <Button
                             style={{ marginTop: "20px" }}
                             height={"50px"}
                             title={"Make Payment"}
@@ -314,7 +354,15 @@ const PaymentForm = () => {
                             fontSize={"16px"}
                             onClick={() => buy()}
                             radius={"20px"}
+                        /> */}
+                         {/* {isPending && <div>Loading PayPal script...</div>}
+                    {isResolved && <div>PayPal script loaded!</div>}
+                    {error && <div>Failed to load PayPal script: {error.message}</div>} */}
+                        <PayPalButtons className="paypal"
+                            createOrder={createOrder}
+                            onApprove={onApprove}
                         />
+
                     </div>
                 </form>
             </div>

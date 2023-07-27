@@ -6,15 +6,23 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import store from 'store';
 import { Provider } from 'react-redux';
+import { PayPalScriptProvider } from '@paypal/react-paypal-js';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+const initialOptions = {
+    clientId: "AU5kgjXC_8Mm4F3xc3InzNSXPEkrAEKI3wAOCTiHBGRzPHMrvZEZe8QLi8xu0_3R9ijUNB9LiEVh7rAB",
+    currency: "USD",
+    intent: "capture",
+  };
 root.render(
     <React.StrictMode>
-        <BrowserRouter>
-            <Provider store={store}>
-                <App />
-            </Provider>
-        </BrowserRouter>
+         <PayPalScriptProvider options={initialOptions}>
+            <BrowserRouter>
+                <Provider store={store}>
+                    <App />
+                </Provider>
+            </BrowserRouter>
+        </PayPalScriptProvider>
     </React.StrictMode>
 );
 

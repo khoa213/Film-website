@@ -75,8 +75,11 @@ public class OrderServiceImp implements OrderService {
 
     @Override
     public boolean checkUserPackage(int idUser) {
-        OrderEntity orderEntity = orderRepository.findByOrderType(idUser);
-        return orderEntity.isOrderType();
+        List<OrderEntity> orderEntity = orderRepository.findByOrderType(idUser);
+        if (orderEntity == null) {
+            return false;
+        }
+        return orderEntity.get(0).isOrderType();
     }
 
     @Override
