@@ -40,7 +40,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
     @Autowired
-private  CustomAuthProvider customAuthProvider;
+    private  CustomAuthProvider customAuthProvider;
 
 
 
@@ -90,14 +90,21 @@ private  CustomAuthProvider customAuthProvider;
                 .and()
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
-                .antMatchers("/signin","/signup","/movies", "/genres").permitAll()
-//                .antMatchers("/**").hasAuthority("ADMIN")
-                .antMatchers(HttpMethod.PUT, "/user/**").hasAuthority("ADMIN")
-                .antMatchers(HttpMethod.DELETE, "/user/**").hasAuthority("ADMIN")
-                .anyRequest().authenticated();
+                .antMatchers("/signin","/signup").permitAll()
+                .antMatchers("/dashboard").hasRole("ADMIN")
+                .antMatchers(HttpMethod.PUT, "/**").hasAuthority("ADMIN")
+                .antMatchers(HttpMethod.DELETE, "/**").hasAuthority("ADMIN")
+                .anyRequest().authenticated()
+//                    .antMatchers("/**").hasAuthority("ADMIN")
+                .and()
+                .formLogin()
+                .loginPage("/login") // Customize the login page URL
+                .defaultSuccessUrl("/dashboard") // Redirect to the dashboard on successful login
+                .and()
+                .logout().logoutSuccessUrl("/login"); // Redirect to the login page after logout
     }
 
-//@Bean
+    //@Bean
 //    public AuthenticationProvider authenticationProvider(){
 //    DaoAuthenticationProvider authenticationProvider=new DaoAuthenticationProvider();
 //    authenticationProvider.setUserDetailsService(customUserDetailsService);
