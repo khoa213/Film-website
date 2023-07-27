@@ -66,4 +66,13 @@ public class OrderController {
         response.setData(orderService.buyPackage(idPackage, idUser));
         return new ResponseEntity<>(response,HttpStatus.OK);
     }
+
+    @PostMapping("/check-user-package")
+    public ResponseEntity<?> checkUserPackage (Principal principal) {
+        int idUser = userService.getUserByname(principal.getName());
+        BaseResponse response = new BaseResponse();
+        response.setStatusCode(200);
+        response.setData(orderService.checkUserPackage(idUser));
+        return new ResponseEntity<>(response,HttpStatus.OK);
+    }
 }

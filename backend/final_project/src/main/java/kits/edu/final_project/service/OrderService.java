@@ -20,5 +20,6 @@ public interface OrderService  {
     OrderEntity addOrder( OrderEntity orderEntity);
     OrderEntity updateOrderById(OrderEntity orderEntity,int id);
     boolean deleteOrderById(@PathVariable int id);
-    boolean buyPackage(int idPackage, int nameUser);
+    boolean buyPackage(int idPackage, int idUser);
+    boolean checkUserPackage(int idUser);
 }
