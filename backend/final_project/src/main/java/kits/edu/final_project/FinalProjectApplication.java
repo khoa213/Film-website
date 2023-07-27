@@ -7,7 +7,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class FinalProjectApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(FinalProjectApplication.class, args);
+		var ctx = SpringApplication.run(FinalProjectApplication.class, args);
+
+
+		var properties = ctx.getBean(DefaultProperties.class);
+
+		System.out.println(properties);
 	}
 
 }
