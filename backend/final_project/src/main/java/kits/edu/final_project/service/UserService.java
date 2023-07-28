@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -31,4 +32,5 @@ public interface UserService  {
 //    UserEntity getByUsername(String username)
 Optional<UserEntity> getByUsername(String username);
 public int getUserByname(String email);
+UserResponse getUserByToken(String username);
 }

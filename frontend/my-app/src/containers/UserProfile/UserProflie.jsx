@@ -1,8 +1,19 @@
 import React, { useState } from "react";
-import { Input, Button, Modal, Select } from "antd";
+import {
+  Input,
+  Button,
+  Modal,
+  Select,
+  Dropdown,
+  Collapse,
+  Menu,
+  Form,
+} from "antd";
 import styled from "styled-components";
 import avatar from "assets/avatar.svg";
 import line from "assets/Line4.svg";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
 
 const StyleUserProfile = styled.div`
   width: 100%;
@@ -146,16 +157,48 @@ const dataUser = {
   birthday: "1989-12-31T17:00:00.000+00:00",
   status: 0,
 };
-const { Option } = Select; // Import Option from Select
+const { Option } = Select;
+const { Panel } = Collapse;
 const UserProfile = () => {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [gender, setGender] = useState(false);
   const [birthday, setBirthday] = useState("");
   const [isModalVisible, setIsModalVisible] = useState(false);
-
+  const dispatch = useDispatch();
+  let ordersData = useSelector((state) => state.order.orders);
   //   const showModal = () => {};
+  useEffect(() => {
+    // const token = localStorage.getItem("userToken");
+    const tokenJSON = JSON.stringify(localStorage.getItem("userToken"));
+    dispatch.user.getUser(tokenJSON);
+    dispatch.order.getAll(tokenJSON);
+    // console.log(user);
+  }, []);
+  const findUserOrder = () => {
+    const matchingOrder = ordersData.find(
+      (order) => order.user.id === dataUser.id
+    );
+    return matchingOrder;
+  };
 
+  const matchingOrder = findUserOrder();
+
+  const [isResetPasswordVisible, setIsResetPasswordVisible] = useState(false);
+  const [resetPasswordValues, setResetPasswordValues] = useState({
+    email: dataUser.email,
+    oldPassword: "",
+    newPassword: "",
+    confirmNewPassword: "",
+  });
+  const toggleResetPasswordVisible = () => {
+    setIsResetPasswordVisible(!isResetPasswordVisible);
+  };
+
+  // Function to handle resetting the password
+  const handleResetPassword = (values) => {
+    console.log(resetPasswordValues);
+  };
   const handleOk = () => {
     setIsModalVisible(false);
     const formData = {
@@ -241,8 +284,112 @@ const UserProfile = () => {
           <div className="change-inform ">
             <h1>Billing Details:</h1>
           </div>
+          {matchingOrder ? (
+            <>
+              <p>Yes</p>
+              {/* Display the details of the matching order here */}
+              <div>
+                <h1>Order ID: {matchingOrder.id}</h1>
+                <h2>Order Date: {matchingOrder.pack.name}</h2>
+                {/* Add more details you want to display */}
+              </div>
+            </>
+          ) : (
+            <p>No</p>
+          )}
           <img src={line}></img>
-          <Button>Reset Password</Button>
+          <Button onClick={toggleResetPasswordVisible}>Reset Password</Button>
+          <Collapse activeKey={isResetPasswordVisible ? "1" : ""}>
+            <Panel header="Reset Password" key="1">
+              <Form onFinish={handleResetPassword}>
+                <div className="input-group">
+                  <Form.Item
+                    name="oldPassword"
+                    label="Old Password"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please enter your old password",
+                      },
+                    ]}
+                  >
+                    <Input
+                      type="password"
+                      onChange={(e) =>
+                        setResetPasswordValues({
+                          ...resetPasswordValues,
+                          oldPassword: e.target.value,
+                        })
+                      }
+                    />
+                  </Form.Item>
+                </div>
+                <div className="input-group">
+                  <Form.Item
+                    name="newPassword"
+                    label="New Password"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please enter your new password",
+                      },
+                    ]}
+                  >
+                    <Input
+                      type="password"
+                      onChange={(e) =>
+                        setResetPasswordValues({
+                          ...resetPasswordValues,
+                          newPassword: e.target.value,
+                        })
+                      }
+                    />
+                  </Form.Item>
+                </div>
+                <div className="input-group">
+                  <Form.Item
+                    name="confirmNewPassword"
+                    label="Confirm New Password"
+                    dependencies={["newPassword"]}
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please confirm your new password",
+                      },
+                      ({ getFieldValue }) => ({
+                        validator(_, value) {
+                          if (
+                            !value ||
+                            getFieldValue("newPassword") === value
+                          ) {
+                            return Promise.resolve();
+                          }
+                          return Promise.reject(
+                            new Error("The two passwords do not match")
+                          );
+                        },
+                      }),
+                    ]}
+                  >
+                    <Input
+                      type="password"
+                      onChange={(e) =>
+                        setResetPasswordValues({
+                          ...resetPasswordValues,
+                          confirmNewPassword: e.target.value,
+                        })
+                      }
+                    />
+                  </Form.Item>
+                </div>
+                <Form.Item>
+                  <Button type="primary" htmlType="submit">
+                    Reset Password
+                  </Button>
+                </Form.Item>
+              </Form>
+            </Panel>
+          </Collapse>
         </div>
         <Modal
           title="Edit Information"

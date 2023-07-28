@@ -1,4 +1,6 @@
 import { movie } from "./movie";
 import { genre } from "./genre";
 import { user } from "./user";
-export { movie, genre, user }
+import { order } from "./order";
+
+export { movie, genre, user, order };

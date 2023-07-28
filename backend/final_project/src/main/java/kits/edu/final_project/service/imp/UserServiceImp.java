@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -150,6 +151,20 @@ public class UserServiceImp implements UserService {
     public int getUserByname(String email) {
         UserEntity userEntity = userRepository.findByEmail(email);
         return userEntity.getId();
+    }
+
+    @Override
+    public UserResponse getUserByToken(String username) {
+
+        UserEntity user = userRepository.findByEmail(username);
+        UserResponse userResponse =new UserResponse();
+        userResponse.setId(user.getId());
+        userResponse.setUsername(user.getUsername());
+        userResponse.setGender(user.getGender());
+        userResponse.setEmail(user.getEmail());
+        userResponse.setOrder(user.getOrders());
+        userResponse.setImage(user.getImage());
+        return userResponse;
     }
 
 }

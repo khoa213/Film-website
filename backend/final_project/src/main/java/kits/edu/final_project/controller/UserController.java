@@ -4,6 +4,8 @@ import kits.edu.final_project.entity.UserEntity;
 import kits.edu.final_project.payload.response.BaseResponse;
 
 
+import kits.edu.final_project.payload.response.UserResponse;
+import kits.edu.final_project.repository.UserRepository;
 import kits.edu.final_project.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +24,8 @@ import java.util.List;
 public class UserController {
     @Autowired
     UserService userService;
-
+    @Autowired
+    UserRepository userRepository;
     @GetMapping("")
    public ResponseEntity<?> getAllUsers(){
         BaseResponse response=new BaseResponse();
@@ -34,6 +37,17 @@ public class UserController {
 //            System.out.println(user.getEmail());
 //        }
         return  new ResponseEntity<>(response, HttpStatus.OK);
+    }
+    @GetMapping("/getUserByToken")
+    public ResponseEntity<?> getUserByToken(Principal principal){
+        System.out.println(principal);
+       String username= principal.getName();
+
+      UserResponse user= userService.getUserByToken(username);
+        BaseResponse response = new BaseResponse();
+        response.setStatusCode(200);
+        response.setData(user);
+        return new ResponseEntity<>(response,HttpStatus.OK);
     }
 //    @PostMapping("/add")
 //    @ResponseBody
