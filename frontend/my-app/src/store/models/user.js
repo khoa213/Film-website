@@ -96,6 +96,7 @@ export const user = {
             Authorization: `Bearer ${obj.token}`,
           },
         };
+
         const { data } = await axios.post(
           `http://localhost:8080/order/buyPackage?idPackage=` + obj.idPackage,
           "",
@@ -109,17 +110,18 @@ export const user = {
         return null;
       }
     },
-    async getUser(tokenJSON) {
+    
+    async getUser(token) {
       try {
         const config = {
           headers: {
-            Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0cm9sZTFAZ21haWwuY29tIn0.EYUO_8gCbM1OXO-C4Se_QnIfbx8aG-v2lEcnyKO4w3A`,
+            Authorization: `Bearer ${token}`,
           },
         };
 
-        console.log(tokenJSON);
-        const { data } = await axios.get(
-          `http://localhost:8080/order`,
+        console.log(token);
+        const { data } = await axios.post(
+          `http://localhost:8080/user/getUserByToken`,
           "",
           config
         );

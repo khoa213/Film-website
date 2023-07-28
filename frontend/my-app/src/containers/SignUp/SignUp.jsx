@@ -322,6 +322,21 @@ const SignUp = () => {
               onClick={() => signUp()}
             >
             </Button>
+            {/* <div style={{marginTop: "15px"}}></div>
+            <Button
+                  title={"SIGNUP"}
+                  width={"420px"}
+                  height={"60px"}
+                  text_color="var(--color-primary)"
+                  bg_color="var(--bg-color-input)"
+                  fontSize={"22px"}
+                  radius={"50px"}
+                  type="submit"
+                  id="btn-signup"
+                  className="btn-signup"
+                  onClick={() => signUp()}
+              >
+              </Button> */}
           </div>
         </div>
       </form>

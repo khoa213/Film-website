@@ -38,7 +38,7 @@ public class UserController {
 //        }
         return  new ResponseEntity<>(response, HttpStatus.OK);
     }
-    @GetMapping("/getUserByToken")
+    @PostMapping("/getUserByToken")
     public ResponseEntity<?> getUserByToken(Principal principal){
         System.out.println(principal);
        String username= principal.getName();

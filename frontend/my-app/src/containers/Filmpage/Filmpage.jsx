@@ -2,6 +2,7 @@ import styled from 'styled-components'
 import menubar from "assets/menubar.svg"
 import logo from "assets/logo.svg"
 import account from "assets/account.svg"
+import avatar from 'assets/avatar.svg'
 import notification from "assets/notification.svg"
 import bpbackground1 from "assets/bpbackground1.png"
 import avatarFilm from "assets/film-avatar.svg"
@@ -13,10 +14,11 @@ import poster3 from "assets/poster3.svg"
 import poster4 from "assets/poster4.svg"
 import poster5 from "assets/poster5.svg"
 import poster6 from "assets/poster6.svg"
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
 import { Footer } from 'components/Footer'
+import { Button } from 'components/Button'
 
 
 const StyleFilmpage = styled.div`
@@ -32,8 +34,23 @@ height: 100vh;
     justify-content: space-between;
 
     .account{
+        .avatar {
+            width: 25px;
+            height: 25px;
+            padding: 3px;
+            border-radius: 50%;
+            cursor: pointer;
+            background-color: #ff7b7b;
+            img {
+                width: 100%;
+                height: 100%;
+            }
+        }
+        .logout, .login {
         display: flex;
-        gap: 10px;
+        align-items: center;
+        gap: 5px;
+    }
     }
     
     .background{
@@ -203,7 +220,15 @@ const Filmpage = () => {
         if (!driveLink) { src = SRC_DEFAULT }
         return src;
     }
+    const profile = () => {
+        nav("/userprofile");
+    }
+    const logout = () => {
+        localStorage.removeItem("userToken");
+        nav("/login");
+    }
     if(rawData) {
+        
         return (
         <StyleFilmpage>
             <Header>
@@ -211,15 +236,25 @@ const Filmpage = () => {
                     <img src={menubar}></img>
                 </div>
                 <div>
-                    <img src={logo}></img>
+                    <Link to={'/'}><img src={logo}></img></Link>
                 </div>
                 <div className="account">
-                    <div>
+                {!userToken ?
+                <div className='login'>
+                    <Link to={'/login'}><Button title={"SIGNIN"} text_color={"white"} width={"49px"} height={"19px"} radius={"40px"} border_custom={"2px solid transparent"} font_size_text={"11px"}></Button></Link>
+                    <Link to={'/signup'}><Button title={"SIGNUP"} text_color={"white"} width={"49px"} height={"19px"} radius={"40px"} border_custom={"2px solid transparent"} font_size_text={"11px"}></Button></Link>
+                </div> :
+                <div className='logout'>
+                    <div className="avatar"><img onClick={() => profile()} src={avatar} alt="" /></div>
+                    <Button onClick={() => logout()} title={"LOGOUT"} text_color={"white"} width={"55px"} height={"19px"} radius={"40px"} border_custom={"2px solid transparent"} font_size_text={"11px"}></Button>
+                </div>
+                }
+                    {/* <div>
                         <img src={account}></img>
                     </div>
                     <div>
                         <img src={notification}></img>
-                    </div>
+                    </div> */}
                 </div>
 
             </Header>
@@ -239,9 +274,7 @@ const Filmpage = () => {
 
                     <img className='line' src={line2}></img>
                     <div className='text'>
-                        {m[0]?.desc} ++ 
-                        Queen Ramonda (Angela Bassett), Shuri (Letitia Wright), M’Baku (Winston Duke), Okoye (Danai Gurira) and the Dora Milaje (including Florence Kasumba), fight to protect their nation from intervening world powers in the wake of King T’Challa’s death. As the Wakandans strive to embrace their next chapter, the heroes must band together with the help of War Dog Nakia (Lupita Nyong’o) and Everett Ross (Martin Freeman) and forge a new path for the kingdom of Wakanda.
-
+                        {m[0]?.desc}
                     </div>
                     {/* <div className='text1'>
                         DIRECTOR
@@ -276,8 +309,7 @@ const Filmpage = () => {
                         CAST
                     </div>
                     <div className='text'>
-                        {m[0]?.actorName.toString()} ++
-                        Angela Bassett, Letitia Wright, Winston Duke, Danai Gurira, Florence Kasumba, Lupita Nyong’o, Martin Freeman, Tenoch Huerta, Dominique Thorne, Michaela Coel, Mabel Cadena and Alex Livanalli.
+                        {m[0]?.actorName.toString()}
                     </div>
                 </div>
                 <div className='movie'>

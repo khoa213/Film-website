@@ -35,9 +35,10 @@ import '@brainhubeu/react-carousel/lib/style.css';
 
 import styled from 'styled-components';
 import { useDispatch, useSelector } from "react-redux"
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { useEffect } from "react"
 import { Footer } from "components/Footer"
+import { Button } from "components/Button"
 //import { Slider } from "components/Slider"
 
 
@@ -72,8 +73,23 @@ const Header = styled.div`
     justify-content: space-between;
 
     .account{
-        display: flex;
-        gap: 10px;
+        .avatar {
+            width: 25px;
+            height: 25px;
+            padding: 3px;
+            border-radius: 50%;
+            cursor: pointer;
+            background-color: #ff7b7b;
+            img {
+                width: 100%;
+                height: 100%;
+            }
+        }
+        .logout, .login {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
     }
 `
 const Comments = styled.div`
@@ -133,6 +149,7 @@ font-family: 'Blinker';
     background-color: red;
     color: white;
     margin-top: 20px;
+    cursor: pointer;
 }
 .review{
     width: 700px;
@@ -196,15 +213,19 @@ height: 200vh;
 const ListComments = styled.div`
     display: flex;
     flex-direction: column;
-    gap: 10px;
     margin: 20px 0;
     .list{
+        margin-top: 15px;
         display: flex;
         gap: 60px;
         .avatarimg {
             display: flex;
             align-items: center;
+            flex-basis: 20%;
             gap: 3px;
+            img {
+                width: 45px;
+            }
         }
         .contenttxt{
             font-size: 20px;
@@ -326,81 +347,87 @@ const Trailer = styled.div`
 
 const InfoPage = () => {
     const SRC_DEFAULT = "https://drive.google.com/uc?export=download&id=";
-    const moiveId = localStorage.getItem("movieId");
+    const movieId = localStorage.getItem("movieId");
+    const token = localStorage.getItem("userToken");
     const nav = useNavigate();
     const dispatch = useDispatch();
     let rawData = useSelector(state => state.movie.movies);
     let reviews = useSelector(state => state.movie.reviews);
-    const [listReview, SetlistReview] = useState([]);
-    let formattedDate = null;
-    // useEffect(() => {
-    //     dispatch.movie.getAll();
-        
-    // }, [])
+    const [reloadMore, setReloadMore] = useState(false);
     useEffect(() => {
         dispatch.movie.getAll();
-        dispatch.movie.getReviews(moiveId)
-          .then((response) => {
-            setData(response.data);
-            console.log(response);
-          })
-          .catch((error) => {
-            // Handle error if necessary
-          });
-      }, [dispatch]);
-      useEffect(() => {
-        if (reviews ) {
-          SetlistReview(reviews);
-    
-        //   console.log(genres.data);
-        }
-      }, [reviews]);
-        if (reviews) {
-            for (var review of reviews) {
-                listReview.push(
-                    <div className="list">
-                        <div className="avatarimg">
-                            <img src={avatar} />
-                            <span>{review.userName}</span>
+        dispatch.movie.getReviews(movieId);
+    }, [movieId, reloadMore]);
+    let listReviewComp = [];
+        for (const review of reviews) {
+            listReviewComp.push(
+                <div className="list" key={review.id}>
+                <div className="avatarimg">
+                    <img src={avatar} />
+                    <span>{review.userName}</span>
+                </div>
+                <div className="contentFilm">
+                    <div>
+                        <div className="contenttxt">
+                            {review.content}
                         </div>
-                        <div className="contentFilm">
+                        <div className="like">
                             <div>
-                                <div className="contenttxt">
-                                    {review.content} ++
-                                    Amazing amazing amazing !
-                                </div>
-                                <div className="like">
-                                    <div>
-                                        Like
-                                    </div>
-                                    <img width="2px" height="2px" src={dot}></img>
-                                    <div>
-                                        Reply
-                                    </div>
-                                    <img width="2px" height="2px" src={dot}></img>
-                                    <div>
-                                        20 weeks
-                                    </div>
-                                </div>
+                                Like
+                            </div>
+                            <img width="2px" height="2px" src={dot}></img>
+                            <div>
+                                Reply
+                            </div>
+                            <img width="2px" height="2px" src={dot}></img>
+                            <div>
+                                20 weeks
                             </div>
                         </div>
                     </div>
-                );
-            }
-        }
-    if (!moiveId) {
+                </div>
+            </div>
+        );
+    }
+    if (!movieId) {
         nav("/");
     }
-    const m = rawData?.filter(movieObj => movieObj.id == moiveId);
+    const m = rawData?.filter(movieObj => movieObj.id == movieId);
     const customLink = (driveLink) => {
         const fileId = driveLink.match(/[-\w]{25,}/);
         let src = SRC_DEFAULT + fileId[0];
         if (!driveLink) { src = SRC_DEFAULT }
         return src;
     }
-    
-    
+    const writeReview = async () => {
+        if (!token) {
+            let isNav = confirm("Go to login page!");
+            if (isNav) {
+                nav("/login");
+            }
+            return;
+        }
+        let content = document.getElementById("content").value;
+        const obj = {
+            movieId : movieId,
+            content: content,
+            token : token
+        }
+        await dispatch.movie.reviewMovie(obj);
+        setReloadMore(!reloadMore);
+        reloadMore ? nav("/watch" + " ") : nav("/watch" + "  ");
+    }
+    const profile = () => {
+        nav("/userprofile");
+    }
+    const logout = () => {
+        localStorage.removeItem("userToken");
+        nav("/login");
+    }
     if (m) {
+        // const date = new Date(m[0]?.releaseDate);
+        // const options = { day: "numeric", month: "long", year: "numeric" };
+        // const formattedDate = new Intl.DateTimeFormat("en-GB", options).format(date);
         return (
             <StyleInfoPage>
                 <Banner>
@@ -409,27 +436,31 @@ const InfoPage = () => {
                             <img src={menubar}></img>
                         </div>
                         <div>
-                            <img src={logo}></img>
+                            <Link to={'/'}><img src={logo}></img></Link>
                         </div>
                         <div className="account">
-                            <div>
-                                <img src={account}></img>
-                            </div>
-                            <div>
-                                <img src={notification}></img>
-                            </div>
+                            {!token ?
+                                <div className='login'>
+                                    <Link to={'/login'}><Button title={"SIGNIN"} text_color={"white"} width={"49px"} height={"19px"} radius={"40px"} border_custom={"2px solid transparent"} font_size_text={"11px"}></Button></Link>
+                                    <Link to={'/signup'}><Button title={"SIGNUP"} text_color={"white"} width={"49px"} height={"19px"} radius={"40px"} border_custom={"2px solid transparent"} font_size_text={"11px"}></Button></Link>
+                                </div> :
+                                <div className='logout'>
+                                    <div className="avatar"><img onClick={() => profile()} src={avatar} alt="" /></div>
+                                    <Button onClick={() => logout()} title={"LOGOUT"} text_color={"white"} width={"55px"} height={"19px"} radius={"40px"} border_custom={"2px solid transparent"} font_size_text={"11px"}></Button>
+                                </div>
+                            }
                         </div>
 
                     </Header>
 
                     <Trailer>
-                        <div class="logo">
+                        <div className="logo">
                             <img src={disneylogo}></img>
                         </div>
-                        <div class="name">
+                        <div className="name">
                             <img src={MandoLogo}></img>
                         </div>
-                        <div class="trailer">
+                        <div className="trailer">
                             <div >
                                 <div className="video-container">
                                     <video controls>
@@ -442,7 +473,7 @@ const InfoPage = () => {
                                 </div>
                             </div>
                         </div>
-                        <div class="line">
+                        <div className="line">
                             <img src={Line4}></img>
                         </div>
 
@@ -463,7 +494,6 @@ const InfoPage = () => {
                                 </div>
                                 <div className="category1">
                                     {m[0]?.genreName.toString()}
-
                                 </div>
                                 <div className="time">
                                     <div>
@@ -471,7 +501,9 @@ const InfoPage = () => {
                                     </div>
                                     <img width="2px" height="2px" src={dot}></img>
                                     <div>
-                                        {formattedDate}
+                                    {
+                                        // formattedDate
+                                    }
                                     </div>
 
                                     {/* <img width="2px" height="2px" src={dot}></img>
@@ -487,86 +519,25 @@ const InfoPage = () => {
                 <Comments>
                     <div className="comment-movie">
                         <ListComments>
-                            <h3>COMMENTS (8)</h3>
-                            {listReview}
-                            <div className="list">
-                                <div className="avatarimg">
-                                    <img src={avatar} />
-                                    <span>JOIN</span>
-                                </div>
-                                <div className="contentFilm">
-                                    <div>
-                                        <div className="contenttxt">
-                                            Amazing amazing amazing !
-                                        </div>
-                                        <div className="like">
-                                            <div>
-                                                Like
-                                            </div>
-                                            <img width="2px" height="2px" src={dot}></img>
-                                            <div>
-                                                Reply
-                                            </div>
-                                            <img width="2px" height="2px" src={dot}></img>
-                                            <div>
-                                                20 weeks
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="list">
-                                <div className="avatarimg">
-                                    <img src={avatar} />
-                                    <span>JOIN</span>
-                                </div>
-                                <div className="contentFilm">
-                                    <div>
-                                        <div className="contenttxt">
-                                            Amazing amazing amazing !
-                                        </div>
-                                        <div className="like">
-                                            <div>
-                                                Like
-                                            </div>
-                                            <img width="2px" height="2px" src={dot}></img>
-                                            <div>
-                                                Reply
-                                            </div>
-                                            <img width="2px" height="2px" src={dot}></img>
-                                            <div>
-                                                20 weeks
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <h3>COMMENTS ({listReviewComp.length})</h3>
+                            {listReviewComp}
                         </ListComments>
                         <div className="comment">
                             <div>
                                 Your email address will not be published. Required fields are marked *
                             </div>
-                            <div className="ratingtxt">
-                                Your rating
-                                <img src={rating}></img>
-                            </div>
                             <div className="review2">
                                 <div>
                                     Your review *
                                 </div>
-                                <input type="text" className="review" />
+                                <input id="content" type="text" className="review" />
                             </div>
-                            <button className="btnsubmit">
+                            <button style={{borderRadius: "20px"}} className="btnsubmit" onClick={() => writeReview()}>
                                 SUBMIT
                             </button>
                         </div>
                     </div>
                 </Comments>
-                {/* <div className="showmore">
-                    <img src={redline}></img>
-                    Show more preview
-                    <img src={redline}></img>
-                </div> */}
                 <Footer></Footer>
 
             </StyleInfoPage>

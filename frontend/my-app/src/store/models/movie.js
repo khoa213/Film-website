@@ -1,3 +1,5 @@
+import axios from "axios";
+
 export const movie = {
   state: {
     movies: [],
@@ -58,6 +60,35 @@ export const movie = {
           console.log("Authorization failed: " + error.message)
         );
       this.setDataReviews(data.data);
+      return data.data;
+    },
+    
+    async reviewMovie(obj) {
+      try {
+        console.log(obj.content + ";; " + obj.movieId + ";; " + obj.token );
+        const formData = {
+          content: obj.content,
+          rating: 5
+        }
+        const config = {
+          headers: {
+            Authorization: `Bearer ${obj.token}`,
+          },
+        };
+
+        console.log(obj.content + ";; " + obj.movieId + ";; " + obj.token );
+        const { data } = await axios.post(
+          `http://localhost:8080/movies/${obj.movieId}/reviews`,
+          formData,
+          config
+        );
+        if (data.statusCode != 200) {
+          return null;
+        }
+        this.setDataUser(data.data);
+      } catch (error) {
+        return null;
+      }
     },
   }),
 };

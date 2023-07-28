@@ -53,6 +53,7 @@ public class UserServiceImp implements UserService {
                 user.setUsername(request.getUsername());
                 user.setPassword(passwordEncoder.encode(request.getPassword()));
                 user.setEmail(request.getEmail());
+                user.setStatus(1);
 
 
                 RoleEntity role=roleRespository.findByName("USER").get();

@@ -168,17 +168,14 @@ const UserProfile = () => {
   const dispatch = useDispatch();
   let ordersData = useSelector((state) => state.order.orders);
 
-  //   const showModal = () => {};
   useEffect(() => {
-    // const token = localStorage.getItem("userToken");
-    const tokenJSON = JSON.stringify(localStorage.getItem("userToken"));
-    // dispatch.user.getUser(tokenJSON);
+    const tokenJSON = localStorage.getItem("userToken");
     const obj = {};
     obj.idPackage = 3;
     obj.token = tokenJSON;
-    dispatch.user.buyPackage(obj);
+    dispatch.user.checkUserPackage(tokenJSON);
+    dispatch.user.getUser(tokenJSON);
     dispatch.order.getAll(tokenJSON);
-    // console.log(user);
   }, []);
   const findUserOrder = () => {
     const matchingOrder = ordersData.find(

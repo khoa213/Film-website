@@ -54,12 +54,21 @@ const StyledHeader = styled.div`
         border: 1px solid white;
         margin: 0;
     }
+    .logout {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
 `
 export const Header = () => {
     const userToken = localStorage.getItem("userToken");
     const nav = useNavigate();
     const profile = () => {
         nav("/userprofile");
+    }
+    const logout = () => {
+        localStorage.removeItem("userToken");
+        nav("/login");
     }
     return (
         <StyledHeader>
@@ -73,15 +82,18 @@ export const Header = () => {
                         <li> <Link to={'/movies'}><Button title={"MOVIES"} text_color={"white"} width={"98px"} height={"19px"} radius={"40px"} border_custom={"2px solid transparent"} font_size_text={"12px"}> </Button> </Link></li>
                         <li className='logo'> <Link to={'/'}><img src={logoIcon} alt="" /></Link></li>
                         <li> <Link to={'/aboutus'}><Button title={"ABOUT"} text_color={"white"} width={"98px"} height={"19px"} radius={"40px"} border_custom={"2px solid transparent"} font_size_text={"12px"}> </Button> </Link></li>
-                        <li> <Link to={'/'}><Button title={"UPCOMING"} text_color={"white"} width={"98px"} height={"19px"} radius={"40px"} border_custom={"2px solid transparent"} font_size_text={"12px"}> </Button> </Link></li>
+                        <li> <Link to={'/pricing'}><Button title={"PRICING"} text_color={"white"} width={"98px"} height={"19px"} radius={"40px"} border_custom={"2px solid transparent"} font_size_text={"12px"}> </Button> </Link></li>
                     </ul>
                 </div>
                 {!userToken ?
                 <div className='login'>
-                    <Button title={"SIGNIN"} text_color={"white"} width={"49px"} height={"19px"} radius={"40px"} border_custom={"2px solid transparent"} font_size_text={"11px"}></Button>
-                    <Button title={"SIGNUP"} text_color={"white"} width={"49px"} height={"19px"} radius={"40px"} border_custom={"2px solid transparent"} font_size_text={"11px"}></Button>
+                    <Link to={'/login'}><Button title={"SIGNIN"} text_color={"white"} width={"49px"} height={"19px"} radius={"40px"} border_custom={"2px solid transparent"} font_size_text={"11px"}></Button></Link>
+                    <Link to={'/signup'}><Button title={"SIGNUP"} text_color={"white"} width={"49px"} height={"19px"} radius={"40px"} border_custom={"2px solid transparent"} font_size_text={"11px"}></Button></Link>
                 </div> :
-                <div className="avatar"><img onClick={() => profile()} src={avatar} alt="" /></div>
+                <div className='logout'>
+                    <div className="avatar"><img onClick={() => profile()} src={avatar} alt="" /></div>
+                    <Button onClick={() => logout()} title={"LOGOUT"} text_color={"white"} width={"55px"} height={"19px"} radius={"40px"} border_custom={"2px solid transparent"} font_size_text={"11px"}></Button>
+                </div>
                 }
             </div>
             <hr className='line-white'/>

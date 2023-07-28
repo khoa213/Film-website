@@ -22,6 +22,7 @@ const StyledCard = styled.div`
             width: ${props => props.width} ;
             height: ${props => props.height};
             border-radius: ${props => props.radius};
+            object-fit: cover;
         }
         button {
             position: absolute;

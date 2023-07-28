@@ -78,10 +78,10 @@ public class OrderServiceImp implements OrderService {
     @Override
     public boolean checkUserPackage(int idUser) {
         List<OrderEntity> orderEntity = orderRepository.findByOrderType(idUser);
-        if (orderEntity == null) {
-            return false;
+        if (orderEntity != null && orderEntity.size() > 0) {
+            return orderEntity.get(0).isOrderType();
         }
-        return orderEntity.get(0).isOrderType();
+        return false;
     }
 
     @Override

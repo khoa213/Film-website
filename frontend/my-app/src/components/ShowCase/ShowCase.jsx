@@ -12,18 +12,23 @@ const StyledShowCase = styled.div`
         height: 213px;
         padding: 15px;
         align-items: flex-end;
+        .card img {
+            width: 100px;
+            height: 140px;
+        }
     }
     .card:hover {
         transform: translateY(-35px);
         transition: all 0.5s ease-out ;
     }
     .card .fee {
-        top: 20px !important;
+        top: 10px !important;
         width: 30px;
         height: 15px;
         font-size: 11px;
         left: 0px;
     }
+   
 `
 export const ShowCase = () => {
     const nav = useNavigate();

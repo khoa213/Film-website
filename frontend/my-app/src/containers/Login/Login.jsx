@@ -232,6 +232,9 @@ const Login = () => {
             alert("Login Fail!");
         }
     }
+    const signUp = () => {
+        navigate("/signup");
+    }
     const showErrorMessage = signInClicked && !validEmail;
     return (
         <Wrapper>
@@ -300,7 +303,6 @@ const Login = () => {
                     </div>
                     <div className="btn-form">
                         <Button
-
                             title={"LOGIN"}
                             width={"420px"}
                             height={"60px"}
@@ -353,7 +355,6 @@ const Login = () => {
                             }}
                         >
                             <Button
-
                                 title={"SIGNUP"}
                                 width={"420px"}
                                 height={"60px"}
@@ -364,7 +365,7 @@ const Login = () => {
                                 type="submit"
                                 id="btn-signup"
                                 className="btn-signup"
-                                onClick={handleSignInClick}
+                                onClick={() => signUp()}
                             >
                             </Button>
                         </div>
