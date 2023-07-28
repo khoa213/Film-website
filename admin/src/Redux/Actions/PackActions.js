@@ -68,8 +68,9 @@ export const updatePack = (pack) => async (dispatch, getState) => {
       pack,
       config
     );
-    console.log(genre.id);
+    // console.log(genre.id);
     dispatch({ type: PACK_UPDATE_SUCCESS, payload: data });
+    toast.success("Success updated");
     // dispatch({ type: PACK_LOGIN_SUCCESS, payload: data });
 
     // localStorage.setItem("userInfo", JSON.stringify(data));

@@ -26,7 +26,7 @@ import {
   genreDeleteReducer,
   genreUpdateReducer,
 } from "./Reducers/GenreReducers";
-import { packListReducer } from "./Reducers/PackReducers";
+import { packListReducer, packUpdateReducer } from "./Reducers/PackReducers";
 const reducer = combineReducers({
   movieList: movieListReducer,
   movieCreate: movieCreateReducer,
@@ -43,7 +43,7 @@ const reducer = combineReducers({
   genreCreate: genreCreateReducer,
   genreUpdate: genreUpdateReducer,
   packList: packListReducer,
-
+  packUpdate: packUpdateReducer,
   // movieDetails: movieDetailsReducer,
   // movieReviewCreate: movieCreateReviewReducer,
 });

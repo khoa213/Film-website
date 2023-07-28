@@ -223,7 +223,7 @@ const Movies = () => {
                     borderRadius={10}
                     width={400}
                     type="text"
-                    value={selectedMovie.releaseDate}
+                    value={selectedMovie.releaseDate.slice(0, 10)}
                     onChange={(e) =>
                       setselectedMovie({
                         ...selectedMovie,
@@ -392,7 +392,7 @@ const Movies = () => {
           id: movie.id,
           movie: movie.title,
           desc: movie.desc,
-          releaseDate: movie.releaseDate,
+          releaseDate: movie.releaseDate ? movie.releaseDate.slice(0, 10) : "",
           duration: movie.duration,
           genreName: movie.genreName,
           // rating: review.rating,

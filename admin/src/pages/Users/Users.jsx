@@ -264,7 +264,7 @@ const Users = () => {
                     borderRadius={10}
                     width={400}
                     type="text"
-                    value={selectedUser.birthday}
+                    value={selectedUser.birthday.slice(0, 10)}
                     onChange={(e) =>
                       setSelectedUser({
                         ...selectedUser,

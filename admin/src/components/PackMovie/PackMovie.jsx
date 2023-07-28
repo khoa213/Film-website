@@ -4,7 +4,7 @@ import CheckIcon from "../../assets/images/checkmark.png";
 import CancelIcon from "assets/images/cancelmark.svg";
 import { Button } from "components/Button";
 import { useDispatch, useSelector } from "react-redux";
-import { listPack } from "Redux/Actions/PackActions";
+import { listPack, updatePack } from "Redux/Actions/PackActions";
 import { Form, Input, Modal } from "antd";
 
 const Wrapper = styled.div`
@@ -119,15 +119,31 @@ const PackMovie = () => {
   }, [packs]);
   const handleUpdateClick = (id) => {
     const packToUpdate = data.find((pack) => pack.id === id);
+    // console.log(packToUpdate);
     if (packToUpdate) {
       setEditedPack(packToUpdate);
+      // console.log(editedPack);
       setIsModalVisible(true);
     }
   };
+
   // Function to handle form submission when the user clicks the "Update" button in the Modal
   const handleUpdateSubmit = (values) => {
+    const formData = { ...values, id: editedPack.id };
+    console.log("Updated Pack Information:", formData);
+    dispatch(updatePack(formData))
+      .then(() => {
+        dispatch(listPack());
+      })
+
+      .then((response) => {
+        setData(response.data);
+      })
+      .catch((error) => {
+        // Handle error if necessary
+      });
     // Dispatch the updatePack action with the updated pack data
-    dispatch(updatePackAction({ ...editedPack, ...values }));
+    // dispatch(updatePackAction({ ...editedPack, ...values }));
     setIsModalVisible(false);
   };
   return (
@@ -186,8 +202,8 @@ const PackMovie = () => {
             layout="vertical"
             onFinish={handleUpdateSubmit}
             initialValues={{
-              name: editedPack.name,
-              price: editedPack.price,
+              name: editedPack?.name || "",
+              price: editedPack?.price || "",
               // Add other form fields and set their initial values here
             }}
           >
@@ -209,6 +225,7 @@ const PackMovie = () => {
             <Form.Item>
               <Button type="primary" htmlType="submit">
                 Save
+                {/* {console.log(editedPack)} */}
               </Button>
             </Form.Item>
           </Form>
