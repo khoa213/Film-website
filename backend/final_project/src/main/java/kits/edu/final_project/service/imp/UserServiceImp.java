@@ -168,4 +168,22 @@ public class UserServiceImp implements UserService {
         return userResponse;
     }
 
+    @Override
+    public boolean resetPasswordUser(String passwordNew,String username) {
+        System.out.println(username);
+        System.out.println(passwordNew);
+        boolean isSuccess=false;
+        try{
+            UserEntity user=  userRepository.findByEmail(username);
+            user.setPassword(passwordEncoder.encode(passwordNew));
+            userRepository.save(user);
+            isSuccess=true;
+        }
+        catch (Exception e){
+            throw new CustomException("Loi cap nhat pass"+e);
+        }
+
+        return isSuccess;
+    }
+
 }

@@ -79,4 +79,12 @@ public class UserController {
         response.setData(userService.deleteUserById(id));
         return new ResponseEntity<>(response,HttpStatus.OK);
     }
+    @PutMapping("/resetPassword")
+    public ResponseEntity<?> resetPassword (@RequestParam String passwordNew,Principal principal) {
+        String username=principal.getName();
+        BaseResponse response = new BaseResponse();
+        response.setStatusCode(200);
+        response.setData(userService.resetPasswordUser(passwordNew,username));
+        return new ResponseEntity<>(response,HttpStatus.OK);
+    }
 }

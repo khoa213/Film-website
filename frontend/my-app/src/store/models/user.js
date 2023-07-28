@@ -110,7 +110,7 @@ export const user = {
         return null;
       }
     },
-    
+
     async getUser(token) {
       try {
         const config = {

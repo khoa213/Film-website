@@ -167,7 +167,8 @@ const UserProfile = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const dispatch = useDispatch();
   let ordersData = useSelector((state) => state.order.orders);
-
+  let userDatass = useSelector((state) => state.user.user);
+  console.log(userDatass);
   useEffect(() => {
     const tokenJSON = localStorage.getItem("userToken");
     const obj = {};
@@ -179,8 +180,9 @@ const UserProfile = () => {
   }, []);
   const findUserOrder = () => {
     const matchingOrder = ordersData.find(
-      (order) => order.user.id === dataUser.id
+      (order) => order.user.id === userDatass.id
     );
+    console.log(matchingOrder);
     return matchingOrder;
   };
 
@@ -257,47 +259,57 @@ const UserProfile = () => {
             </p>
           </div>
           <img src={line}></img>
+          {userDatass !== null && (
+            <div>
+              <div className="change-inform">
+                <div>
+                  <h1>Email:</h1>
+                  <p id="email"> {userDatass.email}</p>
+                </div>
+              </div>
 
-          <div className="change-inform">
-            <div>
-              <h1>Email:</h1>
-              <p id="email"> {dataUser.email}</p>
+              <div className="change-inform">
+                <div>
+                  <h1>Username:</h1>
+                  <p>{userDatass.username}</p>
+                </div>
+              </div>
+              <div className="change-inform">
+                <div>
+                  <h1>Genre:</h1>
+                  <p>{userDatass.gender === true ? "Male" : "Female"}</p>
+                </div>
+              </div>
+              <div className="change-inform">
+                <div>
+                  <h1>Birthday:</h1>
+                  <p>
+                    {" "}
+                    {userDatass.birthday == null
+                      ? "No information"
+                      : userDatass.birthday.slice(0, 10)}
+                  </p>
+                </div>
+              </div>
             </div>
-          </div>
+          )}
 
-          <div className="change-inform">
-            <div>
-              <h1>Username:</h1>
-              <p>{dataUser.username}</p>
-            </div>
-          </div>
-          <div className="change-inform">
-            <div>
-              <h1>Genre:</h1>
-              <p>{dataUser.gender === true ? "Male" : "Female"}</p>
-            </div>
-          </div>
-          <div className="change-inform">
-            <div>
-              <h1>Birthday:</h1>
-              <p> {dataUser.birthday.slice(0, 10)}</p>
-            </div>
-          </div>
           <div className="change-inform ">
             <h1>Billing Details:</h1>
           </div>
           {matchingOrder ? (
             <>
-              <p>Yes</p>
               {/* Display the details of the matching order here */}
-              <div>
+              <div style={{ marginLeft: "10px" }}>
                 <h1>Order ID: {matchingOrder.id}</h1>
-                <h2>Order Date: {matchingOrder.pack.name}</h2>
+                <h2>
+                  Order Date: {matchingOrder.pack == 2 ? "MONTH" : "YEAR"}
+                </h2>
                 {/* Add more details you want to display */}
               </div>
             </>
           ) : (
-            <p>No</p>
+            <p>No Package VIP</p>
           )}
           <img src={line}></img>
           <Button onClick={toggleResetPasswordVisible}>Reset Password</Button>

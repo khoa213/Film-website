@@ -33,4 +33,5 @@ public interface UserService  {
 Optional<UserEntity> getByUsername(String username);
 public int getUserByname(String email);
 UserResponse getUserByToken(String username);
+boolean resetPasswordUser(String passwordNew,String username );
 }
