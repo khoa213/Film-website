@@ -91,7 +91,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
 
-                .antMatchers("/signin","/signup", "/movies/**", "/genres/**", "/review/**","/user/**","/**").permitAll()
+                .antMatchers("/signin","/signup", "/movies/**", "/genres/**", "/review/**","/user/**","/order/**").permitAll()
 
                 .antMatchers("/dashboard").hasRole("ADMIN")
                 .antMatchers(HttpMethod.PUT, "/**").hasAuthority("ADMIN")
