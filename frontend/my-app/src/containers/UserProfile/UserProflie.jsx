@@ -167,11 +167,16 @@ const UserProfile = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const dispatch = useDispatch();
   let ordersData = useSelector((state) => state.order.orders);
+
   //   const showModal = () => {};
   useEffect(() => {
     // const token = localStorage.getItem("userToken");
     const tokenJSON = JSON.stringify(localStorage.getItem("userToken"));
-    dispatch.user.getUser(tokenJSON);
+    // dispatch.user.getUser(tokenJSON);
+    const obj = {};
+    obj.idPackage = 3;
+    obj.token = tokenJSON;
+    dispatch.user.buyPackage(obj);
     dispatch.order.getAll(tokenJSON);
     // console.log(user);
   }, []);
