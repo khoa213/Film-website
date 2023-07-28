@@ -63,9 +63,12 @@ export const login = (formData) => async (dispatch) => {
       error.response && error.response.data.message
         ? error.response.data.message
         : error.message;
-    console.log(error.response.data);
+    // console.log(error.response.data);
     if (message === "Not authorized, token failed") {
       dispatch(logout());
+    }
+    if (message === "Your account is block") {
+      toast.error(message, ToastObjects);
     }
 
     dispatch({
@@ -79,7 +82,7 @@ export const login = (formData) => async (dispatch) => {
 export const logout = () => (dispatch) => {
   localStorage.removeItem("userInfo");
   dispatch({ type: USER_LOGOUT });
-  dispatch({ type: USER_LIST_RESET });
+  // dispatch({ type: USER_LIST_RESET });
 };
 
 //all users
@@ -96,7 +99,7 @@ export const listUser = () => async (dispatch, getState) => {
         Authorization: `Bearer ${userInfo}`,
       },
     };
-    console.log(userInfo);
+    // console.log(userInfo);
     const { data } = await axios.get(`http://localhost:8080/user`, config);
 
     dispatch({ type: USER_LIST_SUCCESS, payload: data });
@@ -158,7 +161,7 @@ export const deleteUser = (id) => async (dispatch, getState) => {
 
     const config = {
       headers: {
-        Authorization: `Bearer ${userInfo.token}`,
+        Authorization: `Bearer ${userInfo}`,
       },
     };
 
@@ -176,7 +179,7 @@ export const deleteUser = (id) => async (dispatch, getState) => {
       return;
     }
     if (message === "Not permit delete because this have data linked in page") {
-      toast.error(message, ToastObjects);
+      toast.error("Not permit delete", ToastObjects);
       dispatch({
         type: USER_DELETE_FAIL,
         payload: message,

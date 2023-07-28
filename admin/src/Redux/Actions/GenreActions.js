@@ -106,7 +106,7 @@ export const deleteGenre = (id) => async (dispatch, getState) => {
     };
 
     await axios.delete(`http://localhost:8080/genres/${id}`, config);
-    toast.success("Successfully deleted genre");
+    // toast.success("Successfully deleted genre");
     dispatch({ type: GENRE_LIST_SUCCESS });
   } catch (error) {
     const message =
@@ -117,11 +117,14 @@ export const deleteGenre = (id) => async (dispatch, getState) => {
       //   dispatch(logout());
       return;
     }
-
+    if (message === "you just deleted data linked") {
+      toast.error(message);
+    }
     dispatch({
       type: GENRE_LIST_FAIL,
       payload: message,
     });
+    // toast.error("Not permit delete genre");
   }
 };
 // UPDATE GENRE
@@ -145,8 +148,10 @@ export const updateGenre = (genre) => async (dispatch, getState) => {
       genre,
       config
     );
-    console.log(genre.id);
+    // console.log(genre.id);
+
     dispatch({ type: GENRE_UPDATE_SUCCESS, payload: data });
+    // toast.success("Genre updated successfully");
     // dispatch({ type: GENRE_LOGIN_SUCCESS, payload: data });
 
     // localStorage.setItem("userInfo", JSON.stringify(data));

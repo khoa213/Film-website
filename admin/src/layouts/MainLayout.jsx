@@ -10,6 +10,7 @@ import {
   UploadOutlined,
   UserOutlined,
   VideoCameraOutlined,
+  CodeSandboxOutlined,
 } from "@ant-design/icons";
 import { Layout, Menu, theme, Row, Col } from "antd";
 import React, { useState } from "react";
@@ -68,11 +69,11 @@ function MainLayout({ children }) {
     getItem("Rating", "2", <DesktopOutlined />),
     // getItem("Comment", "3", <DesktopOutlined />),
     getItem("User", "3", <UserOutlined />),
-    getItem("Genre", "sub1", <UserOutlined />, [
+    getItem("Genre", "sub1", <CodeSandboxOutlined />, [
       getItem("Add Genre", "4"),
       getItem("List Genres", "5"),
     ]),
-    getItem("Movie", "sub2", <UserOutlined />, [
+    getItem("Movie", "sub2", <VideoCameraOutlined />, [
       getItem("Add Movies", "6"),
       getItem("List Movies", "7"),
     ]),
@@ -127,7 +128,8 @@ function MainLayout({ children }) {
             style={{
               margin: "24px 24px ",
               overflow: "initial",
-              minHeight: "1000px",
+              minHeight: "1200px",
+              // height: "auto",
             }}
           >
             <Outlet />

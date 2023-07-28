@@ -13,6 +13,7 @@ import {
   updateReview,
 } from "Redux/Actions/ReviewActions";
 import Loading from "components/LoadingError/Loading";
+import { toast } from "react-toastify";
 const Wrapper = styled.div`
   .custom-table .ant-table-wrapper {
     background-color: var(--body-content-light-background);
@@ -176,7 +177,10 @@ const Rating = () => {
     updateRow.status = updateRow.status === 1 ? 0 : 1;
     // console.log(updateRow);
     dispatch(updateReview(updateRow))
-      .then(() => dispatch(listReview()))
+      .then(() => {
+        dispatch(listReview());
+        toast.success("Review updated status successfully");
+      })
       .then((response) => {
         setData(response.data);
       })
@@ -187,7 +191,10 @@ const Rating = () => {
   };
   const deleteRow = (id) => {
     dispatch(deleteReview(id))
-      .then(() => dispatch(listReview()))
+      .then(() => {
+        dispatch(listReview());
+        toast.success("Deleted review successfully");
+      })
       .then((response) => {
         setData(response.data);
       })
@@ -227,38 +234,26 @@ const Rating = () => {
       <Row>
         <div className="recent-film">
           <h1>Recently Viewed Film</h1>
-          <Search
+          {/* <Search
             placeholder="input search text"
             onSearch={onSearch}
             style={{
               width: 200,
             }}
-          />
+          /> */}
         </div>
         <div style={{ display: "none" }} className="">
           {/* {error && toast.error(error)} */}
           {/* {error && <Toast />} */}
           {loading && <Loading />}
         </div>
-        {/* <Table
+
+        <TableData
+          className="dataTable"
+          rows={data}
           columns={columns}
-          dataSource={tableData}
-          pagination={{
-            total: dataTable.length,
-            pageSize,
-            showTotal: (total, range) =>
-              `${range[0]}-${range[1]} of ${total} items`,
-            onChange: handleChangePage,
-            className: "custom-pagination",
-          }}
-          rowKey="key"
-          scroll={{
-            x: 1000,
-            y: 500,
-          }}
-          className="custom-table"
-        /> */}
-        <TableData className="dataTable" rows={data} columns={columns} />
+          pageSize={5}
+        />
       </Row>
     </Wrapper>
   );

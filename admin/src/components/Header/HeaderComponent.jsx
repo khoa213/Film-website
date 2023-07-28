@@ -22,12 +22,16 @@ import {
 //   FacebookFilled,
 // } from "@ant-design/icons";
 
-import { NavLink, Link, useLocation } from "react-router-dom";
+import { NavLink, Link, useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import avtar from "../../assets/images/team-2.jpg";
 import Menu1 from "../../assets/images/menu (1).svg";
 import Menu2 from "../../assets/images/menu (2).svg";
-
+import LogoutIcon from "../../assets/images/logout-icon.jpg";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { logout } from "Redux/Actions/UserActions";
+import { toast } from "react-toastify";
 const { Search } = Input;
 const ButtonContainer = styled.div`
   .ant-btn-primary {
@@ -249,6 +253,12 @@ const HeaderWrapper = styled.div`
 
       align-items: center;
     }
+    .btn-logout {
+      img {
+        height: 30px;
+        width: 30px;
+      }
+    }
   }
   .avatar {
     height: 50px;
@@ -326,12 +336,18 @@ function HeaderComponent({
   const [page, setPage] = useState("dashboard");
   const location = useLocation();
   const pathname = location.pathname.substring(1);
-
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const userLogin = useSelector((state) => state.userLogin);
   useEffect(() => {
     setPage(pathname);
     // console.log(link);
   }, [pathname]);
-
+  const handleLogout = () => {
+    dispatch(logout());
+    toast.success("You are now logged out");
+    navigate("/signin");
+  };
   // console.log(link);
   return (
     <HeaderWrapper>
@@ -352,13 +368,17 @@ function HeaderComponent({
           />
         </CustomSearchWrapper>
         <div className="icon-header">
-          <Link to="/sign-in" className="btn-right-header btn-sign-in">
-            <img src={Menu1} alt="" />
+          <Link
+            onClick={handleLogout}
+            to="#"
+            className="btn-right-header btn-logout"
+          >
+            <img src={LogoutIcon} alt="" />
           </Link>
-          <Link to="/sign-in" className=" btn-right-header ">
+          {/* <Link to="#" className=" btn-right-header ">
             <img src={Menu2} alt="" />
-          </Link>
-          <Link to="/sign-in" className="btn-right-header ">
+          </Link> */}
+          <Link to="#" className="btn-right-header ">
             <div className="avatar"></div>
           </Link>
         </div>

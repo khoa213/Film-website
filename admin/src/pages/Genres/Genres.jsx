@@ -17,6 +17,7 @@ import {
   updateGenre,
 } from "Redux/Actions/GenreActions";
 import TextArea from "antd/es/input/TextArea";
+import { toast } from "react-toastify";
 const Wrapper = styled.div`
   .custom-table .ant-table-wrapper {
     background-color: var(--body-content-light-background);
@@ -345,8 +346,12 @@ const Genres = () => {
 
   const updateRow = (updatedgenre) => {
     // console.log(updatedgenre.id);
+    // toast.success("Updated genre successfully ");
     dispatch(updateGenre(updatedgenre))
-      .then(() => dispatch(listGenre()))
+      .then(() => {
+        dispatch(listGenre());
+      })
+
       .then((response) => {
         setData(response.data);
       })
@@ -356,9 +361,15 @@ const Genres = () => {
   };
 
   const deleteRow = (id) => {
-    console.log(id);
+    // console.log(id);
     dispatch(deleteGenre(id))
-      .then(() => dispatch(listGenre()))
+      .then(() => {
+        dispatch(listGenre());
+        const dataDelete = data.find((genre) => genre.id === id);
+        if (dataDelete.countMovies === 0) {
+          toast.success("Deleted successfully");
+        }
+      })
       .then((response) => {
         setData(response.data);
       })
@@ -371,7 +382,7 @@ const Genres = () => {
     dispatch(listGenre())
       .then((response) => {
         setData(response.data);
-        console.log(response);
+        // console.log(response);
       })
       .catch((error) => {
         // Handle error if necessary
@@ -381,7 +392,7 @@ const Genres = () => {
     if (genres && genres.data) {
       setData(genres.data);
 
-      console.log(genres.data);
+      // console.log(genres.data);
     }
   }, [genres]);
 
