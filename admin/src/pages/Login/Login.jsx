@@ -207,7 +207,9 @@ const Login = () => {
       navigate("/");
     }
   }, [userInfo, navigate, error]);
-
+  const handleClickTo = () => {
+    navigate("/signup");
+  };
   const submitHandler = (e) => {
     e.preventDefault();
     console.log(username, password);
@@ -367,6 +369,7 @@ const Login = () => {
                 type="submit"
                 id="btn-signup"
                 className="btn-signup"
+                onClick={handleClickTo}
               >
                 SIGNUP NOW
               </Button>
