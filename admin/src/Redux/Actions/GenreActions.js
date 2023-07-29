@@ -33,7 +33,10 @@ export const listGenre = () => async (dispatch, getState) => {
         Authorization: `Bearer ${userInfo}`,
       },
     };
-    const { data } = await axios.get(`http://localhost:8080/genres`, config);
+    const { data } = await axios.get(
+      `http://18.140.101.238:8084/genres`,
+      config
+    );
     // console.log(data);
 
     dispatch({ type: GENRE_LIST_SUCCESS, payload: data });
@@ -69,7 +72,7 @@ export const createGenre = (genre) => async (dispatch, getState) => {
     };
 
     const { data } = await axios.post(
-      `http://localhost:8080/genres/add`,
+      `http://18.140.101.238:8084/genres/add`,
       genre,
       config
     );
@@ -105,7 +108,7 @@ export const deleteGenre = (id) => async (dispatch, getState) => {
       },
     };
 
-    await axios.delete(`http://localhost:8080/genres/${id}`, config);
+    await axios.delete(`http://18.140.101.238:8084/genres/${id}`, config);
     // toast.success("Successfully deleted genre");
     dispatch({ type: GENRE_LIST_SUCCESS });
   } catch (error) {
@@ -144,7 +147,7 @@ export const updateGenre = (genre) => async (dispatch, getState) => {
     };
 
     const { data } = await axios.put(
-      `http://localhost:8080/genres/${genre.id}`,
+      `http://18.140.101.238:8084/genres/${genre.id}`,
       genre,
       config
     );

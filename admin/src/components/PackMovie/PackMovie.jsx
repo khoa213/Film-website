@@ -150,7 +150,7 @@ const PackMovie = () => {
     <Wrapper>
       <div className="container">
         <GridContainer>
-          <GridHead id="1" className="pack">
+          {/* <GridHead id="1" className="pack">
             <div className="tag">
               <span>FREE</span>
             </div>
@@ -159,7 +159,7 @@ const PackMovie = () => {
               <span className="price-item">$0</span>
               <span className="time-pack">/ month</span>
             </div>
-          </GridHead>
+          </GridHead> */}
 
           {data.map((packageItem) => (
             <GridHead key={packageItem.id} className="pack">
@@ -169,7 +169,7 @@ const PackMovie = () => {
 
               <div className="pack-price">
                 <span className="price-item">${packageItem.price}</span>
-                <span className="time-pack">/ month</span>
+                <span className="time-pack">/pack</span>
               </div>
               <Button
                 onClick={() => handleUpdateClick(packageItem.id)}

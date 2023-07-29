@@ -27,7 +27,10 @@ export const listPack = () => async (dispatch, getState) => {
         Authorization: `Bearer ${userInfo}`,
       },
     };
-    const { data } = await axios.get(`http://localhost:8080/package`, config);
+    const { data } = await axios.get(
+      `http://18.140.101.238:8084/package`,
+      config
+    );
     // console.log(data);
 
     dispatch({ type: PACK_LIST_SUCCESS, payload: data });
@@ -64,7 +67,7 @@ export const updatePack = (pack) => async (dispatch, getState) => {
     };
 
     const { data } = await axios.put(
-      `http://localhost:8080/package/${pack.id}`,
+      `http://18.140.101.238:8084/package/${pack.id}`,
       pack,
       config
     );

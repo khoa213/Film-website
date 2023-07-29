@@ -24,7 +24,10 @@ export const listReview = () => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.get(`http://localhost:8080/review`, config);
+    const { data } = await axios.get(
+      `http://18.140.101.238:8084/review`,
+      config
+    );
 
     dispatch({ type: REVIEW_LIST_SUCCESS, payload: data });
   } catch (error) {
@@ -59,7 +62,7 @@ export const deleteReview = (id) => async (dispatch, getState) => {
       },
     };
 
-    await axios.delete(`http://localhost:8080/review/${id}`, config);
+    await axios.delete(`http://18.140.101.238:8084/review/${id}`, config);
 
     dispatch({ type: REVIEW_LIST_SUCCESS });
   } catch (error) {
@@ -95,7 +98,7 @@ export const updateReview = (review) => async (dispatch, getState) => {
     };
 
     const { data } = await axios.put(
-      `http://localhost:8080/review/update/${review.id}`,
+      `http://18.140.101.238:8084/review/update/${review.id}`,
       review,
       config
     );

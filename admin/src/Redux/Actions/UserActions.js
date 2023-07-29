@@ -42,7 +42,7 @@ export const login = (formData) => async (dispatch) => {
     // console.log(username, password);
     console.log(formData);
     const { data } = await axios.post(
-      `http://localhost:8080/signin`,
+      `http://18.140.101.238:8084/signin`,
       formData,
       config
     );
@@ -69,6 +69,9 @@ export const login = (formData) => async (dispatch) => {
     }
     if (message === "Your account is block") {
       toast.error(message, ToastObjects);
+    }
+    if (message === "Request failed with status code 401") {
+      toast.error("You not admin", ToastObjects);
     }
 
     dispatch({
@@ -100,7 +103,7 @@ export const listUser = () => async (dispatch, getState) => {
       },
     };
     // console.log(userInfo);
-    const { data } = await axios.get(`http://localhost:8080/user`, config);
+    const { data } = await axios.get(`http://18.140.101.238:8084/user`, config);
 
     dispatch({ type: USER_LIST_SUCCESS, payload: data });
   } catch (error) {
@@ -130,7 +133,7 @@ export const register = (formData) => async (dispatch) => {
     };
 
     const { data } = await axios.post(
-      `http://localhost:8080/signup`,
+      `http://18.140.101.238:8084/signup`,
       formData,
       config
     );
@@ -165,7 +168,7 @@ export const deleteUser = (id) => async (dispatch, getState) => {
       },
     };
 
-    await axios.delete(`http://localhost:8080/user/${id}`, config);
+    await axios.delete(`http://18.140.101.238:8084/user/${id}`, config);
     toast.success("Delete User Successfully", ToastObjects);
     dispatch({ type: USER_DELETE_SUCCESS });
   } catch (error) {
@@ -204,7 +207,7 @@ export const updateUser = (user) => async (dispatch, getState) => {
     };
 
     const { data } = await axios.put(
-      `http://localhost:8080/user/${user.id}`,
+      `http://18.140.101.238:8084/user/${user.id}`,
       user,
       config
     );
