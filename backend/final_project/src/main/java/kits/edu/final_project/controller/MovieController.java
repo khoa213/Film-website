@@ -56,6 +56,7 @@ public class MovieController {
             genreMovieServiceImp.createGenreMovie(genreIdList, movieEntity.getId());
             BaseResponse newBaseResponse = new BaseResponse();
             newBaseResponse.setData(objData);
+            newBaseResponse.setStatusCode(201);
             return new ResponseEntity<>(newBaseResponse, HttpStatus.OK);
 
     }
@@ -65,8 +66,10 @@ public class MovieController {
     public ResponseEntity<?> addReviewForMovie(@PathVariable int movieId, @RequestBody ReviewRequest reviewRequest, Principal principal) {
         // Gọi phương thức của MovieService để thêm review cho phim
         movieService.addReviewForMovie(movieId, reviewRequest, principal);
-
-        return ResponseEntity.ok("Đã thêm review thành công!");
+        BaseResponse newBaseResponse = new BaseResponse();
+        newBaseResponse.setData(true);
+        newBaseResponse.setStatusCode(201);
+        return new  ResponseEntity(newBaseResponse, HttpStatus.OK);
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteMovieById (@PathVariable("id") int id) {

@@ -32,6 +32,7 @@ public class GenreController {
             List<GenreResponse> genreResponseList = genreService.getGenres();
             BaseResponse newBaseResponse = new BaseResponse();
             newBaseResponse.setData(genreResponseList);
+        newBaseResponse.setStatusCode(200);
             return new ResponseEntity<>(newBaseResponse, HttpStatus.OK);
 
     }
