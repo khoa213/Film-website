@@ -31,7 +31,7 @@ export const listMovie = () => async (dispatch, getState) => {
       },
     };
     const { data } = await axios.get(
-      `http://18.140.101.238:8084/movies`,
+      `https://danielaws.tk/group4/movies`,
       config
     );
     // console.log(data);
@@ -68,7 +68,7 @@ export const createMovie = (formData) => async (dispatch, getState) => {
     };
 
     const { data } = await axios.post(
-      `http://18.140.101.238:8084/movies/create`,
+      `https://danielaws.tk/group4/movies/create`,
       formData,
       config
     );
@@ -105,7 +105,7 @@ export const deleteMovie = (id) => async (dispatch, getState) => {
       },
     };
 
-    await axios.delete(`http://18.140.101.238:8084/movies/${id}`, config);
+    await axios.delete(`https://danielaws.tk/group4/movies/${id}`, config);
     toast.success("Delete Movie Successfully", ToastObjects);
     dispatch({ type: MOVIE_DELETE_SUCCESS });
   } catch (error) {

@@ -42,7 +42,7 @@ export const login = (formData) => async (dispatch) => {
     // console.log(username, password);
     console.log(formData);
     const { data } = await axios.post(
-      `http://18.140.101.238:8084/signin`,
+      `https://danielaws.tk/group4/signin`,
       formData,
       config
     );
@@ -103,7 +103,10 @@ export const listUser = () => async (dispatch, getState) => {
       },
     };
     // console.log(userInfo);
-    const { data } = await axios.get(`http://18.140.101.238:8084/user`, config);
+    const { data } = await axios.get(
+      `https://danielaws.tk/group4/user`,
+      config
+    );
 
     dispatch({ type: USER_LIST_SUCCESS, payload: data });
   } catch (error) {
@@ -133,7 +136,7 @@ export const register = (formData) => async (dispatch) => {
     };
 
     const { data } = await axios.post(
-      `http://18.140.101.238:8084/signup`,
+      `https://danielaws.tk/group4/signup`,
       formData,
       config
     );
@@ -168,7 +171,7 @@ export const deleteUser = (id) => async (dispatch, getState) => {
       },
     };
 
-    await axios.delete(`http://18.140.101.238:8084/user/${id}`, config);
+    await axios.delete(`https://danielaws.tk/group4/user/${id}`, config);
     toast.success("Delete User Successfully", ToastObjects);
     dispatch({ type: USER_DELETE_SUCCESS });
   } catch (error) {
@@ -207,7 +210,7 @@ export const updateUser = (user) => async (dispatch, getState) => {
     };
 
     const { data } = await axios.put(
-      `http://18.140.101.238:8084/user/${user.id}`,
+      `https://danielaws.tk/group4/user/${user.id}`,
       user,
       config
     );

@@ -25,7 +25,7 @@ export const listReview = () => async (dispatch, getState) => {
     };
 
     const { data } = await axios.get(
-      `http://18.140.101.238:8084/review`,
+      `https://danielaws.tk/group4/review`,
       config
     );
 
@@ -62,7 +62,7 @@ export const deleteReview = (id) => async (dispatch, getState) => {
       },
     };
 
-    await axios.delete(`http://18.140.101.238:8084/review/${id}`, config);
+    await axios.delete(`https://danielaws.tk/group4/review/${id}`, config);
 
     dispatch({ type: REVIEW_LIST_SUCCESS });
   } catch (error) {
@@ -98,7 +98,7 @@ export const updateReview = (review) => async (dispatch, getState) => {
     };
 
     const { data } = await axios.put(
-      `http://18.140.101.238:8084/review/update/${review.id}`,
+      `https://danielaws.tk/group4/review/update/${review.id}`,
       review,
       config
     );

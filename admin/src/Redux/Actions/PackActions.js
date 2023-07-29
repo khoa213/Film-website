@@ -28,7 +28,7 @@ export const listPack = () => async (dispatch, getState) => {
       },
     };
     const { data } = await axios.get(
-      `http://18.140.101.238:8084/package`,
+      `https://danielaws.tk/group4/package`,
       config
     );
     // console.log(data);
@@ -67,7 +67,7 @@ export const updatePack = (pack) => async (dispatch, getState) => {
     };
 
     const { data } = await axios.put(
-      `http://18.140.101.238:8084/package/${pack.id}`,
+      `https://danielaws.tk/group4/package/${pack.id}`,
       pack,
       config
     );
