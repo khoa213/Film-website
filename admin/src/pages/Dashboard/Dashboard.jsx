@@ -1,6 +1,6 @@
 import { Button, Col, Row, Table, message } from "antd";
 import CardTransfer from "components/CardTransfer";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { EyeOutlined } from "@ant-design/icons";
 import TopRate from "components/TopRate";
@@ -10,11 +10,21 @@ import DropDown from "components/Dropdown/Dropdown";
 import PieChartComponent from "components/PieChart/PieChart";
 import CardCategory from "components/CardCategory";
 import Search from "antd/es/input/Search";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  deleteGenre,
+  listGenre,
+  updateGenre,
+} from "Redux/Actions/GenreActions";
 const primaryButtonStyle = { backgroundColor: "#1890ff" };
 const dangerButtonStyle = { backgroundColor: "#ff4d4f" };
 const customButtonStyle = { backgroundColor: "#fadb14", color: "#000000" };
 const DashboardWrapper = styled.div`
   .top-category {
+    h1 {
+      padding-left: 20px;
+      font-size: 20px;
+    }
     .top-category-top {
       display: flex;
       justify-content: space-between;
@@ -23,6 +33,7 @@ const DashboardWrapper = styled.div`
       display: flex;
       .left {
         flex: 60%;
+        padding-left: 20px;
       }
       .right {
         flex: 40%;
@@ -30,6 +41,10 @@ const DashboardWrapper = styled.div`
     }
   }
   .category {
+    h1 {
+      padding-left: 20px;
+      font-size: 20px;
+    }
     height: 400px;
     .recharts-responsive-container {
       margin: none !important;
@@ -111,7 +126,7 @@ const GridItem = styled.div`
   padding: 8px;
 `;
 
-const data = [1, 2, 3, 4, 5, 6];
+// const data = [1, 2, 3, 4, 5, 6];
 const style = {
   background: "var(--body-content-light-background)",
   padding: "8px 0",
@@ -142,7 +157,13 @@ const COLORS = [
 ];
 const columns = [
   {
-    title: "Movie",
+    title: "ID",
+    dataIndex: "id",
+    key: "id",
+    width: "100",
+  },
+  {
+    title: "Genre",
     width: 200,
     dataIndex: "name",
     key: "name",
@@ -151,31 +172,21 @@ const columns = [
   {
     title: "Rating",
     width: 100,
-    dataIndex: "rate",
-    key: "rate",
+    dataIndex: "countMovies",
+    key: "countMovies",
     fixed: "left",
     sorter: (a, b) => a.age - b.age,
   },
   {
-    title: "Category",
-    dataIndex: "category",
+    title: "Description",
+    dataIndex: "desc",
     key: "1",
   },
   {
-    title: "Download/View",
-    dataIndex: "dov",
-    key: "2",
-  },
-  {
-    title: "Date",
-    dataIndex: "date",
-    key: "3",
-  },
-
-  {
-    title: "Liked",
-    dataIndex: "liked",
-    key: "4",
+    title: "Hot genre",
+    dataIndex: "status",
+    key: "id",
+    render: (status) => <div>Hot Show In Month</div>,
   },
 
   // {
@@ -239,7 +250,33 @@ const dataTable = [
     category: "New York Park",
   },
 ];
+const getRandomColor = () => {
+  const randomColor = "#" + Math.floor(Math.random() * 16777215).toString(16);
+  return randomColor;
+};
 const Dashboard = () => {
+  const dispatch = useDispatch();
+  const genreList = useSelector((state) => state.genreList);
+  const { loading, error, genres } = genreList;
+
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    dispatch(listGenre())
+      .then((response) => {
+        setData(response.data);
+        // console.log(response);
+      })
+      .catch((error) => {
+        // Handle error if necessary
+      });
+  }, [dispatch]);
+  useEffect(() => {
+    if (genres && genres.data) {
+      setData(genres.data);
+
+      // console.log(genres.data);
+    }
+  }, [genres]);
   const onSearch = (value) => console.log(value);
   return (
     <DashboardWrapper>
@@ -305,7 +342,7 @@ const Dashboard = () => {
         <Col className="gutter-row " span={8}>
           <div className="part-two">
             <div className="category" style={style}>
-              <h1>Category</h1>
+              <h1>Architect View With Gender</h1>
               <BarChartComponent />
             </div>
           </div>
@@ -314,22 +351,27 @@ const Dashboard = () => {
           <div className="part-two">
             <div className="top-category" style={style}>
               <div className="top-category-top">
-                <h1>Top Category</h1>
-                <DropDown
+                <h1>Genres</h1>
+                {/* <DropDown
                   items={items}
                   // onClick={onClick}
                   defaultValue={"Today"}
                   onChange={(value) => {
                     console.log(value); // In giá trị mới của DropDown khi thay đổi
                   }}
-                />
+                /> */}
               </div>
               <div className="top-category-bot">
                 <div className="left">
                   <GridContainer>
+                    {console.log(data)}
                     {data.map((item, index) => (
-                      <GridItem key={index}>
-                        <CardCategory />
+                      <GridItem key={item.id}>
+                        <CardCategory
+                          color={getRandomColor()}
+                          genre={item.name}
+                          countMovie={item.countMovies}
+                        />
                       </GridItem>
                     ))}
                   </GridContainer>
@@ -345,18 +387,18 @@ const Dashboard = () => {
       <Row>
         <div className="recent-film">
           <h1>Recently Viewed Film</h1>
-          <Search
+          {/* <Search
             // className="search-input "
             placeholder="input search text"
             onSearch={onSearch}
             style={{
               width: 200,
             }}
-          />
+          /> */}
         </div>
         <Table
           columns={columns}
-          dataSource={dataTable}
+          dataSource={data}
           pagination={{ pageSize: 50 }}
           scroll={{ y: 240 }}
           className="custom-table"

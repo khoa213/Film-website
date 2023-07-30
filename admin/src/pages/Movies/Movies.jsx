@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { Button, Modal, Popconfirm, Row, Table, message } from "antd";
+import { Button, Modal, Popconfirm, Row, Table, message, Input } from "antd";
 import styled from "styled-components";
 import Excel from "components/Excel/Excel";
 import TableData from "components/Table/Table.jsx";
@@ -8,10 +8,17 @@ import { ReactComponent as EditIcon } from "../../assets/images/edit-icon.svg";
 import { ReactComponent as DeleteIcon } from "../../assets/images/delete-icon.svg";
 import { ReactComponent as VisibleIcon } from "../../assets/images/visible-status.svg";
 import { useDispatch, useSelector } from "react-redux";
-
-import Input from "components/Input";
+import { DataGrid } from "@mui/x-data-grid";
+import { makeStyles } from "@mui/styles";
+// import Input from "components/Input";
 import DropDown from "components/Dropdown/Dropdown";
-import { deleteMovie, listMovie } from "Redux/Actions/MovieActions";
+import {
+  deleteMovie,
+  listMovie,
+  updateMovie,
+} from "Redux/Actions/MovieActions";
+import { TextField } from "@mui/material";
+import TextArea from "antd/es/input/TextArea";
 
 const Wrapper = styled.div`
   .custom-table .ant-table-wrapper {
@@ -99,14 +106,53 @@ const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
   }
+  /* Use a parent class or ID to increase specificity */
 `;
 const onClick = ({ key }) => {
   message.info(`Click on item ${key}`);
 };
+
+const useStyles = makeStyles((theme) => ({
+  customImageCell: {
+    width: 100,
+    height: 300,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  customImage: {
+    width: "100%",
+    height: "100%",
+    objectFit: "cover",
+    maxWidth: "100%",
+    maxHeight: "100%",
+  },
+}));
 const Movies = () => {
+  const classes = useStyles();
   const columns = [
     { field: "id", headerName: "ID", width: 60 },
     { field: "movie", headerName: "MOVIE", width: 120, editable: true },
+    // {
+    //   field: "movieImage",
+    //   headerName: "MOVIE IMAGE",
+    //   height: 100,
+    //   width: 250,
+    //   renderCell: (params) => {
+    //     const movieLink =
+    //       selectedMovie?.movieLink ||
+    //       "https://inkythuatso.com/uploads/thumbnails/800/2022/05/hinh-nen-dien-thoai-anime-ngau-1-25-13-00-30.jpg";
+    //     return (
+    //       <div className={classes.customImageCell}>
+    //         <img
+    //           src={movieLink}
+    //           alt="Movie Image"
+    //           className={classes.customImage}
+    //         />
+    //       </div>
+    //     );
+    //   },
+    // },
     { field: "genreName", headerName: "GENRE", width: 120, editable: true },
     {
       field: "releaseDate",
@@ -122,16 +168,6 @@ const Movies = () => {
       editable: true,
     },
 
-    {
-      field: "status",
-      headerName: "STATUS",
-      // type: "number",
-      width: 80,
-      editable: true,
-      renderCell: (params) => (
-        <div className="action">{params.value === 1 ? "Show" : "Hide"}</div>
-      ),
-    },
     {
       field: "action",
       headerName: "Action",
@@ -163,10 +199,10 @@ const Movies = () => {
                   <label>Name:</label>
                   <br />
                   <Input
-                    boderColor={"#000"}
-                    height={36}
-                    borderRadius={10}
-                    width={400}
+                    // boderColor={"#000"}
+                    // height={36}
+                    // borderRadius={10}
+                    // width={400}
                     type="text"
                     value={selectedMovie.movie}
                     onChange={(e) =>
@@ -181,10 +217,10 @@ const Movies = () => {
                   <label>Genre</label>
                   <br />
                   <Input
-                    boderColor={"#000"}
-                    height={36}
-                    borderRadius={10}
-                    width={400}
+                    // boderColor={"#000"}
+                    // height={36}
+                    // borderRadius={10}
+                    // width={300}
                     type="text"
                     value={selectedMovie.genreName}
                     onChange={(e) =>
@@ -199,10 +235,10 @@ const Movies = () => {
                   <label>Duration:</label>
                   <br />
                   <Input
-                    boderColor={"#000"}
-                    height={36}
-                    borderRadius={10}
-                    width={400}
+                    // boderColor={"#000"}
+                    // height={36}
+                    // borderRadius={10}
+                    // width={60}
                     type="number"
                     value={selectedMovie.duration}
                     onChange={(e) =>
@@ -218,11 +254,11 @@ const Movies = () => {
                   <label>Realease Date:</label>
                   <br />
                   <Input
-                    boderColor={"#000"}
-                    height={36}
-                    borderRadius={10}
-                    width={400}
-                    type="text"
+                    // boderColor={"#000"}
+                    // height={36}
+                    // borderRadius={10}
+                    // width={200}
+                    // type="text"
                     value={selectedMovie.releaseDate.slice(0, 10)}
                     onChange={(e) =>
                       setselectedMovie({
@@ -233,6 +269,24 @@ const Movies = () => {
                   />
                 </div>
                 <div className="input-field">
+                  <label>Description:</label>
+                  <br />
+                  <TextArea
+                    // boderColor={"#000"}
+                    // height={36}
+                    // borderRadius={10}
+                    // width={400}
+                    // type="text"
+                    value={selectedMovie.desc}
+                    onChange={(e) =>
+                      setselectedMovie({
+                        ...selectedMovie,
+                        desc: e.target.value,
+                      })
+                    }
+                  />
+                </div>
+                {/* <div className="input-field">
                   <br />
                   <DropDown
                     onClick={onClick}
@@ -258,7 +312,7 @@ const Movies = () => {
                       })
                     }
                   />
-                </div>
+                </div> */}
                 <Popconfirm
                   title="Are you sure to update this user?"
                   onConfirm={() => {
@@ -321,8 +375,10 @@ const Movies = () => {
     if (selectedMovie) {
       const updatedMovie = {
         ...selectedMovie,
-        // username: selectedMovie.username,
-        // email: selectedMovie.email,
+        title: selectedMovie.movie,
+        genreName: selectedMovie.genreName,
+        duration: selectedMovie.duration,
+        desc: selectedMovie.desc,
         // // phone: selectedMovie.phone,
         // gender: selectedMovie.gender,
 
@@ -354,14 +410,14 @@ const Movies = () => {
   );
 
   const updateRow = (updatedMovie) => {
-    // dispatch(updateUser(updatedMovie))
-    //   .then(() => dispatch(listUser()))
-    //   .then((response) => {
-    //     setData(response.data);
-    //   })
-    //   .catch((error) => {
-    //     // Handle error if necessary
-    //   });
+    dispatch(updateMovie(updatedMovie))
+      .then(() => dispatch(listMovie()))
+      .then((response) => {
+        setData(response.data);
+      })
+      .catch((error) => {
+        // Handle error if necessary
+      });
   };
 
   const deleteRow = (id) => {
@@ -395,6 +451,9 @@ const Movies = () => {
           releaseDate: movie.releaseDate ? movie.releaseDate.slice(0, 10) : "",
           duration: movie.duration,
           genreName: movie.genreName,
+          movieLink: movie.movieLink,
+
+          status: movie.status,
           // rating: review.rating,
           // status: review.status,
           // user: review.user.username,
@@ -424,7 +483,12 @@ const Movies = () => {
           {loading && <Loading />}
         </div>
 
-        <TableData className="dataTable" rows={data} columns={columns} />
+        <TableData
+          id="custom-data-grid"
+          className="dataTable"
+          rows={data}
+          columns={columns}
+        />
       </Row>
     </Wrapper>
   );

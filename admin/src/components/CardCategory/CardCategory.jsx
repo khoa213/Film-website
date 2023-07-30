@@ -10,14 +10,14 @@ const Wrapper = styled.div`
     padding: 0;
     height: 64px;
     width: 8px !important;
-    background-color: red;
+    background-color: ${(props) => (props.color ? props.color : "red")};
     border-radius: 16px;
     position: relative;
     margin-right: 20px;
     &-percent {
       position: absolute;
       padding: 0;
-      background-color: #991717;
+      background-color: white;
       border-radius: 16px;
       bottom: 0;
       left: 0;
@@ -29,7 +29,7 @@ const Wrapper = styled.div`
     height: 64px;
     width: 64px;
     border-radius: 20px;
-    background-color: #991717;
+    background-color: ${(props) => (props.color ? props.color : "red")};
     display: flex;
     justify-content: center;
     align-items: center;
@@ -37,7 +37,7 @@ const Wrapper = styled.div`
     svg {
       height: 30px;
       width: 30px;
-      fill: red;
+      fill: white;
     }
   }
   .right-part {
@@ -53,9 +53,9 @@ const Wrapper = styled.div`
   }
 `;
 
-const CardCategory = ({ percent }) => {
+const CardCategory = ({ countMovie, percent, genre, color }) => {
   return (
-    <Wrapper>
+    <Wrapper color={color}>
       <div className="left-part">
         <div className="left-part-percent"></div>
       </div>
@@ -63,8 +63,8 @@ const CardCategory = ({ percent }) => {
         <FilmSvg />
       </div>
       <div className="right-part">
-        <p>Action</p>
-        <p>+34%</p>
+        <p>{genre}</p>
+        <p>{countMovie}</p>
       </div>
     </Wrapper>
   );

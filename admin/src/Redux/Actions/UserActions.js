@@ -40,7 +40,7 @@ export const login = (formData) => async (dispatch) => {
     };
 
     // console.log(username, password);
-    console.log(formData);
+    // console.log(formData);
     const { data } = await axios.post(
       `https://danielaws.tk/group4/signin`,
       formData,

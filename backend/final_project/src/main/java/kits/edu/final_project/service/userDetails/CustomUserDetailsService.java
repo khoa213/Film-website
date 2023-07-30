@@ -32,6 +32,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         Optional<UserEntity> userOptional = Optional.ofNullable(userRepository.findByEmail(username));
         UserEntity user = userOptional.orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + username));
+//        System.out.println(user);
         return new User(user.getUsername(), user.getPassword(), mapRolesToAuthorities(user.getRoles()));
     }
     private Collection<GrantedAuthority> mapRolesToAuthorities(List<RoleEntity> roles){

@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { Button, Modal, Popconfirm, Row, Table, message } from "antd";
+import { Button, Modal, Popconfirm, Row, Table, message, Input } from "antd";
 import styled from "styled-components";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import Excel from "components/Excel/Excel";
@@ -12,7 +12,7 @@ import { ReactComponent as DeleteIcon } from "../../assets/images/delete-icon.sv
 import { ReactComponent as VisibleIcon } from "../../assets/images/visible-status.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteUser, listUser, updateUser } from "Redux/Actions/UserActions";
-import Input from "components/Input";
+// import Input from "components/Input";
 import DropDown from "components/Dropdown/Dropdown";
 import { toast } from "react-toastify";
 
@@ -117,6 +117,11 @@ const Users = () => {
       type: "number",
       width: 130,
       editable: true,
+      renderCell: (params) => (
+        <div className="action">
+          {params.value ? params.value : "No infornation"}
+        </div>
+      ),
     },
 
     {
@@ -178,10 +183,10 @@ const Users = () => {
                   <label>Username:</label>
                   <br />
                   <Input
-                    boderColor={"#000"}
-                    height={36}
-                    borderRadius={10}
-                    width={400}
+                    // boderColor={"#000"}
+                    // height={36}
+                    // borderRadius={10}
+                    // width={400}
                     type="text"
                     value={selectedUser.username}
                     onChange={(e) =>
@@ -196,16 +201,16 @@ const Users = () => {
                   <label>Email:</label>
                   <br />
                   <Input
-                    boderColor={"#000"}
-                    height={36}
-                    borderRadius={10}
-                    width={400}
+                    // boderColor={"#000"}
+                    // height={36}
+                    // borderRadius={10}
+                    // width={400}
                     type="text"
                     value={selectedUser.email}
                     onChange={(e) =>
                       setSelectedUser({
                         ...selectedUser,
-                        email: e.target.value,
+                        phone: e.target.value,
                       })
                     }
                   />
@@ -214,10 +219,10 @@ const Users = () => {
                   <label>Phone:</label>
                   <br />
                   <Input
-                    boderColor={"#000"}
-                    height={36}
-                    borderRadius={10}
-                    width={400}
+                    // boderColor={"#000"}
+                    // height={36}
+                    // borderRadius={10}
+                    // width={400}
                     type="text"
                     // value={}
                     onChange={(e) =>
@@ -259,12 +264,12 @@ const Users = () => {
                   <label>Birthday:</label>
                   <br />
                   <Input
-                    boderColor={"#000"}
-                    height={36}
-                    borderRadius={10}
-                    width={400}
+                    // boderColor={"#000"}
+                    // height={36}
+                    // borderRadius={10}
+                    // width={400}
                     type="text"
-                    value={selectedUser.birthday.slice(0, 10)}
+                    value={selectedUser.birthday}
                     onChange={(e) =>
                       setSelectedUser({
                         ...selectedUser,

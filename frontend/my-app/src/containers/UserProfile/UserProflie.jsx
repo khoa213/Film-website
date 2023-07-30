@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { LockOutlined } from "@ant-design/icons";
 import {
   Input,
   Button,
@@ -148,6 +149,20 @@ const StyleUserProfile = styled.div`
     font-size: 18px;
     border: none;
   }
+  .custom-panel-header {
+    font-size: 16px;
+    color: #fff; /* You can change the color to your preferred color */
+    font-weight: bold;
+  }
+
+  /* Custom styles for panel header icon */
+  .custom-panel-icon {
+    svg {
+      fill: #fff;
+    }
+    font-size: 16px;
+    margin-right: 8px; /* Add some space between the icon and text */
+  }
 `;
 const dataUser = {
   id: 1,
@@ -191,9 +206,8 @@ const UserProfile = () => {
   const [isResetPasswordVisible, setIsResetPasswordVisible] = useState(false);
   const [resetPasswordValues, setResetPasswordValues] = useState({
     email: dataUser.email,
-    oldPassword: "",
+
     newPassword: "",
-    confirmNewPassword: "",
   });
   const toggleResetPasswordVisible = () => {
     setIsResetPasswordVisible(!isResetPasswordVisible);
@@ -314,7 +328,15 @@ const UserProfile = () => {
           <img src={line}></img>
           <Button onClick={toggleResetPasswordVisible}>Reset Password</Button>
           <Collapse activeKey={isResetPasswordVisible ? "1" : ""}>
-            <Panel header="Reset Password" key="1">
+            <Panel
+              header={
+                <div className="custom-panel-header">
+                  <LockOutlined className="custom-panel-icon" />
+                  Reset Password
+                </div>
+              }
+              key="1"
+            >
               <Form onFinish={handleResetPassword}>
                 <div className="input-group">
                   <Form.Item

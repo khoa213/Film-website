@@ -9,6 +9,9 @@ import {
   MOVIE_DELETE_REQUEST,
   MOVIE_DELETE_SUCCESS,
   MOVIE_DELETE_FAIL,
+  MOVIE_UPDATE_SUCCESS,
+  MOVIE_UPDATE_REQUEST,
+  MOVIE_UPDATE_FAIL,
 } from "../Constants/MovieConstants";
 import { logout } from "./UserActions";
 import { toast } from "react-toastify";
@@ -125,5 +128,47 @@ export const deleteMovie = (id) => async (dispatch, getState) => {
         payload: message,
       });
     }
+  }
+};
+// UPDATE movie
+export const updateMovie = (movie) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: MOVIE_UPDATE_REQUEST });
+    // console.log(user);
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userInfo}`,
+      },
+    };
+
+    const { data } = await axios.put(
+      `https://danielaws.tk/group4/movies/${movie.id}`,
+      movie,
+      config
+    );
+    // console.log(genre.id);
+
+    dispatch({ type: MOVIE_UPDATE_SUCCESS, payload: data });
+    toast.success("Movie updated successfully");
+    // dispatch({ type: GENRE_LOGIN_SUCCESS, payload: data });
+
+    // localStorage.setItem("userInfo", JSON.stringify(data));
+  } catch (error) {
+    const message =
+      error.response && error.response.data.data
+        ? error.response.data.data
+        : error.message;
+    if (message === "Not authorized, token failed") {
+      dispatch(logout());
+    }
+    dispatch({
+      type: MOVIE_UPDATE_FAIL,
+      payload: message,
+    });
   }
 };

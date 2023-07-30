@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { Button, Modal, Popconfirm, Row, Table, message } from "antd";
+import { Button, Modal, Popconfirm, Row, Table, message, Input } from "antd";
 import styled from "styled-components";
 import Excel from "components/Excel/Excel";
 import TableData from "components/Table/Table.jsx";
@@ -7,10 +7,10 @@ import Loading from "components/LoadingError/Loading.jsx";
 import { ReactComponent as EditIcon } from "../../assets/images/edit-icon.svg";
 import { ReactComponent as DeleteIcon } from "../../assets/images/delete-icon.svg";
 import { ReactComponent as VisibleIcon } from "../../assets/images/visible-status.svg";
-import { useDispatch, useSelector } from "react-redux";
 
-import Input from "components/Input";
+// import Input from "components/Input";
 import DropDown from "components/Dropdown/Dropdown";
+import { useDispatch, useSelector } from "react-redux";
 import {
   deleteGenre,
   listGenre,
@@ -167,10 +167,10 @@ const Genres = () => {
                   <label>Name:</label>
                   <br />
                   <Input
-                    boderColor={"#000"}
-                    height={36}
-                    borderRadius={10}
-                    width={400}
+                    // boderColor={"#000"}
+                    // height={36}
+                    // borderRadius={10}
+                    // width={400}
                     type="text"
                     value={selectedGenre.name}
                     onChange={(e) =>
@@ -188,13 +188,13 @@ const Genres = () => {
                   <TextArea
                     name="description"
                     maxLength={10000}
-                    style={{
-                      height: 200,
-                      width: 410,
-                      marginBottom: 24,
-                      border: "1px solid black",
-                      color: "#000",
-                    }}
+                    // style={{
+                    //   height: 200,
+                    //   width: 500,
+                    //   marginBottom: 24,
+                    //   border: "1px solid black",
+                    //   color: "#000",
+                    // }}
                     type="text"
                     value={selectedGenre.desc}
                     onChange={(e) =>
@@ -209,10 +209,10 @@ const Genres = () => {
                   <label>Movie:</label>
                   <br />
                   <Input
-                    boderColor={"#000"}
-                    height={36}
-                    borderRadius={10}
-                    width={400}
+                    // boderColor={"#000"}
+                    // height={36}
+                    // borderRadius={10}
+                    // width={400}
                     type="text"
                     value={selectedGenre.countMovies}
                     onChange={(e) =>

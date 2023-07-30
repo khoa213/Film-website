@@ -31,7 +31,7 @@ export const listPack = () => async (dispatch, getState) => {
       `https://danielaws.tk/group4/package`,
       config
     );
-    // console.log(data);
+    console.log(data);
 
     dispatch({ type: PACK_LIST_SUCCESS, payload: data });
   } catch (error) {
